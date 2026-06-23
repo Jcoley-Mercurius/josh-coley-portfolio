@@ -1,7 +1,6 @@
- tsx
-    // components/Footer.tsx
-    
-    import Link from "next/link";
+ // components/Footer.tsx
+
+import Link from "next/link";
     
     const NAV_LINKS = [
       { label: "About",    href: "#about"    },
