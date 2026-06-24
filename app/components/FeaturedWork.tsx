@@ -35,6 +35,7 @@ const projects: Project[] = [
     technologies: [
       "Product Strategy",
       "Next.js",
+      "TypeScript",
       "Supabase",
       "AI/ML",
       "Vercel",
@@ -51,9 +52,9 @@ const projects: Project[] = [
     ],
     whatBuilt: [
       {
-        name: "Vendor Onboarding System",
+        name: "Professional Vendor Intake Form",
         description:
-          "Service providers can register, build a profile, and list their services via a live multi-step application at applymercurius.com.",
+          "Rebuilt the vendor onboarding experience from a basic HTML form into a polished 5-step wizard built with Next.js, TypeScript, Tailwind CSS, and Framer Motion. Vendors are guided through Business Basics, Contact Info, Service Area, Credentials, and a full Review step — with inline education, smart quick-pick service chips, validation, and a branded success screen. Ready to deploy at applymercurius.com.",
       },
       {
         name: "Consumer-Facing Marketplace",
