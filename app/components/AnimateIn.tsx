@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { type ReactNode } from "react";
 
 interface AnimateInProps {
@@ -28,22 +28,23 @@ export default function AnimateIn({
   duration = 0.6,
   once = true,
 }: AnimateInProps) {
+  const shouldReduceMotion = useReducedMotion();
   const offset = directionOffset[direction];
 
   const variants: Variants = {
     hidden: {
-      opacity: 0,
-      x: offset.x,
-      y: offset.y,
+      opacity: shouldReduceMotion ? 1 : 0,
+      x: shouldReduceMotion ? 0 : offset.x,
+      y: shouldReduceMotion ? 0 : offset.y,
     },
     visible: {
       opacity: 1,
       x: 0,
       y: 0,
       transition: {
-        duration,
-        delay,
-        ease: [0.25, 0.1, 0.25, 1],
+        duration: shouldReduceMotion ? 0 : duration,
+        delay: shouldReduceMotion ? 0 : delay,
+        ease: [0.4, 0, 0.2, 1],
       },
     },
   };

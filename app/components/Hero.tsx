@@ -1,9 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 
 export default function Hero() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section className="relative flex items-center overflow-hidden pb-20 pt-28 sm:pb-24 sm:pt-32 lg:pb-28 lg:pt-32">
       {/* Subtle background gradient */}
@@ -14,13 +16,17 @@ export default function Hero() {
           {/* Left: Copy */}
           <div>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+              initial={
+                shouldReduceMotion
+                  ? false
+                  : { opacity: 0, y: 16, filter: "blur(5px)" }
+              }
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
             >
               <span className="inline-flex items-center gap-2.5 rounded-full border border-emerald-200/80 bg-emerald-50/80 px-4 py-2 text-xs font-semibold tracking-wide text-emerald-800 shadow-sm shadow-emerald-900/5 ring-1 ring-inset ring-white/70">
                 <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-50" />
+                  <span className="availability-dot-glow absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-50" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                 </span>
                 Available for new projects
@@ -28,12 +34,16 @@ export default function Hero() {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={
+                shouldReduceMotion
+                  ? false
+                  : { opacity: 0, y: 22, filter: "blur(8px)" }
+              }
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{
-                duration: 0.6,
+                duration: 0.65,
                 delay: 0.1,
-                ease: [0.25, 0.1, 0.25, 1],
+                ease: [0.4, 0, 0.2, 1],
               }}
               className="mt-5 text-4xl font-bold leading-[1.08] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
             >
@@ -48,12 +58,16 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={
+                shouldReduceMotion
+                  ? false
+                  : { opacity: 0, y: 18, filter: "blur(6px)" }
+              }
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{
                 duration: 0.6,
-                delay: 0.2,
-                ease: [0.25, 0.1, 0.25, 1],
+                delay: 0.22,
+                ease: [0.4, 0, 0.2, 1],
               }}
               className="mt-5 max-w-lg text-lg leading-relaxed text-slate-600"
             >
@@ -63,12 +77,16 @@ export default function Hero() {
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={
+                shouldReduceMotion
+                  ? false
+                  : { opacity: 0, y: 14, filter: "blur(4px)" }
+              }
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{
-                duration: 0.6,
-                delay: 0.3,
-                ease: [0.25, 0.1, 0.25, 1],
+                duration: 0.55,
+                delay: 0.34,
+                ease: [0.4, 0, 0.2, 1],
               }}
               className="mt-7 flex flex-wrap items-center gap-3"
             >
@@ -89,12 +107,14 @@ export default function Hero() {
 
           {/* Right: Professional headshot */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={
+              shouldReduceMotion ? false : { opacity: 0, y: 16, scale: 0.98 }
+            }
+            animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{
               duration: 0.7,
               delay: 0.2,
-              ease: [0.25, 0.1, 0.25, 1],
+              ease: [0.4, 0, 0.2, 1],
             }}
             className="relative mx-auto w-full max-w-md lg:mx-0"
           >

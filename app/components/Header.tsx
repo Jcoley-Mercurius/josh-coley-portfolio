@@ -51,7 +51,7 @@ export default function Header() {
           ))}
           <a
             href="#contact"
-            className="rounded-full bg-slate-900 px-5 py-2 text-sm font-medium text-white transition-all hover:bg-slate-800 active:scale-[0.98]"
+            className="btn-primary rounded-full bg-slate-900 px-5 py-2 text-sm font-medium text-white transition-all hover:bg-slate-800 active:scale-[0.98]"
           >
             Get in Touch
           </a>
@@ -91,7 +91,7 @@ export default function Header() {
               <a
                 href="#contact"
                 onClick={() => setMobileOpen(false)}
-                className="mt-2 rounded-full bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white transition-all hover:bg-slate-800"
+                className="btn-primary mt-2 rounded-full bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white transition-all hover:bg-slate-800"
               >
                 Get in Touch
               </a>
