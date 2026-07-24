@@ -79,48 +79,51 @@ export default function Services() {
           </p>
         </AnimateIn>
 
-        <div className="mt-16 grid gap-8 lg:grid-cols-3">
+        <div className="mt-16 grid gap-8 lg:grid-cols-3 lg:gap-6">
           {packages.map((pkg, index) => (
             <AnimateIn key={pkg.name} delay={index * 0.12}>
               <div
-                className={`relative flex h-full flex-col rounded-2xl border p-8 transition-all duration-300 hover:shadow-lg ${
+                className={`relative flex h-full flex-col overflow-hidden rounded-3xl border p-8 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl ${
                   pkg.featured
-                    ? "border-accent bg-white shadow-md shadow-accent/5"
-                    : "border-slate-200 bg-white hover:border-slate-300"
+                    ? "border-accent/70 bg-gradient-to-b from-accent/[0.045] via-white to-white shadow-lg shadow-accent/10"
+                    : "border-slate-200/90 bg-gradient-to-b from-slate-50/70 to-white shadow-sm hover:border-slate-300"
                 }`}
               >
+                <div
+                  className={`absolute inset-x-0 top-0 h-1 ${
+                    pkg.featured ? "bg-accent" : "bg-slate-200"
+                  }`}
+                />
                 {pkg.featured && (
-                  <span className="absolute -top-3 right-6 rounded-full bg-accent px-4 py-1 text-xs font-semibold text-white">
+                  <span className="absolute right-6 top-5 rounded-full bg-accent px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white shadow-md shadow-accent/20">
                     Most Popular
                   </span>
                 )}
 
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900">
+                  <h3 className="text-xl font-bold tracking-tight text-slate-900">
                     {pkg.name}
                   </h3>
-                  <p className="mt-3 text-3xl font-bold tracking-tight text-slate-900">
+                  <p className="mt-5 text-3xl font-bold tracking-tight text-slate-950">
                     {pkg.price}
                   </p>
                   <p className="mt-1 text-sm text-slate-500">
                     {pkg.turnaround}
                   </p>
-                  <p className="mt-4 text-sm leading-relaxed text-slate-600">
+                  <p className="mt-5 text-sm leading-6 text-slate-600">
                     {pkg.description}
                   </p>
                 </div>
 
-                <ul className="mt-8 flex-1 space-y-3">
+                <ul className="mt-8 flex-1 space-y-3.5 border-t border-slate-100 pt-7">
                   {pkg.features.map((feature) => (
                     <li
                       key={feature}
                       className="flex items-start gap-2.5 text-sm text-slate-700"
                     >
-                      <Check
-                        size={16}
-                        className="mt-0.5 flex-shrink-0 text-accent"
-                        strokeWidth={2}
-                      />
+                      <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-accent/10">
+                        <Check size={12} className="text-accent" strokeWidth={2.5} />
+                      </span>
                       {feature}
                     </li>
                   ))}
@@ -144,7 +147,7 @@ export default function Services() {
 
         {/* Retainer — separate full-width card */}
         <AnimateIn delay={0.4}>
-          <div className="mt-12 rounded-2xl border border-slate-200 bg-gradient-to-r from-slate-50 to-white p-8 transition-all duration-300 hover:shadow-lg sm:p-10">
+          <div className="mt-12 rounded-3xl border border-slate-200 bg-gradient-to-r from-slate-50 via-white to-accent/[0.025] p-8 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:p-10">
             <div className="grid items-center gap-8 lg:grid-cols-5 lg:gap-12">
               <div className="lg:col-span-3">
                 <div className="flex items-center gap-3">

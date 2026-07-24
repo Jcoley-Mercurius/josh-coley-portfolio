@@ -1,17 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
 import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-[90vh] items-center overflow-hidden pt-20">
+    <section className="relative flex items-center overflow-hidden pb-20 pt-28 sm:pb-24 sm:pt-32 lg:pb-28 lg:pt-32">
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-warm-50" />
 
       <div className="relative mx-auto max-w-6xl px-6">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Left: Copy */}
           <div>
             <motion.div
@@ -19,8 +18,11 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             >
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-medium text-slate-600 shadow-sm">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              <span className="inline-flex items-center gap-2.5 rounded-full border border-emerald-200/80 bg-emerald-50/80 px-4 py-2 text-xs font-semibold tracking-wide text-emerald-800 shadow-sm shadow-emerald-900/5 ring-1 ring-inset ring-white/70">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-50" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                </span>
                 Available for new projects
               </span>
             </motion.div>
@@ -33,7 +35,7 @@ export default function Hero() {
                 delay: 0.1,
                 ease: [0.25, 0.1, 0.25, 1],
               }}
-              className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
+              className="mt-5 text-4xl font-bold leading-[1.08] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
             >
               I build websites
               <br />
@@ -53,7 +55,7 @@ export default function Hero() {
                 delay: 0.2,
                 ease: [0.25, 0.1, 0.25, 1],
               }}
-              className="mt-6 max-w-lg text-lg leading-relaxed text-slate-600"
+              className="mt-5 max-w-lg text-lg leading-relaxed text-slate-600"
             >
               AI-powered websites and business tools for small businesses and
               service companies. I combine real business experience with modern
@@ -68,7 +70,7 @@ export default function Hero() {
                 delay: 0.3,
                 ease: [0.25, 0.1, 0.25, 1],
               }}
-              className="mt-8 flex flex-wrap items-center gap-4"
+              className="mt-7 flex flex-wrap items-center gap-3"
             >
               <a
                 href="#contact"
@@ -96,7 +98,7 @@ export default function Hero() {
             }}
             className="relative mx-auto w-full max-w-md lg:mx-0"
           >
-            <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-gradient-to-br from-slate-200 to-slate-300 shadow-2xl shadow-slate-900/10">
+            <div className="aspect-[4/5] overflow-hidden rounded-3xl bg-gradient-to-br from-slate-200 to-slate-300 shadow-2xl shadow-slate-900/10 ring-1 ring-slate-900/5">
               <Image
                 src="/headshot.jpg"
                 alt="Joshua Coley — Founder of Mercurius Solutions"
@@ -108,36 +110,9 @@ export default function Hero() {
             </div>
 
             {/* Decorative element */}
-            <div className="absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-2xl border-2 border-slate-200" />
+            <div className="absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-3xl border-2 border-slate-200" />
           </motion.div>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.6 }}
-          className="mt-16 flex justify-center lg:mt-20"
-        >
-          <a
-            href="#about"
-            className="flex flex-col items-center gap-2 text-slate-400 transition-colors hover:text-slate-600"
-          >
-            <span className="text-xs font-medium uppercase tracking-widest">
-              Scroll
-            </span>
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <ArrowDown size={16} />
-            </motion.div>
-          </a>
-        </motion.div>
       </div>
     </section>
   );
