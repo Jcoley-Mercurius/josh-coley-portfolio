@@ -83,7 +83,7 @@ export default function Services() {
           {packages.map((pkg, index) => (
             <AnimateIn key={pkg.name} delay={index * 0.12}>
               <div
-                className={`relative flex h-full flex-col overflow-hidden rounded-3xl border p-8 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl ${
+                className={`service-card relative flex h-full flex-col overflow-hidden rounded-3xl border p-8 ${
                   pkg.featured
                     ? "border-accent/70 bg-gradient-to-b from-accent/[0.045] via-white to-white shadow-lg shadow-accent/10"
                     : "border-slate-200/90 bg-gradient-to-b from-slate-50/70 to-white shadow-sm hover:border-slate-300"
@@ -95,7 +95,7 @@ export default function Services() {
                   }`}
                 />
                 {pkg.featured && (
-                  <span className="absolute right-6 top-5 rounded-full bg-accent px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white shadow-md shadow-accent/20">
+                  <span className="badge absolute right-6 top-5 rounded-full bg-accent px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white shadow-md shadow-accent/20">
                     Most Popular
                   </span>
                 )}

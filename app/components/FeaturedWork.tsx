@@ -154,7 +154,7 @@ export default function FeaturedWork() {
         <div className="mt-16 space-y-16 lg:mt-20 lg:space-y-20">
           {projects.map((project, index) => (
             <AnimateIn key={project.title} delay={index * 0.15}>
-              <article className="group overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.03),0_12px_30px_rgba(15,23,42,0.04)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-slate-300/90 hover:shadow-[0_20px_50px_rgba(15,23,42,0.09)]">
+              <article className="project-card group overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.03),0_12px_30px_rgba(15,23,42,0.04)]">
                 <div className="p-7 sm:p-10 lg:p-12">
                   {/* Header */}
                   <div className="flex flex-wrap items-start justify-between gap-6">
@@ -164,7 +164,7 @@ export default function FeaturedWork() {
                           {project.title}
                         </h3>
                         <span
-                          className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold tracking-wide shadow-sm ${
+                          className={`badge inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold tracking-wide shadow-sm ${
                             project.status === "Live"
                               ? "border-emerald-200 bg-emerald-50 text-emerald-800"
                               : "border-amber-200 bg-amber-50 text-amber-800"
@@ -276,7 +276,7 @@ export default function FeaturedWork() {
                               <p className="text-sm font-semibold text-slate-800">
                                 {item.name}
                               </p>
-                              <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
+                              <span className="badge rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
                                 Planned
                               </span>
                             </div>
@@ -316,7 +316,7 @@ export default function FeaturedWork() {
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="rounded-md border border-slate-200/80 bg-slate-50 px-2.5 py-1.5 text-[11px] font-semibold tracking-wide text-slate-600"
+                        className="tech-tag rounded-md border border-slate-200/80 bg-slate-50 px-2.5 py-1.5 text-[11px] font-semibold tracking-wide text-slate-600"
                       >
                         {tech}
                       </span>

@@ -54,6 +54,10 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  -webkit-font-smoothing: antialiased;
+}
+
 body {
   font-family: var(--font-sans);
   color: var(--color-slate-800);
@@ -105,16 +109,43 @@ section {
 }
 
 /* ===== PREMIUM CARD SURFACES ===== */
-#work article {
+.project-card {
   background:
     linear-gradient(145deg, rgb(255 255 255 / 1), rgb(248 250 252 / 0.68));
   border-color: rgb(203 213 225 / 0.72);
   box-shadow: var(--shadow-resting);
+  border-radius: 16px;
+  overflow: hidden;
   transition:
-    transform var(--duration-refined) var(--ease-refined),
-    box-shadow var(--duration-refined) var(--ease-refined),
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
     border-color var(--duration-refined) var(--ease-refined);
+  animation: fadeUp 0.65s cubic-bezier(0.4, 0, 0.2, 1) both;
   will-change: transform;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#work > div > div:last-child > div:nth-child(1) .project-card {
+  animation-delay: 0.08s;
+}
+
+#work > div > div:last-child > div:nth-child(2) .project-card {
+  animation-delay: 0.16s;
+}
+
+#work > div > div:last-child > div:nth-child(3) .project-card {
+  animation-delay: 0.24s;
 }
 
 /* Project status badges */
@@ -128,30 +159,45 @@ section {
 }
 
 /* Project tech tags */
-#work article > div > div:last-child > span {
+.tech-tag {
   background: rgb(248 250 252 / 0.9);
   border-color: rgb(203 213 225 / 0.72);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9);
   transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
     color var(--duration-fast) var(--ease-refined),
-    background-color var(--duration-fast) var(--ease-refined),
-    border-color var(--duration-fast) var(--ease-refined),
-    transform var(--duration-fast) var(--ease-refined);
+    border-color var(--duration-fast) var(--ease-refined);
 }
 
 /* Primary service package cards */
-#services [class~="h-full"][class~="flex-col"] {
+.service-card {
   border-color: rgb(203 213 225 / 0.7);
   box-shadow: var(--shadow-resting);
+  border-radius: 16px;
+  overflow: hidden;
   transition:
-    transform var(--duration-refined) var(--ease-refined),
-    box-shadow var(--duration-refined) var(--ease-refined),
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
     border-color var(--duration-refined) var(--ease-refined);
+  animation: fadeUp 0.65s cubic-bezier(0.4, 0, 0.2, 1) both;
   will-change: transform;
 }
 
+#services > div > div:nth-of-type(2) > div:nth-child(1) .service-card {
+  animation-delay: 0.1s;
+}
+
+#services > div > div:nth-of-type(2) > div:nth-child(2) .service-card {
+  animation-delay: 0.18s;
+}
+
+#services > div > div:nth-of-type(2) > div:nth-child(3) .service-card {
+  animation-delay: 0.26s;
+}
+
 /* Featured service card */
-#services [class~="h-full"][class~="flex-col"][class*="border-accent"] {
+.service-card[class*="border-accent"] {
   border-color: rgb(37 99 235 / 0.5);
   box-shadow:
     0 1px 2px rgb(37 99 235 / 0.04),
@@ -178,31 +224,51 @@ button[type="submit"] {
     color var(--duration-fast) ease;
 }
 
+.btn-primary,
+button[class*="bg-"],
+a[class*="bg-"] {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
+}
+
+.badge,
+.tech-tag {
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
 @media (hover: hover) and (pointer: fine) {
-  #work article:hover {
-    transform: translateY(-5px);
+  .project-card:hover,
+  .service-card:hover {
+    transform: translateY(-8px);
     border-color: rgb(148 163 184 / 0.62);
-    box-shadow: var(--shadow-elevated);
+    box-shadow:
+      0 20px 40px rgb(0 0 0 / 0.08),
+      0 12px 32px rgb(10 77 104 / 0.12),
+      0 0 0 1px rgb(10 77 104 / 0.04);
   }
 
-  #work article > div > div:last-child > span:hover {
+  .tech-tag:hover {
     color: var(--color-accent-dark);
     background-color: rgb(239 246 255 / 0.9);
     border-color: rgb(147 197 253 / 0.72);
     transform: translateY(-1px);
   }
 
-  #services [class~="h-full"][class~="flex-col"]:hover {
-    transform: translateY(-5px);
-    border-color: rgb(148 163 184 / 0.7);
-    box-shadow: var(--shadow-elevated);
-  }
-
-  #services [class~="h-full"][class~="flex-col"][class*="border-accent"]:hover {
+  .service-card[class*="border-accent"]:hover {
     border-color: rgb(37 99 235 / 0.68);
     box-shadow:
-      0 2px 4px rgb(37 99 235 / 0.04),
-      0 26px 56px -26px rgb(37 99 235 / 0.34);
+      0 20px 40px rgb(0 0 0 / 0.08),
+      0 12px 32px rgb(10 77 104 / 0.16),
+      0 0 0 1px rgb(37 99 235 / 0.08);
   }
 
   #services [class~="mt-12"][class~="rounded-3xl"]:hover {
@@ -211,20 +277,18 @@ button[type="submit"] {
     box-shadow: var(--shadow-elevated);
   }
 
+  .btn-primary:hover,
+  button[class*="bg-"]:hover,
+  a[class*="bg-"]:hover,
   a[class~="rounded-full"]:hover,
   button[type="submit"]:hover {
     transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgb(10 77 104 / 0.25);
   }
 
-  a[class*="bg-slate-900"]:hover,
-  button[type="submit"]:hover {
-    box-shadow:
-      0 2px 3px rgb(15 23 42 / 0.08),
-      0 12px 26px -12px rgb(15 23 42 / 0.5);
-  }
-
-  a[class*="bg-accent"]:hover {
-    box-shadow: var(--shadow-accent);
+  .badge:hover,
+  .tech-tag:hover {
+    transform: translateY(-1px);
   }
 }
 
