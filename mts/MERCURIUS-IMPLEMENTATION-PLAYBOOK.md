@@ -44,7 +44,7 @@ Checkpoint: slice outcome demonstrated, applicable failures verified and limitat
 
 Actual (2026-10-11): PASS 11 node:test record-adapter checks, lint, typecheck, build (five case studies prerendered), audit 0, 18 new Playwright checks (no-JS case studies with metadata, card links, next-project order and wrap with title focus, back/forward history, direct chapter links with and without JavaScript, keyboard chapters, four unknown-URL 404s without JavaScript, layout at reference widths, no unverified claims). Full suite 51/52: the S1 2560×1440 hero framing test is a pre-existing load-dependent flake (fails 3/3 on main). Rollback: 2d29b7b. Details in mts/QA-STATUS.md.
 
-## S4: Motion and navigation (not_started)
+## S4: Motion and navigation (ready)
 > Execute only S4. Read the inherited contract and canonical files above, then inspect current repository. Implement bounded desktop hero depth, entrance and card motion with cleanup, reduced preference, manual control and accessible menu. Trace changes through mts/IMPLEMENTATION-PLAN.md. In scope: this slice's user journey and applicable failure, recovery, responsive and accessibility states. Out of scope: later slices and unapproved integrations. No migrations or authentication are planned; document if inspection changes that assumption. Validate the end-to-end journey with focused automated checks and manual preview evidence where available. Report actual pass/fail/not-run, changed files, unresolved setup, rollback commit and next slice. Update canonical status and stop at the checkpoint.
 
 Checkpoint: slice outcome demonstrated, applicable failures verified and limitations recorded. Next: S5. Recovery: revert only this slice through reviewed git history, preserving unrelated work.
