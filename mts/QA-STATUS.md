@@ -196,3 +196,21 @@ PASS: `e2e/s5-contact-removal.spec.ts` 2/2: no `#contact`, form, `#contact` or m
 PASS: full suite 72/72 at two workers. At default workers two runs each had timing failures in different tests: S2 and S3 no-JS checks in the first run, an S4 entrance check timing out on a style read in the second. Each passed when rerun alone; none touches the removed code.
 Manual visual review (Playwright screenshots, Chromium): header at 1440 shows Work, Services and About with no gap left behind; Services cards and the retainer panel end cleanly without buttons; at 390 the page ends WhyWorkWithMe → footer.
 NOT RUN: real-device/Safari/Firefox, screen reader, Vercel Preview inspection (pending PR build).
+
+# S5 merge — 2026-10-11
+S5 merged via PR #7.
+
+# S6 project evidence, part 1 — 2026-10-11
+Branch `feat/s6-project-evidence` from main after the S5 merge. Rollback: that main commit.
+
+Owner decisions (2026-10-11, in conversation): all five projects may be published, and all are Josh's own work: engineered, built and set up by him, and deployed for the live ones. Delivery status: The Shave Parlor in rebuild, Homeschool Haven demo, Mercurius Marketplace live, Supabase SaaS project live, Vertex will be live. The current names are final. Write-ups wait until the owner shares each repository. Upwork/Fiverr exports are deferred because the profiles are not set up yet.
+
+Records: all five now have `permission: "granted"` and a `role` stating a solo build ("deployed" only for the two live projects; Shave Parlor, Homeschool Haven and Vertex say engineered, built and set up). Status: Demo (Homeschool Haven), Live (Marketplace, Supabase SaaS), Pre-launch (Vertex), In rebuild (Shave Parlor, unchanged). Supabase SaaS no longer says "working title" in its summary or detail. Vertex's detail no longer lists contribution as pending. Its capability is still labelled user-reported until the repository is reviewed. Unchanged: `publicationReady` false everywhere ("Review pending"), no metrics, no screenshots, challenge/decisions/summary text, project types.
+
+Adapter: `permission` must be "granted" or "unverified", which confirms the S2 term. A screenshot is `{ src, alt }`, both required, with `src` a lowercase-slug image file (png/jpg/jpeg/webp/avif) directly in `/projects/{id}/` (files go in `public/projects/{id}/`). The existing rule still applies: no screenshots without "granted". A unit test fails if a referenced file is missing from `public/`.
+UI: the new `ProjectPreview` replaces the two inline placeholders. It shows the first screenshot through `next/image` (`fill`, `object-cover object-top`, sizes per the 3/2/1 grid or the 80rem content width) inside the same A1 frame, without the placeholder's inner wireframe. Without a screenshot, both placeholders are unchanged.
+
+PASS: `npm run test:unit` 14/14 (adds the permission-term check, screenshot shape/alt/folder checks, and file-existence and owner-status checks). `npm run lint`, `tsc --noEmit`, `npm run build`.
+PASS: full suite 72/72 at default workers. The S2/S3 specs now read status, role and screenshots from the records instead of hard-coded labels; the S3 no-claims check allows exactly one image only when a record has a screenshot. A first run reused a stale `next start` left on port 3100 from an earlier session (serving the old build) and failed widely; it was stopped and the rerun passed.
+PASS (temporary fixture, reverted): with a copy of `public/headshot.jpg` as a Vertex screenshot, build, unit tests and S2+S3 specs (29/29) passed, and screenshots of the card at 390 and the case-study lead at 1440 show the image filling the bordered frame, anchored to the top. The fixture record and file were removed and the build was rerun clean.
+NOT RUN: real project screenshots (none supplied), write-up verification against repositories, real-device/Safari/Firefox, screen reader, Vercel Preview inspection.

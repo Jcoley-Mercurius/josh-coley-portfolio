@@ -3,18 +3,18 @@
   "name": "Supabase SaaS project",
   "category": "SaaS",
   "type": "SaaS project",
-  "summary": "Additional SaaS portfolio work; exact title and scope to be verified.",
+  "summary": "Additional SaaS portfolio work; scope to be verified.",
   "challenge": "Project problem and final scope to be verified.",
   "decisions": [
     "Product scope",
     "Technical decisions",
     "Verification evidence"
   ],
-  "detail": "Working title only. No security, launch-readiness, or performance claims are made.",
-  "status": "Working title",
+  "detail": "No security or performance claims are made.",
+  "status": "Live",
   "publicationReady": false,
-  "permission": "unverified",
-  "role": "verify",
+  "permission": "granted",
+  "role": "Solo build: I engineered, built, deployed and set up this project.",
   "screenshots": [],
   "metrics": [],
   "evidenceRequired": [

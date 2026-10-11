@@ -13,8 +13,8 @@
   "detail": "Approved intent includes three barber profiles and a clear booking handoff. Final corrections and delivery verification are still pending.",
   "status": "In rebuild",
   "publicationReady": false,
-  "permission": "unverified",
-  "role": "verify",
+  "permission": "granted",
+  "role": "Solo build: I engineered, built and set up this project.",
   "screenshots": [],
   "metrics": [],
   "evidenceRequired": [

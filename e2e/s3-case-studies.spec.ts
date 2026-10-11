@@ -12,6 +12,8 @@ interface Record {
   decisions: string[];
   detail: string;
   status: string;
+  role: string;
+  screenshots: { src: string; alt: string }[];
 }
 
 // Display order follows app/_lib/project-records.ts (prototype order).
@@ -66,13 +68,19 @@ test("every case study is server-rendered and readable without JavaScript", asyn
     }
     await expect(page.locator("#challenge")).toContainText(project.challenge);
     await expect(page.locator("#contribution")).toContainText(
-      "Scope, role, and delivery evidence to verify before publication.",
+      project.role === "verify"
+        ? "Scope, role, and delivery evidence to verify before publication."
+        : project.role,
     );
     await expect(page.locator("#decisions")).toContainText(project.detail);
     await expect(page.locator("#decisions").getByRole("heading", { level: 3 })).toHaveText(
       project.decisions,
     );
-    await expect(page.getByText("Verified project screenshot pending")).toBeVisible();
+    if (project.screenshots.length === 0) {
+      await expect(page.getByText("Verified project screenshot pending")).toBeVisible();
+    } else {
+      await expect(page.getByRole("img", { name: project.screenshots[0].alt })).toBeVisible();
+    }
     await expect(page.locator("#evidence")).toContainText("Verification pending. No results claimed.");
 
     await expect(page.getByRole("link", { name: "Back to work" })).toHaveAttribute("href", "/#work");
@@ -231,6 +239,7 @@ test("case studies make no unverified claims", async ({ page }) => {
     const text = await page.locator("main").innerText();
     expect(text).not.toContain("Case Study A1");
     expect(text).not.toMatch(/\d+%/);
-    await expect(page.locator("main img")).toHaveCount(0);
+    // Only permitted screenshots appear: the lead preview, nothing else.
+    await expect(page.locator("main img")).toHaveCount(project.screenshots.length > 0 ? 1 : 0);
   }
 });

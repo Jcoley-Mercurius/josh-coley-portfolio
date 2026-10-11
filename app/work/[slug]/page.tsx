@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ProjectPreview from "../../components/ProjectPreview";
 import { projects } from "../../_lib/project-records";
 import { findProject, nextProject } from "../../_lib/projects";
 
@@ -102,9 +103,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
         ))}
       </nav>
 
-      <div className="project-preview project-preview-large">
-        <span>Verified project screenshot pending</span>
-      </div>
+      <ProjectPreview project={project} large />
 
       <div className="my-10 grid grid-cols-1 gap-5 tablet:grid-cols-2 tablet:gap-8">
         <section id="challenge" aria-labelledby="challenge-title" className={panel}>

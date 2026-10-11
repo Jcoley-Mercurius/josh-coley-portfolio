@@ -51,7 +51,7 @@ Checkpoint: slice outcome demonstrated, applicable failures verified and limitat
 
 Actual (2026-10-11): PASS 11 node:test checks, lint, typecheck, build, audit 0, 18 new Playwright checks (desktop depth follows scroll capped at 32px with no gap above the art, still at 768/390, starts on widening, detaches and resumes across routes; 650ms hero entrance; card lift on hover and keyboard focus; motion switch off/on, keyboard, persistence across client navigation and reload before first paint, system preference lock; legacy sections visible without JavaScript and when motion is off; menu closes on outside click, focus leaving, in-page back and route change; plain links without JavaScript). Full suite 70/70 at default workers. S1 framing test updated for the depth layer, with the owner-chosen longer timeout. Rollback: 478a695. Details in mts/QA-STATUS.md.
 
-## S5: Contact removal (complete, PR review)
+## S5: Contact removal (complete)
 > Owner decision 2026-10-11: the Resend inquiry waits for the sending domain to be verified and moves to S5b. Execute only S5: remove the legacy Web3Forms contact form, its hard-coded key, any dependency used only by it and every link to it, without adding a replacement contact path or address. Validate with focused automated checks. Report actual pass/fail/not-run, changed files, rollback commit and next slice. Update canonical status and stop at the checkpoint.
 
 Checkpoint: no contact form, Web3Forms reference or contact link remains in source, server HTML or client bundle. Next: S5b when its setup is ready, otherwise S6. Recovery: revert only this slice through reviewed git history, preserving unrelated work.
@@ -63,7 +63,7 @@ Actual (2026-10-11): PASS 11 node:test checks, lint, typecheck, build, audit 0, 
 
 Checkpoint: slice outcome demonstrated, applicable failures verified and limitations recorded. Next: S6 (or S7 if S6 is already complete). Recovery: revert only this slice through reviewed git history, preserving unrelated work.
 
-## S6: Project evidence (blocked)
+## S6: Project evidence (in progress, awaiting repositories)
 > Execute only S6. Read the inherited contract and canonical files above, then inspect current repository. Replace placeholders with permitted actual screenshots and verified case narratives; prepare Upwork/Fiverr exports without invented claims. Trace changes through mts/IMPLEMENTATION-PLAN.md. In scope: this slice's user journey and applicable failure, recovery, responsive and accessibility states. Out of scope: later slices and unapproved integrations. No migrations or authentication are planned; document if inspection changes that assumption. Validate the end-to-end journey with focused automated checks and manual preview evidence where available. Report actual pass/fail/not-run, changed files, unresolved setup, rollback commit and next slice. Update canonical status and stop at the checkpoint.
 
 Checkpoint: slice outcome demonstrated, applicable failures verified and limitations recorded. Next: S7. Recovery: revert only this slice through reviewed git history, preserving unrelated work.

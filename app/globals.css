@@ -212,6 +212,18 @@ select:focus-visible {
     background: #f7f3ebe0;
   }
 
+  /* A real screenshot fills the frame edge to edge, without the
+     placeholder's inner wireframe. */
+  .project-preview-image {
+    padding: 0;
+    overflow: hidden;
+    background: var(--color-paper);
+  }
+
+  .project-preview-image::before {
+    content: none;
+  }
+
   /* Case-study lead preview (prototype .study .large). */
   .project-preview-large {
     height: 250px;

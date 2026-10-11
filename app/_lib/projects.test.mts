@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { test } from "node:test";
 import {
   filterProjects,
@@ -43,12 +43,31 @@ test("every supplied record is valid", () => {
 test("supplied records stay truthfully labelled", () => {
   const projects = parseProjects(records);
   for (const project of projects) {
+    // Write-ups are not verified yet, so no record is cleared or shows results.
     assert.equal(project.publicationReady, false, project.id);
     assert.deepEqual(project.metrics, [], project.id);
-    assert.deepEqual(project.screenshots, [], project.id);
+    // Owner decision 2026-10-11: all five are Josh's own work, cleared to publish.
+    assert.equal(project.permission, "granted", project.id);
+    assert.match(project.role, /^Solo build: /, project.id);
   }
-  const shaveParlor = projects.find((p) => p.id === "shave-parlor");
-  assert.equal(shaveParlor?.status, "In rebuild");
+  // Delivery status as stated by the owner on 2026-10-11.
+  const status = Object.fromEntries(projects.map((p) => [p.id, p.status]));
+  assert.deepEqual(status, {
+    "shave-parlor": "In rebuild",
+    "homeschool-haven": "Demo",
+    marketplace: "Live",
+    "supabase-saas": "Live",
+    vertex: "Pre-launch",
+  });
+});
+
+test("every referenced screenshot exists in public/", () => {
+  const publicDir = new URL("../../public/", import.meta.url);
+  for (const project of parseProjects(records)) {
+    for (const { src } of project.screenshots) {
+      assert.ok(existsSync(new URL(`.${src}`, publicDir)), `${project.id}: ${src} is missing`);
+    }
+  }
 });
 
 test("rejects missing or empty required fields", () => {
@@ -70,8 +89,34 @@ test("rejects unknown categories and malformed slugs", () => {
 });
 
 test("rejects claims made before evidence is cleared", () => {
+  const shot = { src: "/projects/example-project/home.png", alt: "Home page" };
   assert.throws(() => parseProject({ ...valid, metrics: ["40% faster"] }), /metrics/);
-  assert.throws(() => parseProject({ ...valid, screenshots: ["home.png"] }), /screenshots/);
+  assert.throws(() => parseProject({ ...valid, screenshots: [shot] }), /screenshots/);
+});
+
+test("accepts only the agreed permission terms", () => {
+  assert.equal(parseProject({ ...valid, permission: "granted" }).permission, "granted");
+  for (const permission of ["Granted", "yes", "pending"]) {
+    assert.throws(() => parseProject({ ...valid, permission }), /permission/);
+  }
+});
+
+test("screenshots need alt text and must live in the project's folder", () => {
+  const granted = { ...valid, permission: "granted" };
+  const shot = { src: "/projects/example-project/home-page.webp", alt: "Home page" };
+  assert.deepEqual(parseProject({ ...granted, screenshots: [shot] }).screenshots, [shot]);
+  assert.throws(() => parseProject({ ...granted, screenshots: [shot.src] }), /screenshot #0/);
+  assert.throws(() => parseProject({ ...granted, screenshots: [{ src: shot.src }] }), /alt/);
+  assert.throws(() => parseProject({ ...granted, screenshots: [{ ...shot, alt: " " }] }), /alt/);
+  for (const src of [
+    "/projects/other-project/home.png",
+    "/headshot.jpg",
+    "/projects/example-project/../headshot.jpg",
+    "/projects/example-project/home.svg",
+    "https://example.com/projects/example-project/home.png",
+  ]) {
+    assert.throws(() => parseProject({ ...granted, screenshots: [{ ...shot, src }] }), /image file/);
+  }
 });
 
 test("rejects duplicate ids", () => {
