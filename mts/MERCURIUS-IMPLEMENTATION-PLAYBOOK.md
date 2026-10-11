@@ -37,7 +37,7 @@ Checkpoint: slice outcome demonstrated, applicable failures verified and limitat
 
 Actual (2026-10-11): PASS 8 node:test record-adapter checks, lint, typecheck, static build, 34 Playwright (11 new: no-JS cards, every filter with counts and aria-pressed, keyboard, 1/2/3-column layout at reference widths, hero CTA, legacy claims removed); empty state verified manually. Rollback: 9905b17. Details in mts/QA-STATUS.md.
 
-## S3: Case-study journey (complete, PR review)
+## S3: Case-study journey (complete)
 > Execute only S3. Read the inherited contract and canonical files above, then inspect current repository. Implement real project routes, chapters, next/back, not-found, per-project metadata and no-JS readable content. Trace changes through mts/IMPLEMENTATION-PLAN.md. In scope: this slice's user journey and applicable failure, recovery, responsive and accessibility states. Out of scope: later slices and unapproved integrations. No migrations or authentication are planned; document if inspection changes that assumption. Validate the end-to-end journey with focused automated checks and manual preview evidence where available. Report actual pass/fail/not-run, changed files, unresolved setup, rollback commit and next slice. Update canonical status and stop at the checkpoint.
 
 Checkpoint: slice outcome demonstrated, applicable failures verified and limitations recorded. Next: S4. Recovery: revert only this slice through reviewed git history, preserving unrelated work.

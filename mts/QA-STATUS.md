@@ -112,7 +112,7 @@ Deliberately not in S2:
 - “Explore case study” card link. `/work/[slug]` does not exist until S3, and merged slices are live, so a link now would 404 in Production. S3 adds it. The card keeps the prototype's 68px summary min-height, which leaves room for it.
 - Card hover/focus lift and entrance motion: S4.
 - Per-filter counts inside the chips. The prototype shows a single result count, which is implemented. Adding per-chip counts would change the approved chip design, so that needs an owner decision.
-Observation: `next dev` rewrites the Next.js block at the top of AGENTS.md (newer wording, plus a note that it re-adds itself). That rewrite was reverted and is not part of S2. Owner to decide whether to accept the generated block or set `agentRules: false` in next.config.
+Observation: `next dev` rewrites the Next.js block at the top of AGENTS.md (newer wording, plus a note that it re-adds itself). That rewrite was reverted and is not part of S2. Resolved 2026-10-11: owner accepted the generated block; committed at the start of S4.
 
 NOT RUN: real-device/Safari/Firefox, screen reader announcement of the live count, 200% zoom, contrast tooling (manual: bronze #82613b on the card fill ≈5:1; #746a5d placeholder text on #f7f3eb ≈5:1), Vercel Preview inspection (pending PR build).
 
@@ -143,3 +143,8 @@ Manual visual comparison of 1440/768/360 screenshots against the prototype case 
 
 Deliberately not in S3: a “Previous project” link (the prototype has Back and Next only); card hover lift and entrance motion (S4); sitemap and canonical URLs (need the domain decision).
 NOT RUN: real-device/Safari/Firefox, screen reader (title focus and route announcement), 200% zoom, contrast tooling, Vercel Preview inspection (pending PR build).
+
+# S3 merge and AGENTS.md — 2026-10-11
+S3 merged via PR #5 (merge 9678f7f) after a one-line playbook fix (e081705, S4 heading set to ready). Vercel Preview checks passed before merge. Production: `/` and all five `/work/*` case studies return 200 with their titles; `/work/not-a-project` returns 404 “Page not found”. Checked by server HTML only, not visually in a browser.
+Owner decision: accept the Next.js block that `next dev` writes at the top of AGENTS.md (Next 16.4.0 wording, plus a note that `next dev` re-adds it). Committed at the start of S4. The Mercurius contract below it and CLAUDE.md's `@AGENTS.md` import are unchanged.
+Owner decision: the S1 2560×1440 hero framing flake is fixed by a longer image-load timeout on that test, not by capping workers (applied in S4).
