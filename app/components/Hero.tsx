@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative isolate overflow-hidden bg-paper tablet:flex tablet:min-h-[600px] tablet:items-center tablet:bg-marble desktop:min-h-[720px]"
+      className="relative isolate overflow-hidden bg-paper tablet:flex tablet:min-h-[600px] tablet:items-center tablet:bg-marble desktop:min-h-[max(720px,min(50vw,calc(100svh-6rem)))]"
     >
       <div className="max-w-[810px] px-[6%] pb-5 pt-[45px] tablet:w-[68%] tablet:px-[max(5vw,24px)] tablet:py-[70px] desktop:w-[60%]">
         <span className="eyebrow">Mercurius Solutions</span>

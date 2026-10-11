@@ -167,14 +167,16 @@ select:focus-visible {
 }
 
 /* Hero artwork: full-bleed behind the copy from 651px, a framed block
-   below the copy on mobile. --hero-depth is reserved for S4 motion. */
+   below the copy on mobile. Anchored to the top so cover-cropping never
+   cuts the statue's head (it starts ~7% down the image). --hero-depth is
+   reserved for S4 motion. */
 .hero-art {
   position: relative;
   height: 300px;
 }
 
 .hero-art img {
-  object-position: 77% center;
+  object-position: 77% top;
 }
 
 @media (min-width: 40.6875rem) {
@@ -186,7 +188,7 @@ select:focus-visible {
   }
 
   .hero-art img {
-    object-position: center;
+    object-position: center top;
     transform: translateY(var(--hero-depth, 0px)) scale(1.04);
   }
 

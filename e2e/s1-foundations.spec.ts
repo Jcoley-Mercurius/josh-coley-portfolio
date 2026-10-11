@@ -180,3 +180,55 @@ test("hero stays readable when the artwork fails to load", async ({ page }, test
   expect(background).toBe("rgb(238, 230, 215)");
   await page.screenshot({ path: testInfo.outputPath("hero-image-failure.png") });
 });
+
+// The statue spans roughly 7%–83% of the artwork's height and 64%–82% of its
+// width. Cover-cropping must never cut the head, and should keep the figure
+// visible at least to the hips.
+test.describe("hero keeps the statue in frame", () => {
+  const viewports = [
+    [360, 800],
+    [600, 900],
+    [768, 1024],
+    [1024, 768],
+    [1280, 800],
+    [1440, 900],
+    [1920, 1080],
+    [2560, 1440],
+  ] as const;
+
+  for (const [width, height] of viewports) {
+    test(`at ${width}×${height}`, async ({ page }, testInfo) => {
+      await page.setViewportSize({ width, height });
+      await page.goto("/");
+      const art = page.getByRole("img", { name: heroAlt });
+      await expect
+        .poll(() => art.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth))
+        .toBeGreaterThan(0);
+
+      const visible = await art.evaluate((img: HTMLImageElement) => {
+        const frame = img.parentElement!.getBoundingClientRect();
+        const box = img.getBoundingClientRect(); // includes the scale transform
+        const scale = Math.max(box.width / img.naturalWidth, box.height / img.naturalHeight);
+        const drawnW = img.naturalWidth * scale;
+        const drawnH = img.naturalHeight * scale;
+        const [posX, posY] = getComputedStyle(img)
+          .objectPosition.split(" ")
+          .map((v) => parseFloat(v) / 100);
+        const left = box.left + (box.width - drawnW) * posX;
+        const top = box.top + (box.height - drawnH) * posY;
+        return {
+          top: (frame.top - top) / drawnH,
+          bottom: (frame.bottom - top) / drawnH,
+          left: (frame.left - left) / drawnW,
+          right: (frame.right - left) / drawnW,
+        };
+      });
+
+      expect(visible.top).toBeLessThanOrEqual(0.05);
+      expect(visible.bottom).toBeGreaterThanOrEqual(0.6);
+      expect(visible.left).toBeLessThanOrEqual(0.64);
+      expect(visible.right).toBeGreaterThanOrEqual(0.82);
+      await page.screenshot({ path: testInfo.outputPath(`statue-${width}.png`) });
+    });
+  }
+});
