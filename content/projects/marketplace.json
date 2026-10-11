@@ -4,6 +4,13 @@
   "category": "Marketplaces",
   "type": "Founder-built product",
   "summary": "A home-services marketplace, presented as founder-built work.",
+  "challenge": "Connect homeowner and vendor needs within a coherent service experience.",
+  "decisions": [
+    "Distinct user journeys",
+    "Service discovery",
+    "Operational workflows"
+  ],
+  "detail": "Founder product work will be distinguished from client delivery. Individual capabilities and outcomes require scoped verification.",
   "status": "Evidence pending",
   "publicationReady": false,
   "permission": "unverified",

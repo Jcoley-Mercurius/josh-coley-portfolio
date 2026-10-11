@@ -20,6 +20,9 @@ export interface Project {
   category: ProjectCategory;
   type: string;
   summary: string;
+  challenge: string;
+  decisions: string[];
+  detail: string;
   status: string;
   publicationReady: boolean;
   permission: string;
@@ -52,6 +55,14 @@ function textList(record: Record<string, unknown>, key: string, label: string): 
   return value as string[];
 }
 
+function nonEmptyTextList(record: Record<string, unknown>, key: string, label: string): string[] {
+  const value = textList(record, key, label);
+  if (value.length === 0 || value.some((item) => item.trim() === "")) {
+    fail(label, `"${key}" must list at least one non-empty string`);
+  }
+  return value.map((item) => item.trim());
+}
+
 export function parseProject(input: unknown, index = 0): Project {
   if (typeof input !== "object" || input === null || Array.isArray(input)) {
     fail(`#${index}`, "must be an object");
@@ -82,6 +93,9 @@ export function parseProject(input: unknown, index = 0): Project {
     category: category as ProjectCategory,
     type: text(record, "type", label),
     summary: text(record, "summary", label),
+    challenge: text(record, "challenge", label),
+    decisions: nonEmptyTextList(record, "decisions", label),
+    detail: text(record, "detail", label),
     status: text(record, "status", label),
     publicationReady: record.publicationReady,
     permission: text(record, "permission", label),
@@ -122,4 +136,18 @@ export function filterProjects<T extends { category: ProjectCategory }>(
 
 export function projectCountLabel(count: number): string {
   return `${count} ${count === 1 ? "project" : "projects"} shown`;
+}
+
+export function findProject<T extends { id: string }>(
+  projects: readonly T[],
+  id: string,
+): T | undefined {
+  return projects.find((project) => project.id === id);
+}
+
+// The case-study "Next project" link follows display order and wraps.
+export function nextProject<T extends { id: string }>(projects: readonly T[], id: string): T {
+  const index = projects.findIndex((project) => project.id === id);
+  if (index === -1) throw new Error(`Unknown project "${id}"`);
+  return projects[(index + 1) % projects.length];
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import RouteFocus from "./components/RouteFocus";
 import "./globals.css";
 
 const description =
@@ -28,7 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    // Lets Next turn off CSS smooth scrolling during route changes (Next 16).
+    <html lang="en" data-scroll-behavior="smooth">
       <body className="min-h-screen antialiased">
         <a className="a1-btn skip-link" href="#main">
           Skip to content
@@ -38,6 +40,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <RouteFocus />
       </body>
     </html>
   );

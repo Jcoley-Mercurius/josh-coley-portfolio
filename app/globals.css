@@ -212,9 +212,19 @@ select:focus-visible {
     background: #f7f3ebe0;
   }
 
+  /* Case-study lead preview (prototype .study .large). */
+  .project-preview-large {
+    height: 250px;
+    margin: 0;
+  }
+
   @media (min-width: 40.6875rem) {
     .project-preview {
       height: 200px;
+    }
+
+    .project-preview-large {
+      height: 390px;
     }
   }
 }
