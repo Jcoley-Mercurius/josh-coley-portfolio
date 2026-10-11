@@ -92,9 +92,6 @@ export default function SiteNav() {
             {link.label}
           </Link>
         ))}
-        <Link className="a1-btn" href="/#contact" onClick={close}>
-          Discuss a project <span aria-hidden="true">↗</span>
-        </Link>
       </nav>
     </>
   );
