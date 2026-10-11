@@ -1,6 +1,7 @@
+import Link from "next/link";
 import type { Project } from "../_lib/projects";
 
-// The case-study link arrives with the S3 routes; card motion is S4.
+// Card motion is S4.
 export default function ProjectCard({ project }: { project: Project }) {
   return (
     <article className="h-full border border-line bg-[#ffffff42] p-[22px]">
@@ -17,6 +18,13 @@ export default function ProjectCard({ project }: { project: Project }) {
         {project.status}
       </span>
       <p className="my-[1em] text-sm tablet:min-h-[68px]">{project.summary}</p>
+      <Link
+        href={`/work/${project.id}`}
+        aria-label={`Explore case study: ${project.name}`}
+        className="block border-t border-line pt-[14px] text-bronze"
+      >
+        Explore case study <span aria-hidden="true">↗</span>
+      </Link>
     </article>
   );
 }

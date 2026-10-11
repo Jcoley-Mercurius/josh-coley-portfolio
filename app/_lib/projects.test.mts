@@ -3,6 +3,8 @@ import { readFileSync, readdirSync } from "node:fs";
 import { test } from "node:test";
 import {
   filterProjects,
+  findProject,
+  nextProject,
   parseProject,
   parseProjects,
   projectCategories,
@@ -20,6 +22,9 @@ const valid = {
   category: "SaaS",
   type: "SaaS project",
   summary: "An example record.",
+  challenge: "An example challenge.",
+  decisions: ["An example decision"],
+  detail: "An example detail.",
   status: "Evidence pending",
   publicationReady: false,
   permission: "unverified",
@@ -47,10 +52,16 @@ test("supplied records stay truthfully labelled", () => {
 });
 
 test("rejects missing or empty required fields", () => {
-  for (const key of ["id", "name", "type", "summary", "status"]) {
+  for (const key of ["id", "name", "type", "summary", "challenge", "detail", "status"]) {
     assert.throws(() => parseProject({ ...valid, [key]: undefined }), new RegExp(key));
     assert.throws(() => parseProject({ ...valid, [key]: "  " }), new RegExp(key));
   }
+});
+
+test("requires at least one key decision", () => {
+  assert.throws(() => parseProject({ ...valid, decisions: [] }), /decisions/);
+  assert.throws(() => parseProject({ ...valid, decisions: [" "] }), /decisions/);
+  assert.throws(() => parseProject({ ...valid, decisions: "Scope" }), /decisions/);
 });
 
 test("rejects unknown categories and malformed slugs", () => {
@@ -86,4 +97,20 @@ test("count label is singular for one project", () => {
   assert.equal(projectCountLabel(0), "0 projects shown");
   assert.equal(projectCountLabel(1), "1 project shown");
   assert.equal(projectCountLabel(5), "5 projects shown");
+});
+
+test("finds projects by exact slug only", () => {
+  const projects = parseProjects(records);
+  assert.equal(findProject(projects, "vertex")?.name, "Vertex");
+  assert.equal(findProject(projects, "Vertex"), undefined);
+  assert.equal(findProject(projects, "missing"), undefined);
+});
+
+test("next project follows display order and wraps", () => {
+  const projects = parseProjects(records);
+  const ids = projects.map((p) => p.id);
+  for (const [index, id] of ids.entries()) {
+    assert.equal(nextProject(projects, id).id, ids[(index + 1) % ids.length]);
+  }
+  assert.throws(() => nextProject(projects, "missing"), /Unknown project/);
 });

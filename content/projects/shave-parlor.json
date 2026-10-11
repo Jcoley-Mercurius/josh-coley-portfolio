@@ -4,6 +4,13 @@
   "category": "Booking",
   "type": "Client website",
   "summary": "A business website and entry point into Squire booking.",
+  "challenge": "Help visitors explore the shop, understand services, and reach booking.",
+  "decisions": [
+    "Barber selection",
+    "Clear booking entry",
+    "Squire scheduling boundary"
+  ],
+  "detail": "Approved intent includes three barber profiles and a clear booking handoff. Final corrections and delivery verification are still pending.",
   "status": "In rebuild",
   "publicationReady": false,
   "permission": "unverified",

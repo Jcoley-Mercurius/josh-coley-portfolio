@@ -4,6 +4,13 @@
   "category": "SaaS",
   "type": "Learning platform",
   "summary": "Keyword search that takes learners to the relevant moment in a video.",
+  "challenge": "Help learners find relevant video content without searching through the full recording.",
+  "decisions": [
+    "Keyword discovery",
+    "Timestamp navigation",
+    "Video context"
+  ],
+  "detail": "Capability description is user-reported. Deployment, contribution, and implementation evidence are pending.",
   "status": "User-reported capability",
   "publicationReady": false,
   "permission": "unverified",

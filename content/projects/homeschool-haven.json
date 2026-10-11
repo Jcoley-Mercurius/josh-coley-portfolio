@@ -4,6 +4,13 @@
   "category": "Websites",
   "type": "Client project",
   "summary": "An education-focused project to explore through a verified case study.",
+  "challenge": "Project problem and final scope to be verified.",
+  "decisions": [
+    "Content structure",
+    "User journey",
+    "Delivery evidence"
+  ],
+  "detail": "Case-study content will be completed from approved project documents and final implementation.",
   "status": "Evidence pending",
   "publicationReady": false,
   "permission": "unverified",
