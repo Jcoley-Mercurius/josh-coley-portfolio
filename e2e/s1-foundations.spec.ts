@@ -183,8 +183,14 @@ test("hero stays readable when the artwork fails to load", async ({ page }, test
 
 // The statue spans roughly 7%–83% of the artwork's height and 64%–82% of its
 // width. Cover-cropping must never cut the head, and should keep the figure
-// visible at least to the hips.
+// visible at least to the hips. The frame is .hero-art: from 901px the image
+// sits in a taller depth layer that starts above the hero (S4).
 test.describe("hero keeps the statue in frame", () => {
+  // Owner decision 2026-10-11: the 2560×1440 image can take a long time to
+  // load and capture under parallel load, so these get longer timeouts
+  // instead of capping workers.
+  const slow = { timeout: 30_000 };
+
   const viewports = [
     [360, 800],
     [600, 900],
@@ -198,15 +204,16 @@ test.describe("hero keeps the statue in frame", () => {
 
   for (const [width, height] of viewports) {
     test(`at ${width}×${height}`, async ({ page }, testInfo) => {
+      test.setTimeout(60_000);
       await page.setViewportSize({ width, height });
       await page.goto("/");
       const art = page.getByRole("img", { name: heroAlt });
       await expect
-        .poll(() => art.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth))
+        .poll(() => art.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth), slow)
         .toBeGreaterThan(0);
 
       const visible = await art.evaluate((img: HTMLImageElement) => {
-        const frame = img.parentElement!.getBoundingClientRect();
+        const frame = img.closest(".hero-art")!.getBoundingClientRect();
         const box = img.getBoundingClientRect(); // includes the scale transform
         const scale = Math.max(box.width / img.naturalWidth, box.height / img.naturalHeight);
         const drawnW = img.naturalWidth * scale;
@@ -228,7 +235,7 @@ test.describe("hero keeps the statue in frame", () => {
       expect(visible.bottom).toBeGreaterThanOrEqual(0.6);
       expect(visible.left).toBeLessThanOrEqual(0.64);
       expect(visible.right).toBeGreaterThanOrEqual(0.82);
-      await page.screenshot({ path: testInfo.outputPath(`statue-${width}.png`) });
+      await page.screenshot({ path: testInfo.outputPath(`statue-${width}.png`), ...slow });
     });
   }
 });

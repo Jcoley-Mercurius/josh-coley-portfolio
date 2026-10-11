@@ -1,5 +1,6 @@
 import Image from "next/image";
 import heroImage from "../_assets/hero-hermes.png";
+import HeroDepth from "./HeroDepth";
 
 export default function Hero() {
   return (
@@ -7,7 +8,7 @@ export default function Hero() {
       aria-labelledby="hero-title"
       className="relative isolate overflow-hidden bg-paper tablet:flex tablet:min-h-[600px] tablet:items-center tablet:bg-marble desktop:min-h-[max(720px,min(50vw,calc(100svh-6rem)))]"
     >
-      <div className="max-w-[810px] px-[6%] pb-5 pt-[45px] tablet:w-[68%] tablet:px-[max(5vw,24px)] tablet:py-[70px] desktop:w-[60%]">
+      <div className="a1-reveal max-w-[810px] px-[6%] pb-5 pt-[45px] tablet:w-[68%] tablet:px-[max(5vw,24px)] tablet:py-[70px] desktop:w-[60%]">
         <span className="eyebrow">Mercurius Solutions</span>
         <h1
           id="hero-title"
@@ -38,16 +39,18 @@ export default function Hero() {
         </p>
       </div>
       <div className="hero-art">
-        <Image
-          src={heroImage}
-          alt="Marble Hermes sculpture on a luminous Greek terrace overlooking the sea"
-          fill
-          sizes="100vw"
-          placeholder="blur"
-          loading="eager"
-          fetchPriority="high"
-          className="object-cover"
-        />
+        <HeroDepth>
+          <Image
+            src={heroImage}
+            alt="Marble Hermes sculpture on a luminous Greek terrace overlooking the sea"
+            fill
+            sizes="100vw"
+            placeholder="blur"
+            loading="eager"
+            fetchPriority="high"
+            className="object-cover"
+          />
+        </HeroDepth>
       </div>
     </section>
   );

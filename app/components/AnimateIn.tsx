@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
-import { type ReactNode } from "react";
+import { motion, useInView, type Variants } from "framer-motion";
+import { useRef, type ReactNode } from "react";
+import { useMotionPreference } from "../_lib/motion-preference";
 
 interface AnimateInProps {
   children: ReactNode;
@@ -20,6 +21,10 @@ const directionOffset = {
   none: { x: 0, y: 0 },
 };
 
+// Legacy section entrance. Driven by `animate` (not whileInView) so turning
+// motion off reveals everything at once, including sections not yet scrolled
+// to. The server renders the hidden state; .animate-in in globals.css keeps
+// it visible when JavaScript never runs.
 export default function AnimateIn({
   children,
   className,
@@ -28,33 +33,29 @@ export default function AnimateIn({
   duration = 0.6,
   once = true,
 }: AnimateInProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once, margin: "-60px" });
+  const { allowed } = useMotionPreference();
   const offset = directionOffset[direction];
 
   const variants: Variants = {
-    hidden: {
-      opacity: shouldReduceMotion ? 1 : 0,
-      x: shouldReduceMotion ? 0 : offset.x,
-      y: shouldReduceMotion ? 0 : offset.y,
-    },
+    hidden: { opacity: 0, x: offset.x, y: offset.y },
     visible: {
       opacity: 1,
       x: 0,
       y: 0,
-      transition: {
-        duration: shouldReduceMotion ? 0 : duration,
-        delay: shouldReduceMotion ? 0 : delay,
-        ease: [0.4, 0, 0.2, 1],
-      },
+      transition: allowed
+        ? { duration, delay, ease: [0.4, 0, 0.2, 1] }
+        : { duration: 0 },
     },
   };
 
   return (
     <motion.div
-      className={className}
+      ref={ref}
+      className={className ? `animate-in ${className}` : "animate-in"}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once, margin: "-60px" }}
+      animate={inView || !allowed ? "visible" : "hidden"}
       variants={variants}
     >
       {children}

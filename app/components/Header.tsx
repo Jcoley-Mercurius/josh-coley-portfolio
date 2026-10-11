@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-paper/93 backdrop-blur-md">
       {/* 1380px bar width is the prototype header value; content uses max-w-content. */}
-      <div className="mx-auto flex max-w-[1380px] items-center justify-between gap-6 px-[6%] py-[18px] tablet:px-[5%] tablet:py-[22px]">
+      <div className="site-bar mx-auto flex max-w-[1380px] items-center justify-between gap-6 px-[6%] py-[18px] tablet:px-[5%] tablet:py-[22px]">
         <Link
           href="/"
           aria-label="Mercurius Solutions home"

@@ -231,11 +231,15 @@ select:focus-visible {
 
 /* Hero artwork: full-bleed behind the copy from 651px, a framed block
    below the copy on mobile. Anchored to the top so cover-cropping never
-   cuts the statue's head (it starts ~7% down the image). --hero-depth is
-   reserved for S4 motion. */
+   cuts the statue's head (it starts ~7% down the image). */
 .hero-art {
   position: relative;
   height: 300px;
+}
+
+.hero-art-layer {
+  position: absolute;
+  inset: 0;
 }
 
 .hero-art img {
@@ -252,7 +256,7 @@ select:focus-visible {
 
   .hero-art img {
     object-position: center top;
-    transform: translateY(var(--hero-depth, 0px)) scale(1.04);
+    transform: scale(1.04);
   }
 
   .hero-art::after {
@@ -268,10 +272,127 @@ select:focus-visible {
   }
 }
 
+/* Desktop depth (S4). HeroDepth sets --hero-depth (0 to --hero-depth-max)
+   while scrolling. The layer starts that far above the hero, which clips it,
+   and the scale grows from the top edge, so the art never pulls away from
+   the top of the hero. */
+@media (min-width: 56.3125rem) {
+  .hero-art-layer {
+    top: calc(-1 * var(--hero-depth-max));
+  }
+
+  .hero-art img {
+    transform: translateY(var(--hero-depth, 0px)) scale(1.04);
+    transform-origin: center top;
+  }
+}
+
+/* ===== A1 MOTION (S4) =====
+   Values from mds/tokens.json motion and the prototype. Stopped by the
+   system preference or the footer switch (html[data-motion="off"]). */
+@keyframes a1-enter {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+}
+
+.a1-reveal {
+  animation: a1-enter var(--motion-entrance) both;
+}
+
+.project-card {
+  transition:
+    transform var(--motion-card),
+    box-shadow var(--motion-card);
+}
+
+.project-card:focus-within {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 30px #53402b12;
+}
+
+@media (hover: hover) {
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 30px #53402b12;
+  }
+}
+
+.motion-toggle {
+  border: 1px solid var(--color-line);
+  padding: 7px 12px;
+  background: none;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.motion-toggle[aria-disabled="true"] {
+  cursor: default;
+}
+
+html[data-motion="off"] {
+  scroll-behavior: auto;
+}
+
+html[data-motion="off"] *,
+html[data-motion="off"] *::before,
+html[data-motion="off"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+html[data-motion="off"] .hero-art img {
+  transform: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
   .hero-art img {
     transform: none !important;
   }
+}
+
+/* ===== NO-JAVASCRIPT FALLBACKS =====
+   motionScript sets html[data-js] before first paint. Without it, the menu
+   button could never open, and framer-motion's server-rendered entrance
+   state would leave legacy sections invisible. */
+@media (max-width: 40.625rem) {
+  html:not([data-js]) .menu-toggle {
+    display: none;
+  }
+
+  html:not([data-js]) .site-bar {
+    flex-wrap: wrap;
+  }
+
+  html:not([data-js]) #primary-navigation {
+    display: flex;
+    position: static;
+    flex: 1 1 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 20px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+html:not([data-js]) .animate-in {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 /* ===== LEGACY COMPONENT STYLES (pre-A1 sections, replaced in S2–S5) ===== */
