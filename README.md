@@ -2,7 +2,7 @@
 
 Source for Josh Coley's freelance portfolio. The site is being rebuilt as the **Mercurius Solutions** portfolio for business websites, landing pages, booking experiences, SaaS/portals and marketplace development.
 
-The rebuild uses the approved **A1** direction (luminous marble and bronze, Greek architecture, Hermes hero artwork) and lands on `main` one slice at a time. `main` deploys to Production on Vercel (https://josh-coley-portfolio.vercel.app) on every push, so in-progress slices are live.
+The rebuild uses the approved **A1** direction (luminous marble and bronze, Greek architecture, Hermes hero artwork) one slice at a time. Each slice is a branch and pull request with a Vercel Preview; merging to `main` deploys to Production (https://josh-coley-portfolio.vercel.app), so merged slices are live.
 
 ## Status
 

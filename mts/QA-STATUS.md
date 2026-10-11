@@ -80,3 +80,6 @@ S4 note: `--hero-depth` translates the art down by up to 32px while `scale(1.04)
 
 NOT RUN: real-device/Safari/Firefox checks, screen reader, 200% zoom, contrast tooling (manual estimates: bronze on paper ≈5:1, white on bronze ≈5.5:1, #666 on paper ≈5.2:1), preview deployment inspection.
 Limitations: mobile menu is a basic disclosure; S4 owns focus containment, motion and final behavior. Without JavaScript the mobile menu cannot open (hero CTAs still link to Work and Services). Legacy sections still use the old palette, and the old Contact still ships the Web3Forms key (S5).
+
+# S1 merge and workflow change — 2026-10-11
+S1 merged via PR #2 (merge d0617dc). Vercel Preview passed before merge. Production `/` returns 200 with title “Mercurius Solutions · Web and product development”. Owner decision: slices now land through one branch and pull request each, not direct commits to `main`.
