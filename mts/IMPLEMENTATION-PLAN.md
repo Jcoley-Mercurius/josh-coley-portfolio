@@ -1,5 +1,5 @@
 # Implementation plan v1.0
-Map MPS-01/05 → S1; MPS-02 → S2/S3; MPS-03 → S6; MPS-04 → S5. MDS-01/02 → S1, MDS-03 → S3/S6, MDS-04/05 → S4/S5. MTS-01 → S0–S4; MTS-02/05/06 → S5. S7 combines all acceptance evidence.
+Map MPS-01/05 → S1; MPS-02 → S2/S3; MPS-03 → S6; MPS-04 → S5b. MDS-01/02 → S1, MDS-03 → S3/S6, MDS-04/05 → S4/S5b. MTS-01 → S0–S4; MTS-02 Web3Forms removal → S5; MTS-02 Resend, MTS-05/06 → S5b. S7 combines all acceptance evidence.
 
 Preserve app/layout.tsx and next/font unless visual reconciliation supports change. Replace old Hero/Header/Footer/FeaturedWork/About/Services/Contact incrementally; inspect current component contracts. Proposed project record adapter must validate supplied records and keep incomplete projects truthfully labeled. Proposed route app/work/[slug]/page.tsx uses installed Next conventions. Keep filter and motion client boundaries narrow. Contact server integration stays separate from UI. No auth, data migration or new database is required for this portfolio.
 

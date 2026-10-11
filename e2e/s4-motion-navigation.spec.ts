@@ -272,7 +272,7 @@ test.describe("mobile menu", () => {
     await page.goto("/");
     await menuButton(page).click();
     await menuButton(page).focus();
-    for (const name of ["Work", "Services", "About", "Discuss a project"]) {
+    for (const name of ["Work", "Services", "About"]) {
       await page.keyboard.press("Tab");
       await expect(nav(page).getByRole("link", { name })).toBeFocused();
     }
@@ -310,7 +310,7 @@ test.describe("mobile menu", () => {
     const page = await context.newPage();
     await page.goto("/");
     await expect(menuButton(page)).toBeHidden();
-    for (const name of ["Work", "Services", "About", "Discuss a project"]) {
+    for (const name of ["Work", "Services", "About"]) {
       await expect(nav(page).getByRole("link", { name })).toBeVisible();
     }
     await noHorizontalOverflow(page);

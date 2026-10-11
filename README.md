@@ -12,8 +12,9 @@ The rebuild uses the approved **A1** direction (luminous marble and bronze, Gree
 | S1 | A1 foundations: tokens, shell, hero, responsive assets | complete |
 | S2 | Selected work: server-rendered cards and accessible filters | complete |
 | S3 | Case studies: `/work/[slug]` routes, chapters, metadata, not-found | complete |
-| S4 | Motion and navigation: bounded hero depth, reduced motion, accessible menu | complete (PR open) |
-| S5 | Inquiry: server-side Resend contact with validation and abuse controls | blocked |
+| S4 | Motion and navigation: bounded hero depth, reduced motion, accessible menu | complete |
+| S5 | Contact removal: legacy Web3Forms form and contact CTAs removed | complete (PR open) |
+| S5b | Inquiry: server-side Resend contact with validation and abuse controls | blocked |
 | S6 | Project evidence: permitted screenshots and verified case narratives | blocked |
 | S7 | Release verification: combined QA, preview inquiry test, approved deploy | blocked |
 
@@ -30,7 +31,7 @@ The live roadmap is [`mts/BUILD-ROADMAP.md`](mts/BUILD-ROADMAP.md), and per-slic
 - npm with a committed lockfile
 - Playwright (`@playwright/test`, dev only) for browser and visual checks
 
-Contact currently posts from the browser to Web3Forms. S5 replaces that with a same-origin Route Handler that sends through **Resend on the server**. `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` and `CONTACT_TO_EMAIL` stay server-only, with no `NEXT_PUBLIC_` credentials.
+The site has no contact form for now: S5 removed the legacy Web3Forms form and its hard-coded key. S5b adds a same-origin Route Handler that sends through **Resend on the server** once the sending domain is verified. `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` and `CONTACT_TO_EMAIL` stay server-only, with no `NEXT_PUBLIC_` credentials.
 
 ## Development
 

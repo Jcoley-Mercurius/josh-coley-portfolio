@@ -179,3 +179,20 @@ Manual visual review (Playwright screenshots, Chromium): 1440 hero at rest match
 
 Deliberately not in S4: menu open/close animation (the prototype has none); entrance motion for case-study pages and project cards (none in the prototype); restyling the legacy sections (separate owner-assigned slice).
 NOT RUN: real-device/Safari/Firefox, touch devices, screen reader (switch announcement, menu state), 200% zoom, contrast tooling, scroll smoothness/performance profiling, Vercel Preview inspection (pending PR build).
+
+# S4 merge — 2026-10-11
+S4 merged via PR #6 (merge a98cd15).
+
+# S5 contact removal — 2026-10-11
+Owner decision: the Resend inquiry waits until the sending domain is verified and moves to a later slice, S5b. S5 removes the legacy contact form now. Branch `feat/s5-remove-contact` from main a98cd15. Rollback: a98cd15.
+
+Removed: `app/components/Contact.tsx` (Web3Forms form with the hard-coded access key, a mailto to a Marketplace address and a “within 24 hours” promise) and its place on the home page; `sonner`, which only Contact used; and three links to the removed `#contact` section: “Discuss a project” in the primary nav and “Get Started” and “Discuss a Retainer” in Services. No replacement contact path or address was added; the manifest rules out reusing Marketplace addresses. The home page now ends WhyWorkWithMe → footer.
+A1 deviation: the A1 header's bronze “Discuss a project” button is gone until S5b gives it a working destination. Tests: the S1 and S4 nav checks now expect Work, Services and About.
+Not changed: the Services copy that lists “Contact form with email notifications” as a feature for clients, and the legacy Services prices (outside this slice).
+Security: the key is out of source, server HTML and the client bundle, but stays in git history and in deployments built before this merge. Owner should still revoke or rotate it in Web3Forms.
+
+PASS: `npm run test:unit` 11/11. `npm run lint`, `tsc --noEmit`, `npm run build`, `npm audit` 0. Search for “web3forms” and the key string over `.next/static` and `.next/server`: no matches.
+PASS: `e2e/s5-contact-removal.spec.ts` 2/2: no `#contact`, form, `#contact` or mailto link, and no Web3Forms request on the home page; no Web3Forms reference in `/` or `/work/vertex` server HTML.
+PASS: full suite 72/72 at two workers. At default workers two runs each had timing failures in different tests: S2 and S3 no-JS checks in the first run, an S4 entrance check timing out on a style read in the second. Each passed when rerun alone; none touches the removed code.
+Manual visual review (Playwright screenshots, Chromium): header at 1440 shows Work, Services and About with no gap left behind; Services cards and the retainer panel end cleanly without buttons; at 390 the page ends WhyWorkWithMe → footer.
+NOT RUN: real-device/Safari/Firefox, screen reader, Vercel Preview inspection (pending PR build).

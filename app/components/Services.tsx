@@ -1,7 +1,7 @@
 "use client";
 
 import AnimateIn from "./AnimateIn";
-import { Check, ArrowRight, RefreshCw } from "lucide-react";
+import { Check, RefreshCw } from "lucide-react";
 
 interface ServicePackage {
   name: string;
@@ -128,18 +128,6 @@ export default function Services() {
                     </li>
                   ))}
                 </ul>
-
-                <a
-                  href="#contact"
-                  className={`mt-8 flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all active:scale-[0.98] ${
-                    pkg.featured
-                      ? "btn-primary bg-slate-900 text-white hover:bg-slate-800 shadow-lg shadow-slate-900/10"
-                      : "border border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50"
-                  }`}
-                >
-                  Get Started
-                  <ArrowRight size={14} />
-                </a>
               </div>
             </AnimateIn>
           ))}
@@ -191,13 +179,6 @@ export default function Services() {
                   $250 – $450
                 </p>
                 <p className="mt-1 text-sm text-slate-500">per month</p>
-                <a
-                  href="#contact"
-                  className="btn-primary mt-6 flex items-center gap-2 rounded-full bg-slate-900 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition-all hover:bg-slate-800 hover:shadow-xl active:scale-[0.98]"
-                >
-                  Discuss a Retainer
-                  <ArrowRight size={14} />
-                </a>
               </div>
             </div>
           </div>
