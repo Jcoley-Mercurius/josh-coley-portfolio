@@ -2,7 +2,7 @@
 
 Source for Josh Coley's freelance portfolio. The site is being rebuilt as the **Mercurius Solutions** portfolio for business websites, landing pages, booking experiences, SaaS/portals and marketplace development.
 
-The current `main` branch is the existing live portfolio. The rebuild uses the approved **A1** direction (luminous marble and bronze, Greek architecture, Hermes hero artwork) and is developed on `feat/mercurius-a1` in reviewed slices. It is not cleared for public release yet.
+The rebuild uses the approved **A1** direction (luminous marble and bronze, Greek architecture, Hermes hero artwork) and lands on `main` one slice at a time. `main` deploys to Production on Vercel (https://josh-coley-portfolio.vercel.app) on every push, so in-progress slices are live.
 
 ## Status
 
@@ -19,7 +19,7 @@ The current `main` branch is the existing live portfolio. The rebuild uses the a
 
 The live roadmap is [`mts/BUILD-ROADMAP.md`](mts/BUILD-ROADMAP.md), and per-slice results are in [`mts/QA-STATUS.md`](mts/QA-STATUS.md).
 
-**Release blockers:** hosting/domain linkage, the Resend sender and recipient, the shared abuse-control choice, project evidence and publication permissions, and combined browser QA. Public release also requires Josh's explicit release instruction.
+**Release blockers:** custom domain, the Resend sender and recipient, the shared abuse-control choice, project evidence and publication permissions, and combined browser QA. Public release also requires Josh's explicit release instruction.
 
 ## Stack
 
@@ -28,6 +28,7 @@ The live roadmap is [`mts/BUILD-ROADMAP.md`](mts/BUILD-ROADMAP.md), and per-slic
 - Framer Motion for React interactions (no second animation engine without an evidenced need)
 - `next/font` (Inter, Playfair Display)
 - npm with a committed lockfile
+- Playwright (`@playwright/test`, dev only) for browser and visual checks
 
 Contact currently posts from the browser to Web3Forms. S5 replaces that with a same-origin Route Handler that sends through **Resend on the server**. `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` and `CONTACT_TO_EMAIL` stay server-only, with no `NEXT_PUBLIC_` credentials.
 

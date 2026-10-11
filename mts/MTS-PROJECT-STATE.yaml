@@ -6,10 +6,12 @@ approved:
   MTS-01: Reuse existing Next application and repository architecture
   MTS-02: Replace Web3Forms with server-side Resend
   MTS-03: Use existing motion library first; GSAP requires a specific evidenced need
-observed: {next: 16.4.0, react: 19.2.4, framer_motion: 12.40.0, tailwind: 4, package_manager: npm}
+observed: {next: 16.4.0, react: 19.2.4, framer_motion: 12.40.0, tailwind: 4, package_manager: npm, playwright_test: 1.63.0}
+hosting: {provider: Vercel, linkage: GitHub integration, production: main, preview: other branches, url: https://josh-coley-portfolio.vercel.app, verified: 2026-10-11}
+delivery: Slices merge directly to main and deploy to Production (owner decision 2026-10-11)
 proposed:
   MTS-04: Static typed project records and server-rendered case-study routes
   MTS-05: Next Route Handler for Resend integration
   MTS-06: Distributed abuse control before public form activation
 readiness: foundations_can_begin_release_blocked
-blockers: [production hosting linkage, sender and recipient configuration, abuse-control selection, browser QA, project evidence]
+blockers: [custom domain decision, sender and recipient configuration, abuse-control selection, browser QA, project evidence]

@@ -1,4 +1,4 @@
-# Actual verification — 2026-10-11
+# Handoff prototype verification (carried from the handoff package)
 PASS: polished inline JavaScript syntax compilation; source assertions for all five project identities, chapter links, missing-project state, motion preference and simulated form states; handoff files and asset checksums.
 NOT RUN: browser interaction, responsive visual QA, screen-reader checks, Next install/build/lint, real Resend integration and delivery, deployment-provider verification.
 Prototype remains private. Simulated contact is explicitly labeled; no data sent/saved. Evidence placeholders remain intentional. B2 preserved separately.
@@ -35,3 +35,10 @@ NOT RUN: browser/visual regression of existing pages.
 Skills: `mercurius-technology-system` and `mercurius-design-system` installed (see mts/AGENT-SKILL-MANIFEST.yaml).
 README rewritten to describe the A1 rebuild, slice status, stack, layout and working agreement.
 Security note: the legacy Web3Forms access key is hard-coded in app/components/Contact.tsx and in git history. Removal is S5 scope; owner should revoke or rotate it in Web3Forms regardless.
+
+# Pre-S1 cleanup — 2026-10-11
+Owner decisions: slices commit straight to `main` (Vercel Production) instead of a staged feature branch; merged branches `feat/mercurius-a1` and `handoff/mercurius-a1` deleted locally and on origin; Playwright approved for S1 visual checks.
+Hosting verified: Vercel GitHub integration. PR #1 merge (caca99c) deployed to Production successfully; live `/` returns 200 with the existing portfolio title.
+Added `@playwright/test` 1.63.0 (exact pin, dev only; 1.64.0 skipped as under two weeks old). Uses the cached Chromium v1243; no browser download needed. Playwright output folders added to `.gitignore`.
+PASS: headless Chromium 153 launch smoke test. PASS: `npm audit` 0 vulnerabilities. PASS: `npm run build`. PASS: `npm run lint`.
+Open: Web3Forms key is still in source and the live bundle; owner to revoke or rotate it, with removal from source in S5.
