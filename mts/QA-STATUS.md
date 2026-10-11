@@ -83,3 +83,35 @@ Limitations: mobile menu is a basic disclosure; S4 owns focus containment, motio
 
 # S1 merge and workflow change — 2026-10-11
 S1 merged via PR #2 (merge d0617dc). Vercel Preview passed before merge. Production `/` returns 200 with title “Mercurius Solutions · Web and product development”. Owner decision: slices now land through one branch and pull request each, not direct commits to `main`.
+
+# S2 selected work journey — 2026-10-11
+Branch `feat/s2-selected-work` from `chore/pr-workflow` 9905b17 (PR #3, docs only, still open). Rollback: 9905b17.
+
+Scope: server-rendered project cards, accessible client filters with a live result count, and an empty state you can recover from. Legacy `FeaturedWork` removed, along with CSS used only by it. It published unverified claims (“Live”, “Ready to deploy”, Smart Quote Tool, Vendor Application Portal) and a “Visit Site” link. Selected work now follows the hero, as in the A1 layout. About, Services, WhyWorkWithMe and Contact are unchanged.
+
+Records: `content/projects/*.json` gain `type` and `summary`, copied verbatim from the approved A1 prototype's project data. Status, permission, role and evidence fields are unchanged, and the records stay canonical where the prototype differs (Vertex shows “User-reported capability”, Supabase SaaS “Working title”, Shave Parlor “In rebuild”). Display order follows the prototype.
+Adapter: `app/_lib/projects.ts` validates every record at build time: required text fields, lowercase slug id, approved category, boolean `publicationReady`, string arrays, unique ids. It also fails the build if a record has metrics while `publicationReady` is false, or screenshots without `"permission": "granted"`. (“granted” is the value this adapter expects once permission is cleared; S6 should confirm the term.)
+Rendering: `SelectedWork` and `ProjectCard` are server components. `WorkFilter` is the only client boundary. It receives the cards already rendered and decides which to show. Filters are `aria-pressed` toggle buttons in a labelled group. The count (“N projects shown”, singular for one) is a `role=status` live region. The empty state says “No {category} projects to show yet.” and offers “Show all projects”, which resets to All and moves focus to the All button. Without JavaScript, all cards and the count render, and the filter row stays hidden with its space reserved, so it never shows controls that cannot work and hydration does not shift the layout. `/` stays static.
+Visual values come from the prototype: grid 3/2/1 columns at ≥901/651–900/≤650, card border and #ffffff42 fill, 25px Georgia titles, bronze category and type line and status label, screenshot placeholder frame (200px, 230px on mobile), filter chips (30px radius, ink fill when pressed). The chip and placeholder styles live in `@layer components` as classes. The chip is not built from `bg-` utilities, because a legacy rule (`button[class*="bg-"]:hover`) would otherwise add the old blue lift.
+Tooling: `npm run test:unit` uses Node's built-in `node:test` with native type stripping (Node 24). No dependency added. `tsconfig.json` gains `allowImportingTsExtensions` (valid with `noEmit`) so the test can import `./projects.ts`.
+
+PASS: `npm run test:unit` 8/8 (all supplied records valid and truthfully labelled; required-field, category, slug, claims-before-evidence and duplicate rejection; filtering including an empty result; count label).
+PASS: `npm run lint`, `tsc --noEmit`, `npm run build` (`/` and `/_not-found` static), `npm audit` 0.
+PASS: `npm run test:e2e` 34/34 (23 S1 plus 11 S2):
+- no-JS: heading, all five cards in order with category, status and screenshot-pending placeholder; count shown; filter controls not offered
+- every filter: matching cards, count text, `aria-pressed` on exactly one button, back to All
+- keyboard: Tab reaches the filters, Enter and Space activate them, focus stays on the control, bronze 3px focus ring
+- pressed chip uses the ink fill, white text and 30px radius
+- 360/390 one column, 768 two, 1280/1440 three; no horizontal overflow; no page errors
+- the hero's “Explore the work” brings Selected work into view
+- legacy claims and “Visit Site” are gone from `/`
+PASS (manual, not committed): empty state. With Shave Parlor temporarily recategorized on a dev server, Booking showed “0 projects shown” and the empty message. “Show all projects” restored 5 projects with All pressed and focused. The data change was reverted.
+Manual visual comparison of the 360/768/1440 screenshots with the prototype structure and `mds/references/homepage.png`: heading with the eyebrow on the right (stacked on mobile), chips, count, and a bordered card grid on paper. The homepage board's titles with arrows and wireframe previews are illustrative. The prototype card (category·type line, “Project screenshot pending”, status, summary) was followed.
+
+Deliberately not in S2:
+- “Explore case study” card link. `/work/[slug]` does not exist until S3, and merged slices are live, so a link now would 404 in Production. S3 adds it. The card keeps the prototype's 68px summary min-height, which leaves room for it.
+- Card hover/focus lift and entrance motion: S4.
+- Per-filter counts inside the chips. The prototype shows a single result count, which is implemented. Adding per-chip counts would change the approved chip design, so that needs an owner decision.
+Observation: `next dev` rewrites the Next.js block at the top of AGENTS.md (newer wording, plus a note that it re-adds itself). That rewrite was reverted and is not part of S2. Owner to decide whether to accept the generated block or set `agentRules: false` in next.config.
+
+NOT RUN: real-device/Safari/Firefox, screen reader announcement of the live count, 200% zoom, contrast tooling (manual: bronze #82613b on the card fill ≈5:1; #746a5d placeholder text on #f7f3eb ≈5:1), Vercel Preview inspection (pending PR build).

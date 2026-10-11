@@ -2,6 +2,8 @@
   "id": "vertex",
   "name": "Vertex",
   "category": "SaaS",
+  "type": "Learning platform",
+  "summary": "Keyword search that takes learners to the relevant moment in a video.",
   "status": "User-reported capability",
   "publicationReady": false,
   "permission": "unverified",
