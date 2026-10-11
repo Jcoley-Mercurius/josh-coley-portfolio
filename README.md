@@ -9,8 +9,8 @@ The rebuild uses the approved **A1** direction (luminous marble and bronze, Gree
 | Slice | Outcome | Status |
 | --- | --- | --- |
 | S0 | Reconcile repository | complete |
-| S1 | A1 foundations: tokens, shell, hero, responsive assets | ready |
-| S2 | Selected work: server-rendered cards and accessible filters | not started |
+| S1 | A1 foundations: tokens, shell, hero, responsive assets | complete |
+| S2 | Selected work: server-rendered cards and accessible filters | ready |
 | S3 | Case studies: `/work/[slug]` routes, chapters, metadata, not-found | not started |
 | S4 | Motion and navigation: bounded hero depth, reduced motion, accessible menu | not started |
 | S5 | Inquiry: server-side Resend contact with validation and abuse controls | blocked |
@@ -26,7 +26,7 @@ The live roadmap is [`mts/BUILD-ROADMAP.md`](mts/BUILD-ROADMAP.md), and per-slic
 - Next.js 16.4 (App Router, Turbopack) with React 19.2 and TypeScript
 - Tailwind CSS 4
 - Framer Motion for React interactions (no second animation engine without an evidenced need)
-- `next/font` (Inter, Playfair Display)
+- A1 type tokens: Georgia (display) and system-ui (body), no web-font download
 - npm with a committed lockfile
 - Playwright (`@playwright/test`, dev only) for browser and visual checks
 
@@ -41,6 +41,7 @@ npm ci          # install exactly from package-lock.json
 npm run dev     # http://localhost:3000
 npm run build   # production build
 npm run lint    # eslint
+npm run test:e2e  # Playwright against a production build (run `npm run build` first)
 ```
 
 Secrets belong in a private `.env.local` or the hosting provider's environment settings and are never committed (`.env*` is git-ignored).
@@ -49,7 +50,8 @@ Secrets belong in a private `.env.local` or the hosting provider's environment s
 
 | Path | Purpose |
 | --- | --- |
-| `app/` | Next.js application (current portfolio, to be replaced incrementally) |
+| `app/` | Next.js application: A1 shell and hero in place, legacy sections replaced incrementally |
+| `e2e/` | Playwright checks per slice |
 | `public/` | Static assets |
 | `mps/` | Mercurius Product System: approved scope and requirements (`MPS-*`) |
 | `mds/` | Mercurius Design System: A1 rules (`MDS-*`), tokens and approved composition boards |

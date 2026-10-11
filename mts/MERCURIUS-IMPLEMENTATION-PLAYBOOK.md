@@ -23,12 +23,14 @@ Checkpoint: baseline build/lint and every asset accounted for. Next: S1. Recover
 
 Actual (2026-10-10): PASS checksums, npm ci, build, lint; AGENTS.md merged; canonical dirs placed. Audit findings recorded for owner decision. Rollback: b41318d. Details in mts/QA-STATUS.md.
 
-## S1: A1 foundations (ready)
+## S1: A1 foundations (complete)
 > Execute only S1. Read the inherited contract and canonical files above, then inspect current repository. Port tokens, shell, hero and responsive asset delivery; verify desktop/mobile references. Trace changes through mts/IMPLEMENTATION-PLAN.md. In scope: this slice's user journey and applicable failure, recovery, responsive and accessibility states. Out of scope: later slices and unapproved integrations. No migrations or authentication are planned; document if inspection changes that assumption. Validate the end-to-end journey with focused automated checks and manual preview evidence where available. Report actual pass/fail/not-run, changed files, unresolved setup, rollback commit and next slice. Update canonical status and stop at the checkpoint.
 
 Checkpoint: slice outcome demonstrated, applicable failures verified and limitations recorded. Next: S2. Recovery: revert only this slice through reviewed git history, preserving unrelated work.
 
-## S2: Selected work journey (not_started)
+Actual (2026-10-11): PASS lint, typecheck, build, 15 Playwright checks at 360/390/768/1280/1440 plus no-JS, skip link, focus, menu, reduced motion and image failure. Rollback: 60aaee1. Details in mts/QA-STATUS.md.
+
+## S2: Selected work journey (ready)
 > Execute only S2. Read the inherited contract and canonical files above, then inspect current repository. Implement server-rendered project cards and accessible client filters with counts and empty state. Trace changes through mts/IMPLEMENTATION-PLAN.md. In scope: this slice's user journey and applicable failure, recovery, responsive and accessibility states. Out of scope: later slices and unapproved integrations. No migrations or authentication are planned; document if inspection changes that assumption. Validate the end-to-end journey with focused automated checks and manual preview evidence where available. Report actual pass/fail/not-run, changed files, unresolved setup, rollback commit and next slice. Update canonical status and stop at the checkpoint.
 
 Checkpoint: slice outcome demonstrated, applicable failures verified and limitations recorded. Next: S3. Recovery: revert only this slice through reviewed git history, preserving unrelated work.

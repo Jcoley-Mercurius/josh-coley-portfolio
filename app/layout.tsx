@@ -1,38 +1,22 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-playfair",
-});
+const description =
+  "Websites, booking experiences, SaaS portals, and marketplaces. Web and product development by Josh Coley.";
 
 export const metadata: Metadata = {
-  title: "Joshua Coley — AI-Powered Web Solutions for Small Businesses",
-  description:
-    "I build AI-powered websites and business tools for small businesses and service companies. Real business experience meets modern development. Based in Cape Coral, Florida.",
-  keywords: [
-    "web developer",
-    "AI websites",
-    "small business websites",
-    "Cape Coral",
-    "Fort Myers",
-    "Southwest Florida",
-    "freelance developer",
-    "business tools",
-  ],
-  authors: [{ name: "Joshua Coley" }],
+  title: {
+    default: "Mercurius Solutions · Web and product development",
+    template: "%s · Mercurius Solutions",
+  },
+  description,
+  authors: [{ name: "Josh Coley" }],
   openGraph: {
-    title: "Joshua Coley — AI-Powered Web Solutions for Small Businesses",
-    description:
-      "I build AI-powered websites and business tools for small businesses and service companies. Based in Cape Coral, Florida.",
+    title: "Mercurius Solutions · Web and product development",
+    description,
+    siteName: "Mercurius Solutions",
     type: "website",
     locale: "en_US",
   },
@@ -44,9 +28,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="min-h-screen bg-white text-slate-800 antialiased">
-        {children}
+    <html lang="en">
+      <body className="min-h-screen antialiased">
+        <a className="a1-btn skip-link" href="#main">
+          Skip to content
+        </a>
+        <Header />
+        <main id="main" tabIndex={-1} className="focus:outline-none">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
