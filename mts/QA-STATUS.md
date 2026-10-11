@@ -42,3 +42,41 @@ Hosting verified: Vercel GitHub integration. PR #1 merge (caca99c) deployed to P
 Added `@playwright/test` 1.63.0 (exact pin, dev only; 1.64.0 skipped as under two weeks old). Uses the cached Chromium v1243; no browser download needed. Playwright output folders added to `.gitignore`.
 PASS: headless Chromium 153 launch smoke test. PASS: `npm audit` 0 vulnerabilities. PASS: `npm run build`. PASS: `npm run lint`.
 Open: Web3Forms key is still in source and the live bundle; owner to revoke or rotate it, with removal from source in S5.
+
+# S1 A1 foundations — 2026-10-11
+Scope: tokens, shell (skip link, sticky header, primary nav, footer), hero, responsive hero asset. Legacy About/Work/Services/WhyWorkWithMe/Contact sections are unchanged and stay until S2–S5 replace them. Rollback: 60aaee1.
+
+Tokens: `mds/tokens.json` colors, type families, 1280 content width, motion values and the 650/900 breakpoints are ported to `app/globals.css` (`@theme`; breakpoints as mobile-first `tablet:` ≥651px and `desktop:` ≥901px). Prototype-observed supporting values tokenized by name only: marble #eee6d7 (hero ground), bronze-deep #73532e (focus ring), muted #666666 (notes). Header bar width 1380px is the prototype value, kept as a local value. No numeric token retuned.
+Fonts: approved A1 uses Georgia / system-ui; Inter and Playfair `next/font` loads were removed from app/layout.tsx (visual reconciliation with the approved prototype, per IMPLEMENTATION-PLAN). Legacy sections now render in system-ui/Georgia.
+Shell: layout renders skip link, Header, `main#main` and Footer, so S3 routes inherit it. Nav links target `/#work`, `/#services`, `/#about`, `/#contact`. Metadata now Mercurius Solutions (title template `%s · Mercurius Solutions`); no metadataBase/OG image until the domain decision.
+Hero: server component, single `next/image` (static import, blur placeholder, eager + high fetch priority, preload link emitted). Desktop/tablet: copy left over the prototype gradient, sculpture full-bleed right. ≤650px: artwork 300px block below copy at 77% focal point. `--hero-depth` hook reserved for S4; transform removed under reduced motion.
+Responsive asset: original 1536×1024 PNG (2.2 MB, checksum identical to handoff) kept in app/_assets; served as WebP 27 KB (640w), 64 KB (1080w), 109 KB (1920w+).
+
+PASS: `npm run lint`. PASS: `tsc --noEmit`. PASS: `npm run build` (`/`, `/_not-found` static).
+PASS: `npm run test:e2e` — 15/15 Playwright (Chromium 153, headless) against `next start`:
+- hero at 360/390/768/1280/1440: heading and image render and load, MDS-02 placement (mobile art below CTAs; ≥651 copy within left 68%, art full-bleed), no horizontal overflow, no page errors
+- no-JS: heading, artwork and primary nav server-rendered
+- metadata title and description
+- skip link visible on focus and moves focus to main
+- bronze 3px focus ring on links
+- desktop nav visible / Menu hidden, in-page navigation; mobile menu aria-expanded, Escape closes and returns focus, link closes menu, widening closes menu
+- hero transform present by default and `none` under reduced motion
+- image failure (optimizer aborted): copy and CTAs remain readable on marble ground
+Manual visual comparison of screenshots vs `mds/references/homepage.png`, `mobile-case-board.png` and the prototype: composition, hierarchy and palette match the A1 direction. Two fixes made during review: A1 component classes moved into `@layer components` (unlayered `.a1-btn` overrode `tablet:hidden`, showing Menu on desktop); mobile CTAs use `flex-auto` + no-wrap so “Explore the work ↗” no longer breaks over two lines at 360/390 (prototype `flex:1` wrapped there too).
+
+Owner decisions on S1 observations (2026-10-11):
+- Copy changes confirmed: prototype labels (“Case Study A1”, “Portfolio design prototype”) stay removed.
+- Hero crop: owner directed fix. The statue must stay in frame. See follow-up below.
+- Services/Approach/About A1 sections and the “Approach” nav item: deferred to a later slice (owner will assign). Not in S1/S2 scope.
+- Footer contacts (email, LinkedIn): deferred to a later pass.
+- Web3Forms: removal of the integration and key stays in S5; owner accepts the interim exposure (site has no audience yet).
+- Georgia is not present on Linux/Android; the serif falls back to the platform serif there. Tokens specify `Georgia, serif`. Open observation.
+
+## S1 follow-up: hero statue framing — 2026-10-11
+Cause: the image was cover-cropped around its vertical center, so at wide aspect ratios (e.g. 1440×720, 2:1) the top was cut and the statue's head lost. The statue spans ~7%–83% of the artwork height and ~64%–82% of its width.
+Fix: artwork anchored to the top (`center top` from 651px; `77% top` on mobile, which also protects 600–650px). Desktop hero height grows with width, `max(720px, min(50vw, 100svh − 6rem))`, so wide screens keep head-to-shins framing instead of head-to-waist, capped at the viewport below the header. 720px minimum (prototype value) unchanged. Tablet 600px minimum unchanged.
+PASS: `npm run build`, `npm run lint`. PASS: 23/23 Playwright, adding 8 framing checks (360×800, 600×900, 768×1024, 1024×768, 1280×800, 1440×900, 1920×1080, 2560×1440) that compute the visible region of the artwork from object-fit geometry: top ≤5% (head intact), bottom ≥60%, statue's horizontal span fully visible. Screenshots reviewed at 600, 1440 and 1920: full head and caduceus with headroom, framing comparable to `mds/references/homepage.png`.
+S4 note: `--hero-depth` translates the art down by up to 32px while `scale(1.04)` leaves only ~2% (≈14–20px) of overscan at the top. With top anchoring, S4 must enlarge the overscan or shift the image origin so depth motion never reveals a gap above the art.
+
+NOT RUN: real-device/Safari/Firefox checks, screen reader, 200% zoom, contrast tooling (manual estimates: bronze on paper ≈5:1, white on bronze ≈5.5:1, #666 on paper ≈5.2:1), preview deployment inspection.
+Limitations: mobile menu is a basic disclosure; S4 owns focus containment, motion and final behavior. Without JavaScript the mobile menu cannot open (hero CTAs still link to Work and Services). Legacy sections still use the old palette, and the old Contact still ships the Web3Forms key (S5).
