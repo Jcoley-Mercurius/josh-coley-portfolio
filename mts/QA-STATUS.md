@@ -112,7 +112,7 @@ Deliberately not in S2:
 - “Explore case study” card link. `/work/[slug]` does not exist until S3, and merged slices are live, so a link now would 404 in Production. S3 adds it. The card keeps the prototype's 68px summary min-height, which leaves room for it.
 - Card hover/focus lift and entrance motion: S4.
 - Per-filter counts inside the chips. The prototype shows a single result count, which is implemented. Adding per-chip counts would change the approved chip design, so that needs an owner decision.
-Observation: `next dev` rewrites the Next.js block at the top of AGENTS.md (newer wording, plus a note that it re-adds itself). That rewrite was reverted and is not part of S2. Owner to decide whether to accept the generated block or set `agentRules: false` in next.config.
+Observation: `next dev` rewrites the Next.js block at the top of AGENTS.md (newer wording, plus a note that it re-adds itself). That rewrite was reverted and is not part of S2. Resolved 2026-10-11: owner accepted the generated block; committed at the start of S4.
 
 NOT RUN: real-device/Safari/Firefox, screen reader announcement of the live count, 200% zoom, contrast tooling (manual: bronze #82613b on the card fill ≈5:1; #746a5d placeholder text on #f7f3eb ≈5:1), Vercel Preview inspection (pending PR build).
 
@@ -143,3 +143,39 @@ Manual visual comparison of 1440/768/360 screenshots against the prototype case 
 
 Deliberately not in S3: a “Previous project” link (the prototype has Back and Next only); card hover lift and entrance motion (S4); sitemap and canonical URLs (need the domain decision).
 NOT RUN: real-device/Safari/Firefox, screen reader (title focus and route announcement), 200% zoom, contrast tooling, Vercel Preview inspection (pending PR build).
+
+# S3 merge and AGENTS.md — 2026-10-11
+S3 merged via PR #5 (merge 9678f7f) after a one-line playbook fix (e081705, S4 heading set to ready). Vercel Preview checks passed before merge. Production: `/` and all five `/work/*` case studies return 200 with their titles; `/work/not-a-project` returns 404 “Page not found”. Checked by server HTML only, not visually in a browser.
+Owner decision: accept the Next.js block that `next dev` writes at the top of AGENTS.md (Next 16.4.0 wording, plus a note that `next dev` re-adds it). Committed at the start of S4. The Mercurius contract below it and CLAUDE.md's `@AGENTS.md` import are unchanged.
+Owner decision: the S1 2560×1440 hero framing flake is fixed by a longer image-load timeout on that test, not by capping workers (applied in S4).
+
+# S4 motion and navigation — 2026-10-11
+Branch `feat/s4-motion-navigation` from main 9678f7f (S3 merged via PR #5). First commit 478a695 records the S3 merge and the AGENTS.md decision. Rollback: 478a695.
+
+Scope: bounded desktop hero depth, hero entrance and card motion, the system reduced-motion preference, a manual motion control and a hardened mobile menu. Behavior follows the A1 prototype's script and CSS; values come from `mds/tokens.json` motion (650ms entrance, 300ms card, 32px depth). No new dependencies. framer-motion (MTS-03, existing library) drives scroll.
+
+Motion preference: one source of truth in `app/_lib/motion-preference.ts`. Motion is quiet when the system asks for reduced motion or the visitor switches it off. The manual choice is stored on `<html data-motion="off">`, so CSS stops motion without waiting for React, and in localStorage (`mercurius-motion`). A small inline `<head>` script (`app/_lib/motion-script.ts`, the pattern in Next's "preventing flash before hydration" guide) restores it before first paint and sets `html[data-js]`. `<html>` has `suppressHydrationWarning` for those attributes. Storage failures are caught; the choice then lasts for the visit only.
+Control: the prototype's footer “Motion: on/off”, built as a switch (`role="switch"`, name “Motion”, state from `aria-checked`) rather than the prototype's `aria-pressed` with a changing label. When the system asks for reduced motion it reads “Motion: off (system setting)”, uses `aria-disabled` and stays focusable with that text as its description, instead of the prototype's `disabled` (which removes it from the tab order). Known gap: with a saved “off”, the switch text shows “on” until hydration (motion itself is already off from first paint).
+Hero depth: `HeroDepth` (client, wraps only the image layer) uses framer's `scroll()` to set `--hero-depth` = min(round(scrollY × 0.06), 32)px. Active only at ≥901px (MDS “bounded desktop hero depth”; the prototype also moved it at 651–900) and only while motion is allowed. It starts and stops when the width crosses 901px or the preference changes, and removes its listener and the variable on unmount. CSS alone owns the transform (`translateY(var(--hero-depth)) scale(1.04)`), so there is one transform owner. The S1 note asked for more overscan: from 901px the image layer starts 32px (`--hero-depth-max`) above the hero, which clips it, and the scale grows from the top edge, so full depth never opens a gap above the art. Cost: at rest the desktop crop starts 32px lower in the image; the S1 framing checks (head within 5% of the top at every viewport) still pass, and the 1440 screenshot keeps the helmet and caduceus with headroom. 651–900 framing is unchanged (no depth, centered `scale(1.04)`).
+Entrance and cards: the hero copy uses the prototype `enter` keyframe (opacity and 15px rise, 650ms) in CSS, so it also runs without JavaScript. Cards lift 5px with the prototype shadow on hover (hover-capable pointers only, to avoid sticky lifts after a tap) and on `:focus-within`, with 300ms transitions.
+Quiet state: `html[data-motion="off"]` and `prefers-reduced-motion: reduce` both remove animations, transitions and the hero transform, and set scroll behavior to auto (prototype `body.quiet`).
+Legacy entrances: About, Services, WhyWorkWithMe and Contact used framer `whileInView`, which server-renders `opacity:0`. Without JavaScript, 17 blocks on Production were invisible. `AnimateIn` now uses `useInView` and `animate`, follows the shared preference (all blocks appear at once when motion is off), and is marked `.animate-in` so a no-JS CSS rule keeps it visible.
+Menu: disclosure navigation, not a modal, so focus is not trapped. It closes on Escape (focus returns to the button), a pointer down outside, focus leaving the button and panel, a hash change (in-page back/forward), a route change and widening past 650px. Without JavaScript (S1 limitation) the Menu button is hidden and the links show inline below the brand on mobile.
+S1 test changes: the framing check measures `.hero-art` instead of the image's parent (now the taller depth layer). Per the owner decision, the framing tests get a 30s image-load and screenshot timeout (60s per test). Workers are not capped.
+
+PASS: `npm run test:unit` 11/11. `npm run lint`, `tsc --noEmit`, `npm run build`, `npm audit` 0.
+PASS: `e2e/s4-motion-navigation.spec.ts` 18/18, and 54/54 over three repeats at two workers:
+- depth at 1280: 0 at top, 12px at 200px scroll, capped at 32px, image top at or above the hero top at full depth, back to 0; no page errors
+- no depth at 768 and 390; depth starts after widening 768 → 1280
+- depth detaches on a case study and resumes after browser back
+- hero copy runs `a1-enter` for 0.65s; cards transition in 0.3s and lift 5px on hover and on keyboard focus of the card link
+- switch off: `aria-checked` false, `data-motion` and storage set, no depth or `--hero-depth`, no animation or transition; still off after client navigation; after reload it is off in the first animation frame
+- switch back on clears storage and depth resumes; Space and Enter toggle it; focus ring shows
+- system reduced motion: locked off with “(system setting)” as its description, keyboard press changes nothing, no depth or entrance
+- legacy sections: every `.animate-in` has opacity 1 without JavaScript, and all reach 1 at once when motion is switched off
+- menu at 390: closes on outside click, after tabbing past “Discuss a project”, on in-page browser back and on route change via back; without JavaScript the button is hidden, all four links show, no horizontal overflow, links work
+PASS: full suite 70/70 at default workers (S1 23, S2 11, S3 18, S4 18), including S1 2560×1440 framing.
+Manual visual review (Playwright screenshots, Chromium): 1440 hero at rest matches the S1 framing; at full depth the art meets the top edge with no gap; footer switch at 1440 (centered) and 390 (stacked, not stretched); no-JS mobile header at 390 and 360 shows brand, three links and the bronze button with no overflow.
+
+Deliberately not in S4: menu open/close animation (the prototype has none); entrance motion for case-study pages and project cards (none in the prototype); restyling the legacy sections (separate owner-assigned slice).
+NOT RUN: real-device/Safari/Firefox, touch devices, screen reader (switch announcement, menu state), 200% zoom, contrast tooling, scroll smoothness/performance profiling, Vercel Preview inspection (pending PR build).

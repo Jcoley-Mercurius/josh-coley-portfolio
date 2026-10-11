@@ -11,8 +11,8 @@ The rebuild uses the approved **A1** direction (luminous marble and bronze, Gree
 | S0 | Reconcile repository | complete |
 | S1 | A1 foundations: tokens, shell, hero, responsive assets | complete |
 | S2 | Selected work: server-rendered cards and accessible filters | complete |
-| S3 | Case studies: `/work/[slug]` routes, chapters, metadata, not-found | complete (PR open) |
-| S4 | Motion and navigation: bounded hero depth, reduced motion, accessible menu | ready |
+| S3 | Case studies: `/work/[slug]` routes, chapters, metadata, not-found | complete |
+| S4 | Motion and navigation: bounded hero depth, reduced motion, accessible menu | complete (PR open) |
 | S5 | Inquiry: server-side Resend contact with validation and abuse controls | blocked |
 | S6 | Project evidence: permitted screenshots and verified case narratives | blocked |
 | S7 | Release verification: combined QA, preview inquiry test, approved deploy | blocked |

@@ -1,10 +1,9 @@
 import Link from "next/link";
 import type { Project } from "../_lib/projects";
 
-// Card motion is S4.
 export default function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="h-full border border-line bg-[#ffffff42] p-[22px]">
+    <article className="project-card h-full border border-line bg-[#ffffff42] p-[22px]">
       <small className="block text-bronze">
         {project.category} · {project.type}
       </small>
