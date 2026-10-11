@@ -1,0 +1,19 @@
+{
+  "id": "homeschool-haven",
+  "name": "Homeschool Haven",
+  "category": "Websites",
+  "status": "Evidence pending",
+  "publicationReady": false,
+  "permission": "unverified",
+  "role": "verify",
+  "screenshots": [],
+  "metrics": [],
+  "evidenceRequired": [
+    "scope and contribution",
+    "current delivery status",
+    "authorized screenshots",
+    "walkthrough",
+    "technical decision evidence"
+  ],
+  "reportedCapability": null
+}

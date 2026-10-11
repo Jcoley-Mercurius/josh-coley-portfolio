@@ -1,0 +1,19 @@
+{
+  "id": "supabase-saas",
+  "name": "Supabase SaaS project",
+  "category": "SaaS",
+  "status": "Working title",
+  "publicationReady": false,
+  "permission": "unverified",
+  "role": "verify",
+  "screenshots": [],
+  "metrics": [],
+  "evidenceRequired": [
+    "scope and contribution",
+    "current delivery status",
+    "authorized screenshots",
+    "walkthrough",
+    "technical decision evidence"
+  ],
+  "reportedCapability": null
+}

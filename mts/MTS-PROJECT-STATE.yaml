@@ -1,0 +1,15 @@
+version: 1.0
+mode: handoff
+repository_classification: existing
+inspected_commit: 7a4ee96535bc8f9cf3a3bc4409d987a2025834a6
+approved:
+  MTS-01: Reuse existing Next application and repository architecture
+  MTS-02: Replace Web3Forms with server-side Resend
+  MTS-03: Use existing motion library first; GSAP requires a specific evidenced need
+observed: {next: 16.4.0, react: 19.2.4, framer_motion: 12.40.0, tailwind: 4, package_manager: npm}
+proposed:
+  MTS-04: Static typed project records and server-rendered case-study routes
+  MTS-05: Next Route Handler for Resend integration
+  MTS-06: Distributed abuse control before public form activation
+readiness: foundations_can_begin_release_blocked
+blockers: [production hosting linkage, sender and recipient configuration, abuse-control selection, browser QA, project evidence]

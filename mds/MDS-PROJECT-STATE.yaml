@@ -1,0 +1,11 @@
+version: 1.0
+authority: user-selected A1 and approved layout
+selection: A1 luminous marble and bronze with architectural and mythological symbolism
+status: approved_direction_with_implementation_verification_pending
+rules:
+  MDS-01: Preserve luminous ivory, bronze and Hermes composition
+  MDS-02: Desktop hero places readable copy left and sculpture right; mobile artwork below copy
+  MDS-03: Case study includes challenge, contribution, decisions and evidence
+  MDS-04: Motion respects system preference and explicit user control
+  MDS-05: Focus, menu, invalid, loading, success and recoverable error states remain visible
+numeric_tokens: observed prototype baseline, tune only with documented visual evidence
