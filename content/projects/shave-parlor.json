@@ -1,0 +1,19 @@
+{
+  "id": "shave-parlor",
+  "name": "The Shave Parlor",
+  "category": "Booking",
+  "status": "In rebuild",
+  "publicationReady": false,
+  "permission": "unverified",
+  "role": "verify",
+  "screenshots": [],
+  "metrics": [],
+  "evidenceRequired": [
+    "scope and contribution",
+    "current delivery status",
+    "authorized screenshots",
+    "walkthrough",
+    "technical decision evidence"
+  ],
+  "reportedCapability": null
+}

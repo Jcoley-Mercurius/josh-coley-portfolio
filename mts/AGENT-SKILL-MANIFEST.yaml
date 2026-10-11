@@ -1,0 +1,25 @@
+version: 1.0
+environment: VS Code with Claude
+availability: verified_in_target_environment_2026-10-10
+required_external_skills: []
+required_project_instructions:
+  - AGENTS.md
+  - Installed Next guide in node_modules/next/dist/docs/
+recommended:
+  - skill: mercurius-technology-system
+    selection: approved_methodology
+    availability: installed_in_Claude_2026-10-10
+    install: user-level ~/.agents/skills/mercurius-technology-system, symlinked from ~/.claude/skills (owner-approved)
+    source: ~/home-school-haven/.agents/skills (commit 9aa872b); only copy found, installed byte-identical
+    fallback: Follow canonical handoff files and official documentation
+  - skill: mercurius-design-system
+    selection: approved_methodology
+    availability: installed_in_Claude_2026-10-10
+    install: user-level ~/.agents/skills/mercurius-design-system, symlinked from ~/.claude/skills (owner-approved)
+    source: ~/home-school-haven/.agents/skills (commit 9aa872b); only copy found, installed byte-identical
+    fallback: Follow MDS references and record visual QA
+permissions: No new connector or account permissions requested
+verification: Inventory actual Claude skills in S0; never claim cross-agent availability without checking
+not_installed_available:
+  - mercurius-product-system (same source; not in approved recommendations)
+  - resend (same source; candidate for S5, requires approval)

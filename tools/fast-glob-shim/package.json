@@ -1,0 +1,11 @@
+{
+  "name": "fast-glob",
+  "version": "3.3.3",
+  "private": true,
+  "description": "Local shim for @next/eslint-plugin-next: fast-glob's globSync backed by tinyglobby, removing the braces advisory (GHSA-vfj7-8cjw-p6xm) from the lint toolchain.",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "tinyglobby": "^0.2.17"
+  }
+}

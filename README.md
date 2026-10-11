@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Josh Coley Portfolio → Mercurius Solutions
 
-## Getting Started
+Source for Josh Coley's freelance portfolio. The site is being rebuilt as the **Mercurius Solutions** portfolio for business websites, landing pages, booking experiences, SaaS/portals and marketplace development.
 
-First, run the development server:
+The current `main` branch is the existing live portfolio. The rebuild uses the approved **A1** direction (luminous marble and bronze, Greek architecture, Hermes hero artwork) and is developed on `feat/mercurius-a1` in reviewed slices. It is not cleared for public release yet.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Status
+
+| Slice | Outcome | Status |
+| --- | --- | --- |
+| S0 | Reconcile repository | complete |
+| S1 | A1 foundations: tokens, shell, hero, responsive assets | ready |
+| S2 | Selected work: server-rendered cards and accessible filters | not started |
+| S3 | Case studies: `/work/[slug]` routes, chapters, metadata, not-found | not started |
+| S4 | Motion and navigation: bounded hero depth, reduced motion, accessible menu | not started |
+| S5 | Inquiry: server-side Resend contact with validation and abuse controls | blocked |
+| S6 | Project evidence: permitted screenshots and verified case narratives | blocked |
+| S7 | Release verification: combined QA, preview inquiry test, approved deploy | blocked |
+
+The live roadmap is [`mts/BUILD-ROADMAP.md`](mts/BUILD-ROADMAP.md), and per-slice results are in [`mts/QA-STATUS.md`](mts/QA-STATUS.md).
+
+**Release blockers:** hosting/domain linkage, the Resend sender and recipient, the shared abuse-control choice, project evidence and publication permissions, and combined browser QA. Public release also requires Josh's explicit release instruction.
+
+## Stack
+
+- Next.js 16.4 (App Router, Turbopack) with React 19.2 and TypeScript
+- Tailwind CSS 4
+- Framer Motion for React interactions (no second animation engine without an evidenced need)
+- `next/font` (Inter, Playfair Display)
+- npm with a committed lockfile
+
+Contact currently posts from the browser to Web3Forms. S5 replaces that with a same-origin Route Handler that sends through **Resend on the server**. `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` and `CONTACT_TO_EMAIL` stay server-only, with no `NEXT_PUBLIC_` credentials.
+
+## Development
+
+Requires Node.js 20.9 or later.
+
+```sh
+npm ci          # install exactly from package-lock.json
+npm run dev     # http://localhost:3000
+npm run build   # production build
+npm run lint    # eslint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Secrets belong in a private `.env.local` or the hosting provider's environment settings and are never committed (`.env*` is git-ignored).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Repository layout
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Path | Purpose |
+| --- | --- |
+| `app/` | Next.js application (current portfolio, to be replaced incrementally) |
+| `public/` | Static assets |
+| `mps/` | Mercurius Product System: approved scope and requirements (`MPS-*`) |
+| `mds/` | Mercurius Design System: A1 rules (`MDS-*`), tokens and approved composition boards |
+| `mts/` | Mercurius Technology System: decisions, integration plan, roadmap, playbook, QA status |
+| `content/projects/` | Typed project records with truthful status, contribution and evidence fields |
+| `handoff/` | Original checksummed A1 handoff package and the prototype reference. Design evidence only, never deployed |
+| `tools/fast-glob-shim/` | npm workspace shim (see below) |
 
-## Learn More
+`handoff/Mercurius-Solutions-A1-Handoff/reference/a1-prototype/` is the polished behavioral reference for A1. It gets translated into accessible Next components, not copied in as a client-only page.
 
-To learn more about Next.js, take a look at the following resources:
+### `tools/fast-glob-shim`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`@next/eslint-plugin-next` depends on `fast-glob`, which pulls in `braces` (GHSA-vfj7-8cjw-p6xm, no patched release). This workspace package provides the one function the plugin uses (`globSync` with `onlyDirectories`) on top of `tinyglobby`. An npm `overrides` entry points the plugin at it. The shim is lint-time only and is not part of the server or client bundle. Remove it once the upstream chain ships a fix.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Working agreement
 
-## Deploy on Vercel
+Agent and contributor rules live in [`AGENTS.md`](AGENTS.md); [`CLAUDE.md`](CLAUDE.md) imports it. In short:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Read the installed Next.js guides in `node_modules/next/dist/docs/` before writing code. This Next version differs from older conventions.
+- Read the MPS/MDS/MTS state and the current slice before editing. Run one slice at a time and report pass/fail/not-run.
+- Don't invent project results, testimonials, delivery status or prices. The Shave Parlor is in rebuild.
+- No new dependencies, providers or public release without a recorded decision.
+- Stage only intended files and preserve unrelated changes.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The implementation playbook is [`mts/MERCURIUS-IMPLEMENTATION-PLAYBOOK.md`](mts/MERCURIUS-IMPLEMENTATION-PLAYBOOK.md).
