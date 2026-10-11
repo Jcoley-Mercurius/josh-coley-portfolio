@@ -2,6 +2,8 @@
   "id": "shave-parlor",
   "name": "The Shave Parlor",
   "category": "Booking",
+  "type": "Client website",
+  "summary": "A business website and entry point into Squire booking.",
   "status": "In rebuild",
   "publicationReady": false,
   "permission": "unverified",

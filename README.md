@@ -10,8 +10,8 @@ The rebuild uses the approved **A1** direction (luminous marble and bronze, Gree
 | --- | --- | --- |
 | S0 | Reconcile repository | complete |
 | S1 | A1 foundations: tokens, shell, hero, responsive assets | complete |
-| S2 | Selected work: server-rendered cards and accessible filters | ready |
-| S3 | Case studies: `/work/[slug]` routes, chapters, metadata, not-found | not started |
+| S2 | Selected work: server-rendered cards and accessible filters | complete (PR open) |
+| S3 | Case studies: `/work/[slug]` routes, chapters, metadata, not-found | ready |
 | S4 | Motion and navigation: bounded hero depth, reduced motion, accessible menu | not started |
 | S5 | Inquiry: server-side Resend contact with validation and abuse controls | blocked |
 | S6 | Project evidence: permitted screenshots and verified case narratives | blocked |
@@ -41,6 +41,7 @@ npm ci          # install exactly from package-lock.json
 npm run dev     # http://localhost:3000
 npm run build   # production build
 npm run lint    # eslint
+npm run test:unit # node:test checks for the project record adapter (no extra dependency)
 npm run test:e2e  # Playwright against a production build (run `npm run build` first)
 ```
 
@@ -50,13 +51,13 @@ Secrets belong in a private `.env.local` or the hosting provider's environment s
 
 | Path | Purpose |
 | --- | --- |
-| `app/` | Next.js application: A1 shell and hero in place, legacy sections replaced incrementally |
+| `app/` | Next.js application: A1 shell, hero and selected work in place, legacy sections replaced incrementally |
 | `e2e/` | Playwright checks per slice |
 | `public/` | Static assets |
 | `mps/` | Mercurius Product System: approved scope and requirements (`MPS-*`) |
 | `mds/` | Mercurius Design System: A1 rules (`MDS-*`), tokens and approved composition boards |
 | `mts/` | Mercurius Technology System: decisions, integration plan, roadmap, playbook, QA status |
-| `content/projects/` | Typed project records with truthful status, contribution and evidence fields |
+| `content/projects/` | Project records with truthful status, contribution and evidence fields, validated at build time by `app/_lib/projects.ts` |
 | `handoff/` | Original checksummed A1 handoff package and the prototype reference. Design evidence only, never deployed |
 | `tools/fast-glob-shim/` | npm workspace shim (see below) |
 

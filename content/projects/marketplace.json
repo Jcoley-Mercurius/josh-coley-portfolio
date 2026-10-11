@@ -2,6 +2,8 @@
   "id": "marketplace",
   "name": "Mercurius Marketplace",
   "category": "Marketplaces",
+  "type": "Founder-built product",
+  "summary": "A home-services marketplace, presented as founder-built work.",
   "status": "Evidence pending",
   "publicationReady": false,
   "permission": "unverified",

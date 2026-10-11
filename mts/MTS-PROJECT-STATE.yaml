@@ -10,7 +10,7 @@ observed: {next: 16.4.0, react: 19.2.4, framer_motion: 12.40.0, tailwind: 4, pac
 hosting: {provider: Vercel, linkage: GitHub integration, production: main, preview: other branches, url: https://josh-coley-portfolio.vercel.app, verified: 2026-10-11}
 delivery: One branch and pull request per slice; Vercel Preview per PR; owner merges to main, which deploys to Production (owner decision 2026-10-11, superseding direct commits to main)
 proposed:
-  MTS-04: Static typed project records and server-rendered case-study routes
+  MTS-04: Static typed project records and server-rendered case-study routes (records adapter implemented in S2; routes in S3)
   MTS-05: Next Route Handler for Resend integration
   MTS-06: Distributed abuse control before public form activation
 readiness: foundations_can_begin_release_blocked

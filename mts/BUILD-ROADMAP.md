@@ -1,12 +1,12 @@
 # Mercurius Solutions build roadmap v1.0
-Consumes MPS/MDS/MTS v1.0. Existing repository. S0 complete 2026-10-10 and merged to main (PR #1, caca99c); S1 complete 2026-10-11 and merged to main (PR #2, d0617dc); current slice S2 ready. A1 polish complete; production build not started. Foundations may begin; release blocked by evidence, contact setup, abuse-control selection and combined browser QA.
+Consumes MPS/MDS/MTS v1.0. Existing repository. S0 complete 2026-10-10 and merged to main (PR #1, caca99c); S1 complete 2026-10-11 and merged to main (PR #2, d0617dc); S2 complete 2026-10-11 on `feat/s2-selected-work`, awaiting PR review; next slice S3. A1 polish complete; production build not started. Foundations may begin; release blocked by evidence, contact setup, abuse-control selection and combined browser QA.
 
 | Slice | Outcome | Status | Completion requirement |
 | --- | --- | --- | --- |
 | S0 | Reconcile repository | complete | Verify package, instructions, handoff assets, current branch and baseline; record build/lint results. No UI edits. |
 | S1 | A1 foundations | complete | Port tokens, shell, hero and responsive asset delivery; verify desktop/mobile references. |
-| S2 | Selected work journey | ready | Implement server-rendered project cards and accessible client filters with counts and empty state. |
-| S3 | Case-study journey | not_started | Implement real project routes, chapters, next/back, not-found, per-project metadata and no-JS readable content. |
+| S2 | Selected work journey | complete (PR review) | Implement server-rendered project cards and accessible client filters with counts and empty state. |
+| S3 | Case-study journey | ready | Implement real project routes, chapters, next/back, not-found, per-project metadata and no-JS readable content. |
 | S4 | Motion and navigation | not_started | Implement bounded desktop hero depth, entrance and card motion with cleanup, reduced preference, manual control and accessible menu. |
 | S5 | Inquiry journey | blocked | Implement server Resend validation, idempotency and selected shared abuse controls; cover every success/error state. |
 | S6 | Project evidence | blocked | Replace placeholders with permitted actual screenshots and verified case narratives; prepare Upwork/Fiverr exports without invented claims. |

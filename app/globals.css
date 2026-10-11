@@ -164,6 +164,59 @@ select:focus-visible {
   .skip-link:focus {
     left: 12px;
   }
+
+  /* Work filter (prototype .filter). Kept as a class: legacy rules match
+     buttons whose class contains "bg-". */
+  .filter-chip {
+    border: 1px solid var(--color-line);
+    border-radius: 30px;
+    padding: 8px 16px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .filter-chip[aria-pressed="true"] {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: #ffffff;
+  }
+
+  /* Placeholder frame for project screenshots (prototype .preview). */
+  .project-preview {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 230px;
+    margin: 18px 0;
+    padding: 20px;
+    border: 1px solid var(--color-line);
+    background: linear-gradient(120deg, #e7e1d7, #f7f5ef);
+    color: #746a5d;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .project-preview::before {
+    content: "";
+    position: absolute;
+    inset: 25px;
+    border: 1px solid #c5b9a6;
+    background: linear-gradient(0deg, #ffffff66, #ffffff11);
+  }
+
+  .project-preview span {
+    position: relative;
+    z-index: 1;
+    padding: 10px;
+    background: #f7f3ebe0;
+  }
+
+  @media (min-width: 40.6875rem) {
+    .project-preview {
+      height: 200px;
+    }
+  }
 }
 
 /* Hero artwork: full-bleed behind the copy from 651px, a framed block
@@ -238,44 +291,6 @@ section {
   width: 100%;
 }
 
-/* ===== PREMIUM CARD SURFACES ===== */
-.project-card {
-  background:
-    radial-gradient(circle at 100% 0%, rgb(14 116 144 / 0.035), transparent 34%),
-    linear-gradient(145deg, rgb(255 255 255 / 1), rgb(248 250 252 / 0.68));
-  border-color: rgb(203 213 225 / 0.72);
-  box-shadow: var(--shadow-resting);
-  border-radius: 16px;
-  overflow: hidden;
-  transition:
-    transform var(--duration-card) var(--ease-refined),
-    box-shadow var(--duration-card) var(--ease-refined),
-    border-color var(--duration-card) var(--ease-refined);
-  will-change: transform;
-}
-
-/* Project status badges */
-#work article h3 + span {
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.8),
-    0 4px 12px -8px currentColor;
-  transition:
-    box-shadow var(--duration-micro) var(--ease-refined),
-    border-color var(--duration-micro) var(--ease-refined);
-}
-
-/* Project tech tags */
-.tech-tag {
-  background: rgb(248 250 252 / 0.9);
-  border-color: rgb(203 213 225 / 0.72);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9);
-  transition:
-    transform var(--duration-micro) var(--ease-refined),
-    background-color var(--duration-micro) var(--ease-refined),
-    color var(--duration-micro) var(--ease-refined),
-    border-color var(--duration-micro) var(--ease-refined);
-}
-
 /* Primary service package cards */
 .service-card {
   background-image:
@@ -348,8 +363,7 @@ a[class*="bg-"] {
     0 8px 20px -12px rgb(14 94 116 / 0.62);
 }
 
-.badge,
-.tech-tag {
+.badge {
   transition:
     transform var(--duration-micro) var(--ease-refined),
     background-color var(--duration-micro) var(--ease-refined),
@@ -358,55 +372,7 @@ a[class*="bg-"] {
     box-shadow var(--duration-micro) var(--ease-refined);
 }
 
-/* ===== STATUS BADGES ===== */
-.status-live,
-.status-development,
-.status-planned {
-  font-weight: 650;
-  letter-spacing: 0.025em;
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.72),
-    0 5px 14px -10px currentColor;
-}
-
-.status-live {
-  color: #047857;
-  background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
-  border-color: rgb(110 231 183 / 0.72);
-}
-
-.status-development {
-  color: #a16207;
-  background: linear-gradient(135deg, #fffbeb, #fefce8);
-  border-color: rgb(253 211 77 / 0.68);
-}
-
-.status-planned {
-  color: #a16207;
-  background: linear-gradient(135deg, #fef3c7, #fef9c3);
-  border: 1px solid rgb(253 224 71 / 0.48);
-}
-
-.status-live > span,
-.status-development > span {
-  animation: statusGlow 3.6s var(--ease-refined) infinite;
-}
-
-@keyframes statusGlow {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 currentColor;
-    opacity: 0.88;
-  }
-
-  50% {
-    box-shadow: 0 0 0 3px transparent;
-    opacity: 1;
-  }
-}
-
 @media (hover: hover) and (pointer: fine) {
-  .project-card:hover,
   .service-card:hover {
     transform: translateY(-8px);
     border-color: rgb(148 163 184 / 0.62);
@@ -414,13 +380,6 @@ a[class*="bg-"] {
       0 20px 40px rgb(0 0 0 / 0.08),
       0 12px 32px rgb(10 77 104 / 0.12),
       0 0 0 1px rgb(10 77 104 / 0.04);
-  }
-
-  .tech-tag:hover {
-    color: var(--color-accent-dark);
-    background-color: rgb(239 246 255 / 0.9);
-    border-color: rgb(147 197 253 / 0.72);
-    transform: translateY(-1px);
   }
 
   .service-card[class*="border-accent"]:hover {
@@ -453,8 +412,7 @@ a[class*="bg-"] {
       0 12px 26px -10px rgb(14 94 116 / 0.52);
   }
 
-  .badge:hover,
-  .tech-tag:hover {
+  .badge:hover {
     transform: translateY(-1px);
   }
 }
@@ -469,10 +427,8 @@ a[class*="bg-"] {
     animation-iteration-count: 1 !important;
   }
 
-  .project-card:hover,
   .service-card:hover,
   .badge:hover,
-  .tech-tag:hover,
   a:hover,
   button:hover {
     transform: none !important;

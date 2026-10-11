@@ -2,6 +2,8 @@
   "id": "supabase-saas",
   "name": "Supabase SaaS project",
   "category": "SaaS",
+  "type": "SaaS project",
+  "summary": "Additional SaaS portfolio work; exact title and scope to be verified.",
   "status": "Working title",
   "publicationReady": false,
   "permission": "unverified",
