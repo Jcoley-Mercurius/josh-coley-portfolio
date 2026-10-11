@@ -1,0 +1,19 @@
+{
+  "id": "vertex",
+  "name": "Vertex",
+  "category": "SaaS",
+  "status": "User-reported capability",
+  "publicationReady": false,
+  "permission": "unverified",
+  "role": "verify",
+  "screenshots": [],
+  "metrics": [],
+  "evidenceRequired": [
+    "scope and contribution",
+    "current delivery status",
+    "authorized screenshots",
+    "walkthrough",
+    "technical decision evidence"
+  ],
+  "reportedCapability": "Keyword search navigates to a video timestamp"
+}

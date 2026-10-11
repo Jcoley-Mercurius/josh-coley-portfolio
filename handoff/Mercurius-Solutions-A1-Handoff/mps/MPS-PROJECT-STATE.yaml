@@ -1,0 +1,15 @@
+version: 1.0
+project: Mercurius Solutions portfolio
+authority: user approvals in conversation
+status: approved_scope
+requirements:
+  MPS-01: Replace existing portfolio for websites, landing pages, booking, SaaS and marketplaces
+  MPS-02: Filter selected work and navigate individual shareable case studies
+  MPS-03: Distinguish client work, founder work, contribution and verified evidence
+  MPS-04: Submit a project inquiry with validation and recoverable failure states
+  MPS-05: Support mobile, keyboard, reduced motion and server-rendered content
+release_blockers:
+  - Final project evidence and publication permissions
+  - Contact recipient and verified sending identity
+  - Combined browser and production verification
+out_of_scope: [payments, accounts, CMS, newsletter, attachments, automatic replies]

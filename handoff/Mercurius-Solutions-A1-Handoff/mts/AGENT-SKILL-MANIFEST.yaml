@@ -1,0 +1,18 @@
+version: 1.0
+environment: VS Code with Claude
+availability: unverified_in_target_environment
+required_external_skills: []
+required_project_instructions:
+  - AGENTS.md
+  - Installed Next guide in node_modules/next/dist/docs/
+recommended:
+  - skill: mercurius-technology-system
+    selection: approved_methodology
+    availability: verified_here_unknown_in_Claude
+    fallback: Follow canonical handoff files and official documentation; no installation required
+  - skill: mercurius-design-system
+    selection: approved_methodology
+    availability: unknown_in_Claude
+    fallback: Follow MDS references and record visual QA
+permissions: No new connector or account permissions requested
+verification: Inventory actual Claude skills in S0; never claim cross-agent availability without checking
