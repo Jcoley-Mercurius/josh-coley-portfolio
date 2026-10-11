@@ -11,10 +11,10 @@
     "Delivery evidence"
   ],
   "detail": "Case-study content will be completed from approved project documents and final implementation.",
-  "status": "Evidence pending",
+  "status": "Demo",
   "publicationReady": false,
-  "permission": "unverified",
-  "role": "verify",
+  "permission": "granted",
+  "role": "Solo build: I engineered, built and set up this project.",
   "screenshots": [],
   "metrics": [],
   "evidenceRequired": [

@@ -10,9 +10,18 @@ export const projectCategories = [
 ] as const;
 
 export type ProjectCategory = (typeof projectCategories)[number];
+// "granted" is the owner's publication permission; nothing else is accepted.
+export const projectPermissions = ["granted", "unverified"] as const;
+
 export type ProjectFilter = "All" | ProjectCategory;
 
 export const projectFilters: readonly ProjectFilter[] = ["All", ...projectCategories];
+
+// A permitted screenshot, served from public/projects/{project id}/.
+export interface Screenshot {
+  src: string;
+  alt: string;
+}
 
 export interface Project {
   id: string;
@@ -27,7 +36,7 @@ export interface Project {
   publicationReady: boolean;
   permission: string;
   role: string;
-  screenshots: string[];
+  screenshots: Screenshot[];
   metrics: string[];
   evidenceRequired: string[];
   reportedCapability: string | null;
@@ -63,6 +72,26 @@ function nonEmptyTextList(record: Record<string, unknown>, key: string, label: s
   return value.map((item) => item.trim());
 }
 
+const screenshotFile = /^[a-z0-9]+(?:-[a-z0-9]+)*\.(?:png|jpe?g|webp|avif)$/;
+
+function screenshotList(record: Record<string, unknown>, id: string, label: string): Screenshot[] {
+  const value = record.screenshots;
+  if (!Array.isArray(value)) fail(label, `"screenshots" must be an array`);
+  return value.map((item, index) => {
+    if (typeof item !== "object" || item === null || Array.isArray(item)) {
+      fail(label, `screenshot #${index} must be an object with "src" and "alt"`);
+    }
+    const shot = item as Record<string, unknown>;
+    const src = text(shot, "src", `${label} screenshot #${index}`);
+    const alt = text(shot, "alt", `${label} screenshot #${index}`);
+    const prefix = `/projects/${id}/`;
+    if (!src.startsWith(prefix) || !screenshotFile.test(src.slice(prefix.length))) {
+      fail(label, `screenshot "${src}" must be an image file in ${prefix}`);
+    }
+    return { src, alt };
+  });
+}
+
 export function parseProject(input: unknown, index = 0): Project {
   if (typeof input !== "object" || input === null || Array.isArray(input)) {
     fail(`#${index}`, "must be an object");
@@ -76,6 +105,11 @@ export function parseProject(input: unknown, index = 0): Project {
   const category = text(record, "category", label);
   if (!projectCategories.includes(category as ProjectCategory)) {
     fail(label, `"category" must be one of ${projectCategories.join(", ")}`);
+  }
+
+  const permission = text(record, "permission", label);
+  if (!projectPermissions.includes(permission as (typeof projectPermissions)[number])) {
+    fail(label, `"permission" must be one of ${projectPermissions.join(", ")}`);
   }
 
   if (typeof record.publicationReady !== "boolean") {
@@ -98,9 +132,9 @@ export function parseProject(input: unknown, index = 0): Project {
     detail: text(record, "detail", label),
     status: text(record, "status", label),
     publicationReady: record.publicationReady,
-    permission: text(record, "permission", label),
+    permission,
     role: text(record, "role", label),
-    screenshots: textList(record, "screenshots", label),
+    screenshots: screenshotList(record, id, label),
     metrics: textList(record, "metrics", label),
     evidenceRequired: textList(record, "evidenceRequired", label),
     reportedCapability,

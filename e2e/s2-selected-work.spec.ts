@@ -1,13 +1,12 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 
-// Display order and categories come from content/projects/ (prototype order).
-const projects = [
-  { name: "The Shave Parlor", category: "Booking", status: "In rebuild" },
-  { name: "Homeschool Haven", category: "Websites", status: "Evidence pending" },
-  { name: "Mercurius Marketplace", category: "Marketplaces", status: "Evidence pending" },
-  { name: "Vertex", category: "SaaS", status: "User-reported capability" },
-  { name: "Supabase SaaS project", category: "SaaS", status: "Working title" },
-];
+// Display order follows app/_lib/project-records.ts (prototype order); names,
+// categories and statuses come from content/projects/.
+const order = ["shave-parlor", "homeschool-haven", "marketplace", "vertex", "supabase-saas"];
+const projects: { name: string; category: string; status: string; screenshots: unknown[] }[] =
+  order.map((id) => JSON.parse(readFileSync(join("content/projects", `${id}.json`), "utf8")));
 const filters = ["All", "Websites", "Booking", "SaaS", "Marketplaces"];
 
 const work = (page: Page) => page.locator("section#work");
@@ -33,7 +32,11 @@ test("project cards are server-rendered and readable without JavaScript", async 
     const card = cards(page).filter({ hasText: project.name });
     await expect(card).toContainText(project.status);
     await expect(card).toContainText(project.category);
-    await expect(card).toContainText("Project screenshot pending");
+    if (project.screenshots.length === 0) {
+      await expect(card).toContainText("Project screenshot pending");
+    } else {
+      await expect(card.locator("img")).toHaveCount(1);
+    }
   }
   await expect(work(page).getByText("5 projects shown")).toBeVisible();
   // Filters cannot work without JavaScript, so they are not offered.

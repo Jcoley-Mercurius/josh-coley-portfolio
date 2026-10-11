@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Project } from "../_lib/projects";
+import ProjectPreview from "./ProjectPreview";
 
 export default function ProjectCard({ project }: { project: Project }) {
   return (
@@ -10,9 +11,7 @@ export default function ProjectCard({ project }: { project: Project }) {
       <h3 className="mb-4 font-display text-[25px] leading-[1.1] font-normal">
         {project.name}
       </h3>
-      <div className="project-preview">
-        <span>Project screenshot pending</span>
-      </div>
+      <ProjectPreview project={project} />
       <span className="inline-block border border-line px-2 py-1 text-[11px] text-bronze">
         {project.status}
       </span>

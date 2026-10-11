@@ -11,10 +11,10 @@
     "Operational workflows"
   ],
   "detail": "Founder product work will be distinguished from client delivery. Individual capabilities and outcomes require scoped verification.",
-  "status": "Evidence pending",
+  "status": "Live",
   "publicationReady": false,
-  "permission": "unverified",
-  "role": "verify",
+  "permission": "granted",
+  "role": "Solo build: I engineered, built, deployed and set up this project.",
   "screenshots": [],
   "metrics": [],
   "evidenceRequired": [

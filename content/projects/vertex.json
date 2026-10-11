@@ -10,11 +10,11 @@
     "Timestamp navigation",
     "Video context"
   ],
-  "detail": "Capability description is user-reported. Deployment, contribution, and implementation evidence are pending.",
-  "status": "User-reported capability",
+  "detail": "Capability description is user-reported. Deployment and implementation evidence are pending.",
+  "status": "Pre-launch",
   "publicationReady": false,
-  "permission": "unverified",
-  "role": "verify",
+  "permission": "granted",
+  "role": "Solo build: I engineered, built and set up this project.",
   "screenshots": [],
   "metrics": [],
   "evidenceRequired": [
