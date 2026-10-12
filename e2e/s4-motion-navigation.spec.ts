@@ -6,7 +6,6 @@ const DEPTH_MAX = 32; // mds/tokens.json motion.heroDepthMaxPx
 
 const heroArt = (page: Page) => page.getByRole("img", { name: heroAlt });
 const heroCopy = (page: Page) => page.locator(".a1-reveal");
-const motionSwitch = (page: Page) => page.getByRole("switch", { name: "Motion" });
 const menuButton = (page: Page) => page.getByRole("button", { name: "Menu" });
 const nav = (page: Page) => page.locator("#primary-navigation");
 
@@ -132,99 +131,28 @@ test.describe("entrance and card motion", () => {
   });
 });
 
-test.describe("motion control", () => {
-  test("switching motion off stops depth, entrance and card motion and persists", async ({
-    page,
-  }) => {
-    await page.setViewportSize({ width: 1280, height: 900 });
+test.describe("motion preference", () => {
+  // Owner decision 2026-10-12: the footer switch is gone; the system
+  // preference is the only control.
+  test("there is no manual motion switch", async ({ page }) => {
     await page.goto("/");
-    const toggle = motionSwitch(page);
-    await expect(toggle).toHaveAttribute("aria-checked", "true");
-    await expect(toggle).toHaveText("Motion: on");
-
-    await toggle.click();
-    await expect(toggle).toHaveAttribute("aria-checked", "false");
-    await expect(toggle).toHaveText("Motion: off");
-    await expect(page.locator("html")).toHaveAttribute("data-motion", "off");
-    expect(await page.evaluate(() => localStorage.getItem("mercurius-motion"))).toBe("off");
-
-    await scrollTo(page, 300);
-    await page.waitForTimeout(200);
-    expect(await depth(page)).toBe(0);
-    expect(
-      await page.locator(".hero-art-layer").evaluate((el) => el.style.getPropertyValue("--hero-depth")),
-    ).toBe("");
-    expect(await heroCopy(page).evaluate((el) => getComputedStyle(el).animationName)).toBe("none");
-    expect(
-      await page.locator(".project-card").first().evaluate((el) => getComputedStyle(el).transitionDuration),
-    ).toBe("0s");
-
-    // The choice survives client navigation…
-    await page.getByRole("link", { name: "Explore case study: Vertex" }).click();
-    await expect(page).toHaveURL(/\/work\/vertex$/);
-    await expect(motionSwitch(page)).toHaveAttribute("aria-checked", "false");
-
-    // …and a reload, applied before the first frame is painted.
-    await page.addInitScript(() => {
-      requestAnimationFrame(() => {
-        (window as unknown as { firstFrameMotion: string | null }).firstFrameMotion =
-          document.documentElement.getAttribute("data-motion");
-      });
-    });
-    await page.goto("/");
-    expect(await page.evaluate(() => (window as unknown as { firstFrameMotion: string | null }).firstFrameMotion)).toBe("off");
-    await expect(motionSwitch(page)).toHaveAttribute("aria-checked", "false");
-    expect(await depth(page)).toBe(0);
+    await expect(page.getByRole("switch")).toHaveCount(0);
   });
 
-  test("switching motion back on restores depth", async ({ page }) => {
-    await page.setViewportSize({ width: 1280, height: 900 });
-    await page.goto("/");
-    const toggle = motionSwitch(page);
-    await toggle.click();
-    await toggle.click();
-    await expect(toggle).toHaveAttribute("aria-checked", "true");
-    await expect(page.locator("html")).not.toHaveAttribute("data-motion", /.*/);
-    expect(await page.evaluate(() => localStorage.getItem("mercurius-motion"))).toBeNull();
-    await scrollTo(page, 100);
-    await expect.poll(() => depth(page)).toBe(6);
-  });
-
-  test("works from the keyboard", async ({ page }) => {
-    await page.goto("/");
-    const toggle = motionSwitch(page);
-    await toggle.focus();
-    await page.keyboard.press("Space");
-    await expect(toggle).toHaveAttribute("aria-checked", "false");
-    await page.keyboard.press("Enter");
-    await expect(toggle).toHaveAttribute("aria-checked", "true");
-    const outline = await toggle.evaluate((el) => getComputedStyle(el).outlineStyle);
-    expect(outline).toBe("solid");
-  });
-
-  test("the system preference locks motion off and says so", async ({ browser }) => {
+  test("the system preference stops depth and entrance motion", async ({ browser }) => {
     const context = await browser.newContext({
       reducedMotion: "reduce",
       viewport: { width: 1280, height: 900 },
     });
     const page = await context.newPage();
     await page.goto("/");
-    const toggle = motionSwitch(page);
-    await expect(toggle).toHaveAttribute("aria-checked", "false");
-    await expect(toggle).toHaveAttribute("aria-disabled", "true");
-    await expect(toggle).toHaveText("Motion: off (system setting)");
-    await expect(toggle).toHaveAccessibleDescription("(system setting)");
-    // Still focusable, so the reason can be found; pressing it changes nothing.
-    await toggle.focus();
-    await expect(toggle).toBeFocused();
-    await page.keyboard.press("Space");
-    await expect(toggle).toHaveAttribute("aria-checked", "false");
-    await expect(page.locator("html")).not.toHaveAttribute("data-motion", /.*/);
-
     await scrollTo(page, 300);
     await page.waitForTimeout(200);
     expect(await depth(page)).toBe(0);
     expect(await heroCopy(page).evaluate((el) => getComputedStyle(el).animationName)).toBe("none");
+    expect(
+      await page.locator(".project-card").first().evaluate((el) => getComputedStyle(el).transitionDuration),
+    ).toBe("0s");
     await context.close();
   });
 });

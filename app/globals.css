@@ -317,7 +317,7 @@ select:focus-visible {
 
 /* ===== A1 MOTION (S4) =====
    Values from mds/tokens.json motion and the prototype. Stopped by the
-   system preference or the footer switch (html[data-motion="off"]). */
+   system reduced-motion preference. */
 @keyframes a1-enter {
   from {
     opacity: 0;
@@ -345,33 +345,6 @@ select:focus-visible {
     transform: translateY(-5px);
     box-shadow: 0 16px 30px #53402b12;
   }
-}
-
-.motion-toggle {
-  border: 1px solid var(--color-line);
-  padding: 7px 12px;
-  background: none;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.motion-toggle[aria-disabled="true"] {
-  cursor: default;
-}
-
-html[data-motion="off"] {
-  scroll-behavior: auto;
-}
-
-html[data-motion="off"] *,
-html[data-motion="off"] *::before,
-html[data-motion="off"] *::after {
-  animation: none !important;
-  transition: none !important;
-}
-
-html[data-motion="off"] .hero-art img {
-  transform: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
