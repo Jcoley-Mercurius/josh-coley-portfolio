@@ -272,7 +272,7 @@ test.describe("mobile menu", () => {
     await page.goto("/");
     await menuButton(page).click();
     await menuButton(page).focus();
-    for (const name of ["Work", "Services", "About"]) {
+    for (const name of ["Work", "Services", "About", "Discuss a project"]) {
       await page.keyboard.press("Tab");
       await expect(nav(page).getByRole("link", { name })).toBeFocused();
     }
