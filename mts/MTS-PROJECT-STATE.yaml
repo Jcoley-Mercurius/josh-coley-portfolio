@@ -12,7 +12,7 @@ delivery: One branch and pull request per slice; Vercel Preview per PR; owner me
 proposed:
   MTS-04: Static typed project records and server-rendered case-study routes (records adapter implemented in S2; routes implemented in S3)
   MTS-05: Next Route Handler for Resend integration (implemented in S5b at app/api/contact/route.ts)
-  MTS-06: Distributed abuse control before public form activation (S5b, owner-selected 2026-10-11: Vercel Firewall rate-limit rule plus honeypot)
+  MTS-06: "Distributed abuse control before public form activation (S5b, owner-selected 2026-10-11: Vercel Firewall rate-limit rule plus honeypot)"
 contact:
   decided: 2026-10-11 (owner)
   domain: none; site stays on josh-coley-portfolio.vercel.app, which Resend cannot verify
