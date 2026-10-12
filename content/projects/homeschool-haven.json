@@ -3,26 +3,57 @@
   "name": "Homeschool Haven",
   "category": "Websites",
   "type": "Client project",
-  "summary": "An education-focused project to explore through a verified case study.",
-  "challenge": "Project problem and final scope to be verified.",
+  "summary": "A public website plus family, educator and admin portals for a homeschool community in Cape Coral, Florida.",
+  "challenge": "Home School Haven's classes, calendar, contact and payment lived in separate places. The goal was one connected product: a public site families can browse, and private portals where parents register children, educators see only their own programs and administrators run enrollment.",
   "decisions": [
-    "Content structure",
-    "User journey",
-    "Delivery evidence"
+    {
+      "title": "Authorization in the database",
+      "detail": "Supabase row-level security and least-privilege grants decide who sees what. One family cannot see another's records, and an educator sees only assigned programs. The boundary was checked by signing in as each sample role and probing the API directly."
+    },
+    {
+      "title": "Provisioned accounts only",
+      "detail": "There is no self-service sign-up, and students never sign in; a parent manages each child. Sign-in failures read the same whether or not an account exists, and recovery links are verified on the server."
+    },
+    {
+      "title": "Honest checkout handoff",
+      "detail": "Registration hands off to the organization's existing checkout page. Coming back from checkout never marks anything paid: a registration stays pending until an administrator confirms payment."
+    }
   ],
-  "detail": "Case-study content will be completed from approved project documents and final implementation.",
+  "detail": "The current build is a demo for the owner's review and runs on sample families and children. Real families are not invited until the owner confirms the policy checklist, and placeholder imagery is blocked from production builds.",
   "status": "Demo",
-  "publicationReady": false,
+  "publicationReady": true,
   "permission": "granted",
-  "role": "Solo build: I engineered, built and set up this project.",
-  "screenshots": [],
   "metrics": [],
-  "evidenceRequired": [
-    "scope and contribution",
-    "current delivery status",
-    "authorized screenshots",
-    "walkthrough",
-    "technical decision evidence"
+  "evidenceRequired": [],
+  "reportedCapability": null,
+  "role": "Solo build: I engineered, built and set up this project.",
+  "screenshots": [
+    {
+      "src": "/projects/homeschool-haven/programs.webp",
+      "alt": "Home School Haven programs page listing Haven Days with its schedule and monthly pricing",
+      "width": 1440,
+      "height": 900,
+      "caption": "Published programs"
+    },
+    {
+      "src": "/projects/homeschool-haven/calendar.webp",
+      "alt": "Home School Haven calendar in month view, with published programs listed beside it",
+      "width": 1440,
+      "height": 900,
+      "caption": "Calendar, with sample data"
+    }
   ],
-  "reportedCapability": null
+  "engineering": [
+    "Next.js App Router and TypeScript on Supabase Postgres and Auth",
+    "25 versioned database migrations, including audit history for enrollment changes",
+    "Public pages fall back to a committed catalog, so they render without database credentials",
+    "Playwright end-to-end tests with axe accessibility checks",
+    "A prebuild check that fails any production build while placeholder imagery is present"
+  ],
+  "links": [
+    {
+      "label": "Source code",
+      "href": "https://github.com/Jcoley-Mercurius/Home-School-Haven"
+    }
+  ]
 }

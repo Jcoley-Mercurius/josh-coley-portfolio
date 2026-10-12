@@ -35,7 +35,7 @@ export default function Hero() {
           </a>
         </div>
         <p className="max-w-[450px] text-xs text-muted">
-          Project evidence is provisional.
+          Every case study is checked against its project’s source code.
         </p>
       </div>
       <div className="hero-art">

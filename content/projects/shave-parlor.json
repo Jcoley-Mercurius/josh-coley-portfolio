@@ -3,26 +3,51 @@
   "name": "The Shave Parlor",
   "category": "Booking",
   "type": "Client website",
-  "summary": "A business website and entry point into Squire booking.",
-  "challenge": "Help visitors explore the shop, understand services, and reach booking.",
+  "summary": "A website rebuild for a Cape Coral barbershop, with every page leading into the shop's Squire booking.",
+  "challenge": "The shop's first site was a single-page React app. It needed a rebuild that keeps the look, gives services, barbers and the visit their own pages, and sends every booking to the Squire scheduler the shop already uses.",
   "decisions": [
-    "Barber selection",
-    "Clear booking entry",
-    "Squire scheduling boundary"
+    {
+      "title": "Squire booking boundary",
+      "detail": "Scheduling stays in Squire. The site's job is to get visitors there: service cards, barber profiles, the header and a mobile call to action all lead to the same booking page."
+    },
+    {
+      "title": "Typed content",
+      "detail": "Services, prices, barbers, reviews and visit details live in typed TypeScript data files, so the shop's details can change without touching layout code."
+    },
+    {
+      "title": "Real pages",
+      "detail": "Experience, services, barbers and visit each have their own route and page metadata, replacing one long scrolling page."
+    }
   ],
-  "detail": "Approved intent includes three barber profiles and a clear booking handoff. Final corrections and delivery verification are still pending.",
+  "detail": "The rebuild moves the site to the Next.js App Router. It is still in progress: final corrections and delivery checks are pending, and the screens below come from the rebuild's review deployment.",
   "status": "In rebuild",
-  "publicationReady": false,
+  "publicationReady": true,
   "permission": "granted",
-  "role": "Solo build: I engineered, built and set up this project.",
-  "screenshots": [],
   "metrics": [],
-  "evidenceRequired": [
-    "scope and contribution",
-    "current delivery status",
-    "authorized screenshots",
-    "walkthrough",
-    "technical decision evidence"
+  "evidenceRequired": [],
+  "reportedCapability": null,
+  "role": "Solo build: I engineered, built and set up this project.",
+  "screenshots": [
+    {
+      "src": "/projects/shave-parlor/home.webp",
+      "alt": "The Shave Parlor home page: “Refined grooming. Timeless service.” over a photo of the shop floor, with Book Now and View Services buttons",
+      "width": 1040,
+      "height": 650,
+      "caption": "Home"
+    },
+    {
+      "src": "/projects/shave-parlor/services-menu.webp",
+      "alt": "The Shave Parlor services menu with starting prices and a Book This Service button on each card",
+      "width": 1440,
+      "height": 900,
+      "caption": "Services menu"
+    }
   ],
-  "reportedCapability": null
+  "engineering": [
+    "Next.js App Router, TypeScript and Tailwind CSS",
+    "One section component per page area, shared across routes",
+    "Fonts self-hosted through next/font",
+    "Deployed to Vercel for review"
+  ],
+  "links": []
 }

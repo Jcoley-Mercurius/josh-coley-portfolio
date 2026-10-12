@@ -2,27 +2,68 @@
   "id": "supabase-saas",
   "name": "Supabase SaaS project",
   "category": "SaaS",
-  "type": "SaaS project",
-  "summary": "Additional SaaS portfolio work; scope to be verified.",
-  "challenge": "Project problem and final scope to be verified.",
+  "type": "Audit lab",
+  "summary": "A public audit lab that reproduces launch-blocking Supabase failures on synthetic data and shows the evidence before and after each fix.",
+  "challenge": "Teams launching on Supabase rarely know whether their row-level security, storage rules and webhooks hold up until real users find out. The lab had to show that risk and its fix in a form a buyer can read and an engineer can reproduce, without touching any real system.",
   "decisions": [
-    "Product scope",
-    "Technical decisions",
-    "Verification evidence"
+    {
+      "title": "Reproducible evidence",
+      "detail": "Scenarios run against an isolated local PostgreSQL fixture and are replayed from a committed transcript. A digest ties the transcript to that exact fixture, so a hand edit fails its own check, and CI re-records it from a clean database."
+    },
+    {
+      "title": "Before and after the fix",
+      "detail": "Each finding is shown as found, then re-tested after the documented fix. Untested checks never count as passes, and every result carries its scope and limitations."
+    },
+    {
+      "title": "No live database for evidence",
+      "detail": "The published app holds no database connection for its evidence and runs no new query. The only writes are inquiries, stored behind tested grants and row-level security and redacted after 12 months."
+    }
   ],
-  "detail": "No security or performance claims are made.",
+  "detail": "Four scenarios cover authorization and RLS, storage and configuration, webhook integrity, and reliability and recovery. Everything runs on synthetic data, and the lab states plainly that it is not a certification or a penetration test.",
   "status": "Live",
-  "publicationReady": false,
+  "publicationReady": true,
   "permission": "granted",
-  "role": "Solo build: I engineered, built, deployed and set up this project.",
-  "screenshots": [],
   "metrics": [],
-  "evidenceRequired": [
-    "scope and contribution",
-    "current delivery status",
-    "authorized screenshots",
-    "walkthrough",
-    "technical decision evidence"
+  "evidenceRequired": [],
+  "reportedCapability": null,
+  "role": "Solo build: I engineered, built, deployed and set up this project.",
+  "screenshots": [
+    {
+      "src": "/projects/supabase-saas/home.webp",
+      "alt": "Supabase SaaS Launch-Readiness Lab home page with an evidence snapshot on synthetic data",
+      "width": 1440,
+      "height": 900,
+      "caption": "Home and evidence snapshot"
+    },
+    {
+      "src": "/projects/supabase-saas/scenario.webp",
+      "alt": "Authorization and RLS scenario showing a high-severity cross-tenant finding and its five steps",
+      "width": 1440,
+      "height": 900,
+      "caption": "Scenario walkthrough"
+    },
+    {
+      "src": "/projects/supabase-saas/report.webp",
+      "alt": "Sample launch-readiness report on synthetic data, opening with its scope",
+      "width": 1440,
+      "height": 900,
+      "caption": "Sample report"
+    }
   ],
-  "reportedCapability": null
+  "engineering": [
+    "Next.js App Router and TypeScript, deployed on Vercel",
+    "Supabase Postgres for inquiries only, with allow and deny checks run against the hosted project",
+    "Inquiry email sent through Resend on the server, with duplicate and abuse controls",
+    "Playwright browser matrix, including WebKit, run in CI alongside the evidence reproduction"
+  ],
+  "links": [
+    {
+      "label": "Live site",
+      "href": "https://supabase-saas-launch-readiness-lab.vercel.app"
+    },
+    {
+      "label": "Source code",
+      "href": "https://github.com/Jcoley-Mercurius/supabase-saas-launch-readiness-lab"
+    }
+  ]
 }

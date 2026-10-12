@@ -63,7 +63,7 @@ Actual (2026-10-11): PASS 11 node:test checks, lint, typecheck, build, audit 0, 
 
 Checkpoint: slice outcome demonstrated, applicable failures verified and limitations recorded. Next: S6 (or S7 if S6 is already complete). Recovery: revert only this slice through reviewed git history, preserving unrelated work.
 
-## S6: Project evidence (in progress, awaiting repositories)
+## S6: Project evidence (complete; Upwork/Fiverr exports deferred by owner)
 > Execute only S6. Read the inherited contract and canonical files above, then inspect current repository. Replace placeholders with permitted actual screenshots and verified case narratives; prepare Upwork/Fiverr exports without invented claims. Trace changes through mts/IMPLEMENTATION-PLAN.md. In scope: this slice's user journey and applicable failure, recovery, responsive and accessibility states. Out of scope: later slices and unapproved integrations. No migrations or authentication are planned; document if inspection changes that assumption. Validate the end-to-end journey with focused automated checks and manual preview evidence where available. Report actual pass/fail/not-run, changed files, unresolved setup, rollback commit and next slice. Update canonical status and stop at the checkpoint.
 
 Checkpoint: slice outcome demonstrated, applicable failures verified and limitations recorded. Next: S7. Recovery: revert only this slice through reviewed git history, preserving unrelated work.

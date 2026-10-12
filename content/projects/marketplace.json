@@ -3,26 +3,68 @@
   "name": "Mercurius Marketplace",
   "category": "Marketplaces",
   "type": "Founder-built product",
-  "summary": "A home-services marketplace, presented as founder-built work.",
-  "challenge": "Connect homeowner and vendor needs within a coherent service experience.",
+  "summary": "A managed home-services marketplace for Lee County, Florida, with homeowner, vendor and admin portals.",
+  "challenge": "Homeowners want reliable local pros without chasing quotes, and good local vendors want work without hunting for leads. Mercurius coordinates both sides, so matching, quotes, jobs, payments and payouts all need clear rules, and the public site must never overstate coverage.",
   "decisions": [
-    "Distinct user journeys",
-    "Service discovery",
-    "Operational workflows"
+    {
+      "title": "One canonical lifecycle",
+      "detail": "Requests, matching, quotes, jobs, payments, payouts, disputes and reviews follow one versioned set of state machines with actor permissions, so no record can be left in an unmapped state."
+    },
+    {
+      "title": "Payment integrity",
+      "detail": "Checkout attempts are idempotent, Stripe webhooks are durable and replayable, and money movements are written to immutable journals. Payments stay in test mode until a separate activation decision."
+    },
+    {
+      "title": "Invitation-gated booking",
+      "detail": "Anyone can browse the catalog and join early access, but booking opens by invitation: requests and checkout are refused for homeowners who have not been admitted."
+    }
   ],
-  "detail": "Founder product work will be distinguished from client delivery. Individual capabilities and outcomes require scoped verification.",
+  "detail": "The public site is live for early access while the rebuilt booking flows move through phased acceptance. It shows real catalog coverage instead of invented scale, and services without an active provider say so.",
   "status": "Live",
-  "publicationReady": false,
+  "publicationReady": true,
   "permission": "granted",
-  "role": "Solo build: I engineered, built, deployed and set up this project.",
-  "screenshots": [],
   "metrics": [],
-  "evidenceRequired": [
-    "scope and contribution",
-    "current delivery status",
-    "authorized screenshots",
-    "walkthrough",
-    "technical decision evidence"
+  "evidenceRequired": [],
+  "reportedCapability": null,
+  "role": "Solo build: I engineered, built, deployed and set up this project.",
+  "screenshots": [
+    {
+      "src": "/projects/marketplace/home.webp",
+      "alt": "Mercurius home page: “Home Services, Without the Awkward Parts” for Cape Coral and Fort Myers, beside an illustrated Florida home",
+      "width": 1440,
+      "height": 900,
+      "caption": "Home"
+    },
+    {
+      "src": "/projects/marketplace/services.webp",
+      "alt": "Mercurius service catalog with category filters and a count of services with live provider coverage",
+      "width": 1440,
+      "height": 900,
+      "caption": "Service catalog"
+    },
+    {
+      "src": "/projects/marketplace/how-it-works.webp",
+      "alt": "Mercurius How It Works page: three steps from request to completed job",
+      "width": 1440,
+      "height": 900,
+      "caption": "How it works"
+    }
   ],
-  "reportedCapability": null
+  "engineering": [
+    "Next.js and TypeScript on Supabase Postgres, Auth, Storage and Edge Functions",
+    "181 SQL migrations, with role-isolation tests run against a local Supabase stack",
+    "Stripe checkout and webhook handling in Edge Functions, tested with synthetic fixtures",
+    "Intake forms protected by a honeypot, a fill-time check and per-email and per-IP limits",
+    "CI gates for lint, types, unit tests and a repository secret scan"
+  ],
+  "links": [
+    {
+      "label": "Live site",
+      "href": "https://mercurius-marketplace-next.vercel.app"
+    },
+    {
+      "label": "Source code",
+      "href": "https://github.com/Jcoley-Mercurius/mercurius-marketplace-next"
+    }
+  ]
 }
