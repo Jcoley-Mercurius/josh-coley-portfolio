@@ -32,47 +32,6 @@
   --breakpoint-desktop: 56.3125rem;
 }
 
-/* ===== LEGACY THEME (pre-A1 sections, replaced in S2–S5) ===== */
-:root {
-  --ease-refined: cubic-bezier(0.4, 0, 0.2, 1);
-  --duration-micro: 220ms;
-  --duration-card: 340ms;
-  --duration-entrance: 600ms;
-  --shadow-resting:
-    0 1px 2px rgb(15 23 42 / 0.025),
-    0 10px 30px -18px rgb(15 23 42 / 0.16);
-  --shadow-elevated:
-    0 2px 4px rgb(15 23 42 / 0.035),
-    0 24px 52px -24px rgb(15 23 42 / 0.24);
-  --shadow-accent:
-    0 10px 24px -12px rgb(37 99 235 / 0.42);
-}
-
-@theme inline {
-  --color-slate-950: #020617;
-  --color-slate-900: #0f172a;
-  --color-slate-800: #1e293b;
-  --color-slate-700: #334155;
-  --color-slate-600: #475569;
-  --color-slate-500: #64748b;
-  --color-slate-400: #94a3b8;
-  --color-slate-300: #cbd5e1;
-  --color-slate-200: #e2e8f0;
-  --color-slate-100: #f1f5f9;
-  --color-slate-50: #f8fafc;
-
-  --color-warm-50: #faf8f5;
-  --color-warm-100: #f5f0ea;
-  --color-warm-200: #e8dfd4;
-
-  --color-accent: #2563eb;
-  --color-accent-dark: #1d4ed8;
-  --color-accent-light: #3b82f6;
-
-  --section-padding-y: 6rem;
-  --section-padding-y-lg: 8rem;
-}
-
 /* ===== A1 BASE ===== */
 html {
   scroll-behavior: smooth;
@@ -120,10 +79,6 @@ select:focus-visible {
   font-family: var(--font-display);
 }
 
-.text-balance {
-  text-wrap: balance;
-}
-
 /* ===== A1 COMPONENTS =====
    Layered so Tailwind utilities (e.g. tablet:hidden) can override them. */
 @layer components {
@@ -165,8 +120,7 @@ select:focus-visible {
     left: 12px;
   }
 
-  /* Work filter (prototype .filter). Kept as a class: legacy rules match
-     buttons whose class contains "bg-". */
+  /* Work filter (prototype .filter). */
   .filter-chip {
     border: 1px solid var(--color-line);
     border-radius: 30px;
@@ -439,8 +393,7 @@ html[data-motion="off"] .hero-art img {
 
 /* ===== NO-JAVASCRIPT FALLBACKS =====
    motionScript sets html[data-js] before first paint. Without it, the menu
-   button could never open, and framer-motion's server-rendered entrance
-   state would leave legacy sections invisible. */
+   button could never open. */
 @media (max-width: 40.625rem) {
   html:not([data-js]) .menu-toggle {
     display: none;
@@ -464,183 +417,7 @@ html[data-motion="off"] .hero-art img {
   }
 }
 
-html:not([data-js]) .animate-in {
-  opacity: 1 !important;
-  transform: none !important;
-}
-
 /* The inquiry form posts with fetch only; say so when that cannot happen. */
 html[data-js] .inquiry-nojs {
   display: none;
-}
-
-/* ===== LEGACY COMPONENT STYLES (pre-A1 sections, replaced in S2–S5) ===== */
-/* ===== SMOOTH SECTION TRANSITIONS ===== */
-section {
-  position: relative;
-}
-
-/* ===== SUBTLE LINK UNDERLINE ANIMATION ===== */
-.link-underline {
-  position: relative;
-  text-decoration: none;
-}
-
-.link-underline::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 1.5px;
-  background-color: var(--color-accent);
-  transition: width var(--duration-micro) var(--ease-refined);
-}
-
-.link-underline:hover::after {
-  width: 100%;
-}
-
-/* Primary service package cards */
-.service-card {
-  background-image:
-    radial-gradient(circle at 100% 0%, rgb(14 116 144 / 0.03), transparent 36%),
-    linear-gradient(160deg, rgb(255 255 255 / 0.2), transparent 55%);
-  border-color: rgb(203 213 225 / 0.7);
-  box-shadow: var(--shadow-resting);
-  border-radius: 16px;
-  overflow: hidden;
-  transition:
-    transform var(--duration-card) var(--ease-refined),
-    box-shadow var(--duration-card) var(--ease-refined),
-    border-color var(--duration-card) var(--ease-refined);
-  will-change: transform;
-}
-
-/* Featured service card */
-.service-card[class*="border-accent"] {
-  border-color: rgb(37 99 235 / 0.5);
-  box-shadow:
-    0 1px 2px rgb(37 99 235 / 0.04),
-    0 18px 44px -28px rgb(37 99 235 / 0.38);
-}
-
-.card-accent-line {
-  background-image: linear-gradient(
-    90deg,
-    rgb(14 116 144 / 0.72),
-    rgb(37 99 235 / 0.58)
-  );
-}
-
-/* Retainer card */
-#services [class~="mt-12"][class~="rounded-3xl"] {
-  box-shadow: var(--shadow-resting);
-  transition:
-    transform var(--duration-card) var(--ease-refined),
-    box-shadow var(--duration-card) var(--ease-refined),
-    border-color var(--duration-card) var(--ease-refined);
-}
-
-/* ===== REFINED INTERACTIONS ===== */
-a[class~="rounded-full"],
-button[type="submit"]:not(.a1-btn) {
-  transition:
-    transform var(--duration-micro) var(--ease-refined),
-    box-shadow var(--duration-micro) var(--ease-refined),
-    background-color var(--duration-micro) var(--ease-refined),
-    border-color var(--duration-micro) var(--ease-refined),
-    color var(--duration-micro) var(--ease-refined);
-}
-
-.btn-primary,
-button[class*="bg-"],
-a[class*="bg-"] {
-  transition:
-    transform var(--duration-micro) var(--ease-refined),
-    box-shadow var(--duration-micro) var(--ease-refined),
-    background-color var(--duration-micro) var(--ease-refined),
-    border-color var(--duration-micro) var(--ease-refined),
-    color var(--duration-micro) var(--ease-refined);
-}
-
-.btn-primary {
-  background-color: #0f5f73;
-  background-image: linear-gradient(135deg, #0f5f73 0%, #155e75 100%);
-  border: 1px solid rgb(255 255 255 / 0.1);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.16),
-    0 8px 20px -12px rgb(14 94 116 / 0.62);
-}
-
-.badge {
-  transition:
-    transform var(--duration-micro) var(--ease-refined),
-    background-color var(--duration-micro) var(--ease-refined),
-    border-color var(--duration-micro) var(--ease-refined),
-    color var(--duration-micro) var(--ease-refined),
-    box-shadow var(--duration-micro) var(--ease-refined);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .service-card:hover {
-    transform: translateY(-8px);
-    border-color: rgb(148 163 184 / 0.62);
-    box-shadow:
-      0 20px 40px rgb(0 0 0 / 0.08),
-      0 12px 32px rgb(10 77 104 / 0.12),
-      0 0 0 1px rgb(10 77 104 / 0.04);
-  }
-
-  .service-card[class*="border-accent"]:hover {
-    border-color: rgb(37 99 235 / 0.68);
-    box-shadow:
-      0 20px 40px rgb(0 0 0 / 0.08),
-      0 12px 32px rgb(10 77 104 / 0.16),
-      0 0 0 1px rgb(37 99 235 / 0.08);
-  }
-
-  #services [class~="mt-12"][class~="rounded-3xl"]:hover {
-    transform: translateY(-3px);
-    border-color: rgb(148 163 184 / 0.58);
-    box-shadow: var(--shadow-elevated);
-  }
-
-  .btn-primary:hover,
-  button[class*="bg-"]:hover,
-  a[class*="bg-"]:hover,
-  a[class~="rounded-full"]:hover,
-  button[type="submit"]:not(.a1-btn):hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgb(10 77 104 / 0.25);
-  }
-
-  .btn-primary:hover {
-    background-image: linear-gradient(135deg, #0c5062 0%, #124f67 100%);
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.2),
-      0 12px 26px -10px rgb(14 94 116 / 0.52);
-  }
-
-  .badge:hover {
-    transform: translateY(-1px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-  }
-
-  .service-card:hover,
-  .badge:hover,
-  a:hover,
-  button:hover {
-    transform: none !important;
-  }
 }

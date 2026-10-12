@@ -1,188 +1,76 @@
-"use client";
+import type { InquiryService } from "../_lib/inquiry";
 
-import AnimateIn from "./AnimateIn";
-import { Check, RefreshCw } from "lucide-react";
-
-interface ServicePackage {
-  name: string;
-  price: string;
-  turnaround: string;
+interface Service {
+  service: InquiryService;
+  title: string;
   description: string;
-  features: string[];
-  featured?: boolean;
+  cta: string;
 }
 
-const packages: ServicePackage[] = [
+// A1 "What we build" copy. Each link jumps to the inquiry form and, with
+// JavaScript, preselects the matching project type (see ContactForm).
+const services: Service[] = [
   {
-    name: "Business Launch Page",
-    price: "$600 – $950",
-    turnaround: "5–7 business days",
-    description:
-      "A polished, mobile-first landing page that makes your business look professional and converts visitors into leads.",
-    features: [
-      "Custom responsive design",
-      "Mobile-optimized and fast-loading",
-      "Contact form with email notifications",
-      "Basic SEO setup",
-      "Deployed with your domain",
-      "1 round of revisions",
-    ],
+    service: "website",
+    title: "Business websites",
+    description: "Brand expression, service discovery, landing pages, and a clear next step.",
+    cta: "Discuss a website",
   },
   {
-    name: "Smart Business Website",
-    price: "$1,200 – $1,800",
-    turnaround: "10–14 business days",
-    description:
-      "A complete multi-page website with AI-enhanced forms, analytics, and everything a modern business needs to grow online.",
-    features: [
-      "3–5 page custom website",
-      "AI-enhanced contact or intake form",
-      "Google Business integration guidance",
-      "Analytics and performance tracking",
-      "Social media integration",
-      "2 rounds of revisions",
-    ],
-    featured: true,
+    service: "booking",
+    title: "Booking experiences",
+    description: "Help visitors choose a service and reach the business’s scheduling system.",
+    cta: "Discuss a booking project",
   },
   {
-    name: "Business Growth Tools",
-    price: "$1,800 – $2,800",
-    turnaround: "2–3 weeks",
-    description:
-      "Custom tools and automations that save time, increase efficiency, and help your business scale — built specifically for how you work.",
-    features: [
-      "Custom quote calculator or intake tool",
-      "AI chatbot or smart form integration",
-      "Database setup and management",
-      "Email automation workflows",
-      "Training session included",
-      "Ongoing support options",
-    ],
+    service: "saas",
+    title: "SaaS & portals",
+    description: "Product interfaces that organize information and support repeatable workflows.",
+    cta: "Discuss a SaaS or portal",
+  },
+  {
+    service: "marketplace",
+    title: "Marketplaces",
+    description: "Experiences that connect different users through a coherent product journey.",
+    cta: "Discuss a marketplace",
   },
 ];
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 lg:py-32">
-      <div className="mx-auto max-w-6xl px-6">
-        <AnimateIn className="text-center">
-          <span className="text-sm font-semibold uppercase tracking-widest text-accent">
-            Services
-          </span>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Clear packages. Honest pricing.
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
-            Fixed-price packages so you know exactly what you&apos;re getting and
-            what you&apos;re paying. No hourly surprises. 50% upfront, 50% on
-            delivery.
-          </p>
-        </AnimateIn>
-
-        <div className="mt-16 grid gap-8 lg:grid-cols-3 lg:gap-6">
-          {packages.map((pkg, index) => (
-            <AnimateIn key={pkg.name} delay={index * 0.12}>
-              <div
-                className={`service-card relative flex h-full flex-col overflow-hidden rounded-3xl border p-8 ${
-                  pkg.featured
-                    ? "border-accent/70 bg-gradient-to-b from-accent/[0.045] via-white to-white shadow-lg shadow-accent/10"
-                    : "border-slate-200/90 bg-gradient-to-b from-slate-50/70 to-white shadow-sm hover:border-slate-300"
-                }`}
+    <section
+      id="services"
+      aria-labelledby="services-title"
+      className="border-y border-line bg-[#eee8dd]"
+    >
+      <div className="mx-auto max-w-content px-[6%] py-[45px] tablet:px-[5%] tablet:py-[70px]">
+        <span className="eyebrow">What we build</span>
+        <h2
+          id="services-title"
+          className="mt-4 font-display text-[clamp(34px,4vw,56px)] leading-[1.1] font-normal tracking-[-0.03em]"
+        >
+          From first impression
+          <br />
+          to everyday operation.
+        </h2>
+        <p className="mt-4 max-w-[650px]">
+          Every project is quoted from its brief, not from a package.
+        </p>
+        <ul className="mt-[30px] grid gap-[30px] tablet:grid-cols-2 desktop:grid-cols-4">
+          {services.map((item) => (
+            <li key={item.service} className="flex flex-col border-t border-line pt-5">
+              <h3 className="font-display text-[23px] leading-[1.1] font-normal">{item.title}</h3>
+              <p className="mt-4 flex-1 text-sm">{item.description}</p>
+              <a
+                href="#contact"
+                data-inquiry-service={item.service}
+                className="mt-5 self-start text-sm text-bronze"
               >
-                <div
-                  className={`card-accent-line absolute inset-x-0 top-0 h-1 ${
-                    pkg.featured ? "bg-accent" : "bg-slate-200"
-                  }`}
-                />
-                {pkg.featured && (
-                  <span className="badge absolute right-6 top-5 rounded-full bg-accent px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white shadow-md shadow-accent/20">
-                    Most Popular
-                  </span>
-                )}
-
-                <div>
-                  <h3 className="text-xl font-bold tracking-tight text-slate-900">
-                    {pkg.name}
-                  </h3>
-                  <p className="mt-5 text-3xl font-bold tracking-tight text-slate-950">
-                    {pkg.price}
-                  </p>
-                  <p className="mt-1 text-sm text-slate-500">
-                    {pkg.turnaround}
-                  </p>
-                  <p className="mt-5 text-sm leading-6 text-slate-600">
-                    {pkg.description}
-                  </p>
-                </div>
-
-                <ul className="mt-8 flex-1 space-y-3.5 border-t border-slate-100 pt-7">
-                  {pkg.features.map((feature) => (
-                    <li
-                      key={feature}
-                      className="flex items-start gap-2.5 text-sm text-slate-700"
-                    >
-                      <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-accent/10">
-                        <Check size={12} className="text-accent" strokeWidth={2.5} />
-                      </span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </AnimateIn>
+                {item.cta} <span aria-hidden="true">↗</span>
+              </a>
+            </li>
           ))}
-        </div>
-
-        {/* Retainer — separate full-width card */}
-        <AnimateIn delay={0.4}>
-          <div className="mt-12 rounded-3xl border border-slate-200 bg-gradient-to-r from-slate-50 via-white to-accent/[0.025] p-8 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:p-10">
-            <div className="grid items-center gap-8 lg:grid-cols-5 lg:gap-12">
-              <div className="lg:col-span-3">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10">
-                    <RefreshCw size={18} className="text-accent" strokeWidth={2} />
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900">
-                    Monthly Retainer &amp; Ongoing Support
-                  </h3>
-                </div>
-                <p className="mt-4 leading-relaxed text-slate-600">
-                  For businesses that need a reliable partner on call — not just
-                  a one-time build. I stay involved after launch to keep things
-                  running, improving, and growing with your business.
-                </p>
-                <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-                  {[
-                    "Priority support & fast response times",
-                    "Small updates, tweaks & improvements",
-                    "Monthly strategy check-in call",
-                    "Help implementing tools into daily workflows",
-                    "Performance monitoring & recommendations",
-                    "Discounted rates on larger add-on projects",
-                  ].map((feature) => (
-                    <li
-                      key={feature}
-                      className="flex items-start gap-2.5 text-sm text-slate-700"
-                    >
-                      <Check
-                        size={16}
-                        className="mt-0.5 flex-shrink-0 text-accent"
-                        strokeWidth={2}
-                      />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex flex-col items-start lg:col-span-2 lg:items-center lg:text-center">
-                <p className="text-3xl font-bold tracking-tight text-slate-900">
-                  $250 – $450
-                </p>
-                <p className="mt-1 text-sm text-slate-500">per month</p>
-              </div>
-            </div>
-          </div>
-        </AnimateIn>
+        </ul>
       </div>
     </section>
   );

@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
 
 const navLinks = [
   { label: "Work", href: "/#work" },
   { label: "Services", href: "/#services" },
+  { label: "Approach", href: "/#approach" },
   { label: "About", href: "/#about" },
 ];
 
@@ -79,7 +79,7 @@ export default function SiteNav() {
           setOpen((value) => !value);
         }}
       >
-        Menu <Menu aria-hidden="true" size={18} strokeWidth={1.5} />
+        Menu <span aria-hidden="true">☰</span>
       </button>
       <nav
         ref={navRef}

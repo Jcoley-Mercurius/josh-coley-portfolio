@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useSyncExternalStore, type FormEvent } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent } from "react";
 import {
   inquiryLimits,
   inquiryServices,
@@ -45,6 +45,20 @@ export default function ContactForm() {
     setValues((current) => ({ ...current, [field]: value }));
     if (errors[field]) setErrors((current) => ({ ...current, [field]: undefined }));
   };
+
+  // Service links elsewhere on the page ("Discuss a website ↗") carry
+  // data-inquiry-service; following one preselects that project type.
+  useEffect(() => {
+    const onClick = (event: MouseEvent) => {
+      const link = event.target instanceof Element ? event.target.closest("a[data-inquiry-service]") : null;
+      const value = link?.getAttribute("data-inquiry-service");
+      if (!value || !inquiryServices.some((service) => service.value === value)) return;
+      setValues((current) => ({ ...current, service: value }));
+      setErrors((current) => ({ ...current, service: undefined }));
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
 
   const focusFirstError = (found: InquiryErrors) => {
     const first = fieldOrder.find((field) => found[field]);
