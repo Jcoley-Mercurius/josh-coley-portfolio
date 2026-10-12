@@ -2,7 +2,7 @@ import Hero from "./components/Hero";
 import SelectedWork from "./components/SelectedWork";
 import About from "./components/About";
 import Services from "./components/Services";
-import WhyWorkWithMe from "./components/WhyWorkWithMe";
+import Approach from "./components/Approach";
 import Contact from "./components/Contact";
 
 export default function Home() {
@@ -10,9 +10,9 @@ export default function Home() {
     <>
       <Hero />
       <SelectedWork />
-      <About />
       <Services />
-      <WhyWorkWithMe />
+      <Approach />
+      <About />
       <Contact />
     </>
   );

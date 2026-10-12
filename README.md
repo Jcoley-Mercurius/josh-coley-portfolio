@@ -16,6 +16,7 @@ The rebuild uses the approved **A1** direction (luminous marble and bronze, Gree
 | S5 | Contact removal: legacy Web3Forms form and contact CTAs removed | complete |
 | S5b | Inquiry: server-side Resend contact with validation and abuse controls | complete (Preview delivery verified) |
 | S6 | Project evidence: permitted screenshots and verified case narratives | complete (PR open; Upwork/Fiverr exports deferred) |
+| S6b | Services and approach: A1 sections, scoped quotes instead of prices, old-site sections removed | PR open |
 | S7 | Release verification: combined QA, preview inquiry test, approved deploy | blocked |
 
 The live roadmap is [`mts/BUILD-ROADMAP.md`](mts/BUILD-ROADMAP.md), and per-slice results are in [`mts/QA-STATUS.md`](mts/QA-STATUS.md).

@@ -101,7 +101,7 @@ test.describe("navigation", () => {
     await page.goto("/");
     await expect(page.getByRole("button", { name: "Menu" })).toBeHidden();
     const nav = page.getByRole("navigation", { name: "Primary" });
-    for (const name of ["Work", "Services", "About"]) {
+    for (const name of ["Work", "Services", "Approach", "About"]) {
       await expect(nav.getByRole("link", { name })).toBeVisible();
     }
     await nav.getByRole("link", { name: "Services" }).click();

@@ -229,32 +229,6 @@ test.describe("motion control", () => {
   });
 });
 
-test.describe("legacy section entrances", () => {
-  test("are visible without JavaScript", async ({ browser }) => {
-    const context = await browser.newContext({ javaScriptEnabled: false });
-    const page = await context.newPage();
-    await page.goto("/");
-    const opacities = await page
-      .locator(".animate-in")
-      .evaluateAll((els) => els.map((el) => getComputedStyle(el).opacity));
-    expect(opacities.length).toBeGreaterThan(0);
-    expect(new Set(opacities)).toEqual(new Set(["1"]));
-    await context.close();
-  });
-
-  test("all appear at once when motion is off", async ({ page }) => {
-    await page.goto("/");
-    await motionSwitch(page).click();
-    await expect
-      .poll(() =>
-        page
-          .locator(".animate-in")
-          .evaluateAll((els) => els.every((el) => getComputedStyle(el).opacity === "1")),
-      )
-      .toBe(true);
-  });
-});
-
 test.describe("mobile menu", () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
@@ -272,7 +246,7 @@ test.describe("mobile menu", () => {
     await page.goto("/");
     await menuButton(page).click();
     await menuButton(page).focus();
-    for (const name of ["Work", "Services", "About", "Discuss a project"]) {
+    for (const name of ["Work", "Services", "Approach", "About", "Discuss a project"]) {
       await page.keyboard.press("Tab");
       await expect(nav(page).getByRole("link", { name })).toBeFocused();
     }
@@ -310,7 +284,7 @@ test.describe("mobile menu", () => {
     const page = await context.newPage();
     await page.goto("/");
     await expect(menuButton(page)).toBeHidden();
-    for (const name of ["Work", "Services", "About"]) {
+    for (const name of ["Work", "Services", "Approach", "About"]) {
       await expect(nav(page).getByRole("link", { name })).toBeVisible();
     }
     await noHorizontalOverflow(page);
