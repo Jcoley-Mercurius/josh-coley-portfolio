@@ -16,7 +16,7 @@ proposed:
 contact:
   decided: 2026-10-11 (owner)
   domain: none; site stays on josh-coley-portfolio.vercel.app, which Resend cannot verify
-  sender: "Mercurius Solutions <onboarding@resend.dev>" (Resend test sender; only delivers to the Resend account's own address)
+  sender: "Mercurius Solutions <onboarding@resend.dev> (Resend test sender; only delivers to the Resend account's own address)"
   recipient: jcoley@mercuriusmarketplace.com (owner-chosen; must be the Resend account email)
   abuse_control: Vercel Firewall custom rule "Rate limit project inquiries", POST /api/contact, 5 per 600 s per IP, fixed window, 429; published 2026-10-11
   vercel_env: CONTACT_FROM_EMAIL and CONTACT_TO_EMAIL set for Production and Preview 2026-10-11; RESEND_API_KEY (Sensitive, sending access, all domains) added by owner for Production and Preview 2026-10-12
