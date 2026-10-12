@@ -255,4 +255,12 @@ FLAKY (not S5b code): at default workers (16 cores) one run failed only S4 "hero
 PASS (visual, local): contact section with all errors shown at 1440 and 390.
 NOT RUN: a real Resend send and delivery (no API key), Vercel Preview check, firewall 429 against a deployment, real-device/Safari/Firefox, screen reader.
 
-Merge gate: merging deploys the form to Production. Until `RESEND_API_KEY` is set, every submission there reports "unavailable". Merge only after the key is added and one synthetic inquiry on the PR Preview is accepted and arrives in the inbox.
+## S5b Preview verification — 2026-10-12
+Owner added `RESEND_API_KEY` (Sensitive) for Production and Preview. PR #10 Preview (commit 084dd83) redeployed as `josh-coley-portfolio-fjmvoqvgp-mercurius-projects.vercel.app` to load it. Requests made with `vercel curl` (the CLI generated a deployment-protection bypass token for the project to do this; owner may revoke it after S7).
+PASS: routing probe (before the key) — invalid payload → 400 with field errors, nothing sent.
+PASS: one synthetic inquiry (02:05:06Z, reply-to `delivered@resend.dev`) → 202 accepted; delivered to jcoley@mercuriusmarketplace.com from `onboarding@resend.dev` at 02:05:10Z, subject "Project inquiry from S5b Preview Test", Inbox (Gmail Updates tab), not spam. Confirmed in Gmail.
+PASS: idempotency — identical request with the same key → 202, and Gmail still shows exactly one message.
+PASS: firewall rate limit — the 6th POST to `/api/contact` within the window (routing probe, send, replay, two invalid probes) and every one after → 429.
+NOT RUN: the form UI on the Preview in a real browser (covered locally by Playwright), Safari/Firefox, screen reader.
+
+Merge gate (met 2026-10-12): merging deploys the form to Production. Until `RESEND_API_KEY` is set, every submission there reports "unavailable". Merge only after the key is added and one synthetic inquiry on the PR Preview is accepted and arrives in the inbox.

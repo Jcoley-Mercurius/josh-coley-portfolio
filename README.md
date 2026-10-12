@@ -14,13 +14,13 @@ The rebuild uses the approved **A1** direction (luminous marble and bronze, Gree
 | S3 | Case studies: `/work/[slug]` routes, chapters, metadata, not-found | complete |
 | S4 | Motion and navigation: bounded hero depth, reduced motion, accessible menu | complete |
 | S5 | Contact removal: legacy Web3Forms form and contact CTAs removed | complete |
-| S5b | Inquiry: server-side Resend contact with validation and abuse controls | implemented, awaiting API key and delivery check |
+| S5b | Inquiry: server-side Resend contact with validation and abuse controls | complete (Preview delivery verified) |
 | S6 | Project evidence: permitted screenshots and verified case narratives | complete (PR open; Upwork/Fiverr exports deferred) |
 | S7 | Release verification: combined QA, preview inquiry test, approved deploy | blocked |
 
 The live roadmap is [`mts/BUILD-ROADMAP.md`](mts/BUILD-ROADMAP.md), and per-slice results are in [`mts/QA-STATUS.md`](mts/QA-STATUS.md).
 
-**Release blockers:** the Resend API key in Vercel, a verified Preview inquiry, and combined browser QA. Public release also requires Josh's explicit release instruction.
+**Release blockers:** combined browser QA (S7). Public release also requires Josh's explicit release instruction.
 
 ## Stack
 
