@@ -86,7 +86,7 @@ test("focused controls show the bronze focus ring", async ({ page }) => {
   await page.goto("/");
   await page.keyboard.press("Tab"); // skip link
   await page.keyboard.press("Tab"); // brand
-  const brand = page.getByRole("link", { name: "Mercurius Solutions home" });
+  const brand = page.getByRole("banner").getByRole("link", { name: "Mercurius Solutions home" });
   await expect(brand).toBeFocused();
   const outline = await brand.evaluate((el) => {
     const style = getComputedStyle(el);

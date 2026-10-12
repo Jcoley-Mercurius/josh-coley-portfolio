@@ -31,8 +31,8 @@ export default function RootLayout({
 }) {
   return (
     // data-scroll-behavior lets Next turn off CSS smooth scrolling during
-    // route changes (Next 16). motionScript adds data-js and a saved
-    // data-motion before first paint, hence suppressHydrationWarning.
+    // route changes (Next 16). motionScript adds data-js before first
+    // paint, hence suppressHydrationWarning.
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: motionScript }} />

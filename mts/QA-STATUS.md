@@ -279,3 +279,12 @@ PASS: `tsc --noEmit`, `npm run lint`, `npm run build`, `npm run test:unit` 29/29
 PASS: Playwright 92/92 at two workers. Removed the two S4 "legacy section entrances" checks (sections gone). New check: home section order equals the prototype, About heading, no old-site copy, and no element in `main` uses the legacy blue `#2563eb`.
 PASS (visual, local, reduced motion): Approach → About → Contact → footer at 1440 and 390.
 NOT RUN: Vercel Preview, Safari/Firefox, screen reader.
+
+## S6c Footer — 2026-10-12 (branch `feat/s6c-footer`)
+Owner request (in conversation): footer modelled on the Mercurius Marketplace footer, professional and in depth; remove the motion switch and clean it up.
+Implementation: `Footer` rebuilt as a server component — brand block (wordmark, existing hero/metadata description, "Discuss a project ↗"), three labelled navigation columns (Case studies from the project records; What we build, whose links carry `data-inquiry-service` so the form preselects the type on the home page; Studio: home sections and "Start a project"), and a bottom bar (copyright, the source-checked statement). Nothing new is claimed: no policy pages, social links, email address or location, since the site has none approved. Removed `MotionToggle`, its CSS, the `html[data-motion="off"]` rules, the saved `mercurius-motion` preference and the manual half of `useMotionPreference`; the `<head>` script now only sets `data-js`. MDS-04 amended accordingly.
+PASS: `tsc --noEmit`, `npm run lint`, `npm run build`.
+PASS: Playwright 94/94 at two workers. S4's four motion-switch checks replaced by "no switch present" and "system preference stops depth, entrance and card motion". 4 new S6c checks: footer structure and labels, every footer link returns 200 and its anchor exists, a footer service link preselects the inquiry, no horizontal scroll at 360/390/768/1280/1440 on a case study. S1 focus-ring and S5b nav-link checks scoped to the header, since the footer repeats those link names.
+FLAKY (not S6c code): the first default-worker run had timing failures across S1–S6b specs; all pass at two workers. Same family as earlier notes.
+PASS (visual, local): footer at 1440 (four columns), 768 (two by two) and 390 (stacked).
+NOT RUN: Vercel Preview, Safari/Firefox, screen reader.

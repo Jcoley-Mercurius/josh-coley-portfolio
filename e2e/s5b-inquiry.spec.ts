@@ -37,7 +37,7 @@ test("contact section, form and nav link render; no legacy integration", async (
   const contact = page.locator("#contact");
   await expect(contact.getByRole("heading", { name: "What would you like to build?" })).toBeVisible();
   await expect(contact.locator("form")).toHaveCount(1);
-  await expect(page.getByRole("link", { name: /discuss a project/i })).toHaveAttribute(
+  await expect(page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: /discuss a project/i })).toHaveAttribute(
     "href",
     "/#contact",
   );
