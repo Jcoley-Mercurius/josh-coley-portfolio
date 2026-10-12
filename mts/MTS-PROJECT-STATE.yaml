@@ -14,4 +14,4 @@ proposed:
   MTS-05: Next Route Handler for Resend integration
   MTS-06: Distributed abuse control before public form activation
 readiness: foundations_can_begin_release_blocked
-blockers: [custom domain decision, Resend sending-domain verification, sender and recipient configuration, abuse-control selection, browser QA, project evidence]
+blockers: [custom domain decision, Resend sending-domain verification, sender and recipient configuration, abuse-control selection, browser QA]

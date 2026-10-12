@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProjectPreview from "../../components/ProjectPreview";
@@ -40,7 +41,8 @@ const chapters = [
   { id: "evidence", label: "Evidence" },
 ];
 
-const engineeringDetails = [
+// Shown until a record supplies its own engineering details.
+const pendingEngineeringDetails = [
   "Responsive behavior",
   "Accessible interactions",
   "Technical decisions",
@@ -52,12 +54,15 @@ const chapterHeading =
 const panel = "border border-line p-[30px]";
 const note = "text-xs text-muted";
 
-// Copy follows the approved A1 prototype case study. Every section stays
-// labelled as pending until the record is cleared for publication (S6).
+// Copy follows the approved A1 prototype case study. A record cleared for
+// publication (S6) supplies its own decisions, walkthrough screenshots and
+// engineering details; anything not supplied stays labelled as pending.
 export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]">) {
   const project = findProject(projects, (await params).slug);
   if (!project) notFound();
   const next = nextProject(projects, project.id);
+  // The first screenshot leads the page; the rest form the walkthrough.
+  const walkthrough = project.screenshots.slice(1);
 
   return (
     <article
@@ -89,6 +94,22 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
           <dd className="mb-[15px]">
             {project.publicationReady ? "Cleared for publication" : "Review pending"}
           </dd>
+          {project.links.length > 0 && (
+            <>
+              <dt className="text-bronze">Links</dt>
+              <dd className="mb-[15px]">
+                <ul role="list">
+                  {project.links.map((link) => (
+                    <li key={link.href}>
+                      <a href={link.href} rel="noopener">
+                        {link.label} <span aria-hidden="true">↗</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </>
+          )}
         </dl>
       </div>
 
@@ -131,14 +152,14 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
         <p className="mb-5">{project.detail}</p>
         <ol role="list" className="grid grid-cols-1 gap-5 desktop:grid-cols-3">
           {project.decisions.map((decision, index) => (
-            <li key={decision} className="border border-line p-6">
+            <li key={decision.title} className="border border-line p-6">
               <span className="eyebrow" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <h3 className="my-4 font-display text-[23px] leading-[1.1] font-normal">
-                {decision}
+                {decision.title}
               </h3>
-              <p className={note}>Intent to be paired with implementation evidence.</p>
+              <p className="text-sm">{decision.detail}</p>
             </li>
           ))}
         </ol>
@@ -153,21 +174,53 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
             <h3 className="mb-4 font-display text-[28px] leading-[1.1] font-normal">
               Interface walkthrough
             </h3>
-            <div className="project-preview">
-              <span>Walkthrough pending</span>
-            </div>
-            <p className={note}>A narrated view of the actual user journey.</p>
+            {walkthrough.length > 0 ? (
+              <div className="grid gap-5">
+                {walkthrough.map((shot) => (
+                  <figure key={shot.src}>
+                    <Image
+                      src={shot.src}
+                      alt={shot.alt}
+                      width={shot.width}
+                      height={shot.height}
+                      sizes="(min-width: 80rem) 36rem, (min-width: 40.6875rem) 45vw, 90vw"
+                      className="h-auto w-full border border-line"
+                    />
+                    <figcaption className={`${note} mt-2`}>{shot.caption}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            ) : (
+              <>
+                <div className="project-preview">
+                  <span>Walkthrough pending</span>
+                </div>
+                <p className={note}>A narrated view of the actual user journey.</p>
+              </>
+            )}
           </div>
           <div className={panel}>
             <h3 className="mb-4 font-display text-[28px] leading-[1.1] font-normal">
               Engineering details
             </h3>
-            <ul role="list" className="mb-4">
-              {engineeringDetails.map((detail) => (
-                <li key={detail}>{detail}</li>
-              ))}
-            </ul>
-            <p className={note}>Verification pending. No results claimed.</p>
+            {project.engineering.length > 0 ? (
+              <ul role="list" className="grid gap-3 text-sm">
+                {project.engineering.map((detail) => (
+                  <li key={detail} className="border-t border-line pt-3">
+                    {detail}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <>
+                <ul role="list" className="mb-4">
+                  {pendingEngineeringDetails.map((detail) => (
+                    <li key={detail}>{detail}</li>
+                  ))}
+                </ul>
+                <p className={note}>Verification pending. No results claimed.</p>
+              </>
+            )}
           </div>
         </div>
       </section>

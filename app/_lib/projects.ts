@@ -17,10 +17,26 @@ export type ProjectFilter = "All" | ProjectCategory;
 
 export const projectFilters: readonly ProjectFilter[] = ["All", ...projectCategories];
 
-// A permitted screenshot, served from public/projects/{project id}/.
+// A permitted screenshot, served from public/projects/{project id}/. Width and
+// height are the file's pixel size (checked by the unit tests) so the
+// walkthrough reserves the right space; the caption labels it there.
 export interface Screenshot {
   src: string;
   alt: string;
+  width: number;
+  height: number;
+  caption: string;
+}
+
+export interface Decision {
+  title: string;
+  detail: string;
+}
+
+// An external link from a case study, such as the live site or source code.
+export interface ProjectLink {
+  label: string;
+  href: string;
 }
 
 export interface Project {
@@ -30,13 +46,15 @@ export interface Project {
   type: string;
   summary: string;
   challenge: string;
-  decisions: string[];
+  decisions: Decision[];
   detail: string;
   status: string;
   publicationReady: boolean;
   permission: string;
   role: string;
   screenshots: Screenshot[];
+  engineering: string[];
+  links: ProjectLink[];
   metrics: string[];
   evidenceRequired: string[];
   reportedCapability: string | null;
@@ -64,12 +82,46 @@ function textList(record: Record<string, unknown>, key: string, label: string): 
   return value as string[];
 }
 
-function nonEmptyTextList(record: Record<string, unknown>, key: string, label: string): string[] {
-  const value = textList(record, key, label);
-  if (value.length === 0 || value.some((item) => item.trim() === "")) {
-    fail(label, `"${key}" must list at least one non-empty string`);
+function objectList(
+  record: Record<string, unknown>,
+  key: string,
+  label: string,
+): Record<string, unknown>[] {
+  const value = record[key];
+  if (
+    !Array.isArray(value) ||
+    value.some((item) => typeof item !== "object" || item === null || Array.isArray(item))
+  ) {
+    fail(label, `"${key}" must be an array of objects`);
   }
-  return value.map((item) => item.trim());
+  return value as Record<string, unknown>[];
+}
+
+function decisionList(record: Record<string, unknown>, label: string): Decision[] {
+  const value = objectList(record, "decisions", label);
+  if (value.length === 0) fail(label, `"decisions" must list at least one decision`);
+  return value.map((item, index) => ({
+    title: text(item, "title", `${label} decision #${index}`),
+    detail: text(item, "detail", `${label} decision #${index}`),
+  }));
+}
+
+function linkList(record: Record<string, unknown>, label: string): ProjectLink[] {
+  return objectList(record, "links", label).map((item, index) => {
+    const href = text(item, "href", `${label} link #${index}`);
+    if (!/^https:\/\/[^\s/]+(?:\/\S*)?$/.test(href)) {
+      fail(label, `link "${href}" must be an https URL`);
+    }
+    return { label: text(item, "label", `${label} link #${index}`), href };
+  });
+}
+
+function pixels(shot: Record<string, unknown>, key: string, label: string): number {
+  const value = shot[key];
+  if (typeof value !== "number" || !Number.isInteger(value) || value <= 0) {
+    fail(label, `"${key}" must be a positive whole number`);
+  }
+  return value;
 }
 
 const screenshotFile = /^[a-z0-9]+(?:-[a-z0-9]+)*\.(?:png|jpe?g|webp|avif)$/;
@@ -82,13 +134,20 @@ function screenshotList(record: Record<string, unknown>, id: string, label: stri
       fail(label, `screenshot #${index} must be an object with "src" and "alt"`);
     }
     const shot = item as Record<string, unknown>;
-    const src = text(shot, "src", `${label} screenshot #${index}`);
-    const alt = text(shot, "alt", `${label} screenshot #${index}`);
+    const shotLabel = `${label} screenshot #${index}`;
+    const src = text(shot, "src", shotLabel);
+    const alt = text(shot, "alt", shotLabel);
     const prefix = `/projects/${id}/`;
     if (!src.startsWith(prefix) || !screenshotFile.test(src.slice(prefix.length))) {
       fail(label, `screenshot "${src}" must be an image file in ${prefix}`);
     }
-    return { src, alt };
+    return {
+      src,
+      alt,
+      width: pixels(shot, "width", shotLabel),
+      height: pixels(shot, "height", shotLabel),
+      caption: text(shot, "caption", shotLabel),
+    };
   });
 }
 
@@ -128,13 +187,15 @@ export function parseProject(input: unknown, index = 0): Project {
     type: text(record, "type", label),
     summary: text(record, "summary", label),
     challenge: text(record, "challenge", label),
-    decisions: nonEmptyTextList(record, "decisions", label),
+    decisions: decisionList(record, label),
     detail: text(record, "detail", label),
     status: text(record, "status", label),
     publicationReady: record.publicationReady,
     permission,
     role: text(record, "role", label),
     screenshots: screenshotList(record, id, label),
+    engineering: textList(record, "engineering", label).map((item) => item.trim()),
+    links: linkList(record, label),
     metrics: textList(record, "metrics", label),
     evidenceRequired: textList(record, "evidenceRequired", label),
     reportedCapability,
@@ -146,6 +207,24 @@ export function parseProject(input: unknown, index = 0): Project {
   }
   if (project.permission !== "granted" && project.screenshots.length > 0) {
     fail(label, `screenshots require "permission": "granted"`);
+  }
+  if (project.engineering.some((item) => item === "")) {
+    fail(label, `"engineering" must not contain empty entries`);
+  }
+
+  // A cleared record needs its evidence in place and nothing left open.
+  if (project.publicationReady) {
+    if (project.permission !== "granted") fail(label, `publicationReady requires "granted"`);
+    if (project.screenshots.length === 0) fail(label, "publicationReady requires a screenshot");
+    if (project.engineering.length === 0) {
+      fail(label, `publicationReady requires "engineering" details`);
+    }
+    if (project.evidenceRequired.length > 0) {
+      fail(label, `publicationReady requires an empty "evidenceRequired"`);
+    }
+    if (project.reportedCapability !== null) {
+      fail(label, `publicationReady requires a verified, not reported, capability`);
+    }
   }
 
   return project;

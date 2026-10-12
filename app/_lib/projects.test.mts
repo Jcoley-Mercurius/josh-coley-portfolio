@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { createRequire } from "node:module";
 import { test } from "node:test";
 import {
   filterProjects,
@@ -10,6 +11,9 @@ import {
   projectCategories,
   projectCountLabel,
 } from "./projects.ts";
+
+// sharp ships with Next; used only to read screenshot dimensions.
+const sharp = createRequire(import.meta.url)("sharp");
 
 const recordsDir = new URL("../../content/projects/", import.meta.url);
 const records = readdirSync(recordsDir)
@@ -23,16 +27,37 @@ const valid = {
   type: "SaaS project",
   summary: "An example record.",
   challenge: "An example challenge.",
-  decisions: ["An example decision"],
+  decisions: [{ title: "An example decision", detail: "Why it was made." }],
   detail: "An example detail.",
   status: "Evidence pending",
   publicationReady: false,
   permission: "unverified",
   role: "verify",
   screenshots: [],
+  engineering: [],
+  links: [],
   metrics: [],
   evidenceRequired: ["scope and contribution"],
   reportedCapability: null,
+};
+
+const shot = {
+  src: "/projects/example-project/home-page.webp",
+  alt: "Home page",
+  width: 1440,
+  height: 900,
+  caption: "Home",
+};
+
+// A record that meets every condition for publication.
+const cleared = {
+  ...valid,
+  publicationReady: true,
+  permission: "granted",
+  role: "Solo build: I built this.",
+  screenshots: [shot],
+  engineering: ["Next.js App Router"],
+  evidenceRequired: [],
 };
 
 test("every supplied record is valid", () => {
@@ -43,8 +68,9 @@ test("every supplied record is valid", () => {
 test("supplied records stay truthfully labelled", () => {
   const projects = parseProjects(records);
   for (const project of projects) {
-    // Write-ups are not verified yet, so no record is cleared or shows results.
-    assert.equal(project.publicationReady, false, project.id);
+    // S6: every write-up was verified against its repository and cleared.
+    // No record claims results.
+    assert.equal(project.publicationReady, true, project.id);
     assert.deepEqual(project.metrics, [], project.id);
     // Owner decision 2026-10-11: all five are Josh's own work, cleared to publish.
     assert.equal(project.permission, "granted", project.id);
@@ -61,12 +87,24 @@ test("supplied records stay truthfully labelled", () => {
   });
 });
 
-test("every referenced screenshot exists in public/", () => {
+test("every referenced screenshot exists in public/ at its recorded size", async () => {
   const publicDir = new URL("../../public/", import.meta.url);
   for (const project of parseProjects(records)) {
-    for (const { src } of project.screenshots) {
-      assert.ok(existsSync(new URL(`.${src}`, publicDir)), `${project.id}: ${src} is missing`);
+    for (const { src, width, height } of project.screenshots) {
+      const file = new URL(`.${src}`, publicDir);
+      assert.ok(existsSync(file), `${project.id}: ${src} is missing`);
+      const metadata = await sharp(file.pathname).metadata();
+      assert.deepEqual([metadata.width, metadata.height], [width, height], `${project.id}: ${src}`);
     }
+  }
+});
+
+test("only Shave Parlor and Homeschool Haven omit a live link", () => {
+  // Shave Parlor's repositories are private and its rebuild is unfinished;
+  // the Homeschool Haven demo is a private review deployment for the client.
+  for (const project of parseProjects(records)) {
+    const live = project.links.some((link) => link.label !== "Source code");
+    assert.equal(live, !["shave-parlor", "homeschool-haven"].includes(project.id), project.id);
   }
 });
 
@@ -79,8 +117,33 @@ test("rejects missing or empty required fields", () => {
 
 test("requires at least one key decision", () => {
   assert.throws(() => parseProject({ ...valid, decisions: [] }), /decisions/);
-  assert.throws(() => parseProject({ ...valid, decisions: [" "] }), /decisions/);
+  assert.throws(() => parseProject({ ...valid, decisions: ["Scope"] }), /decisions/);
   assert.throws(() => parseProject({ ...valid, decisions: "Scope" }), /decisions/);
+  assert.throws(() => parseProject({ ...valid, decisions: [{ title: "Scope" }] }), /detail/);
+  assert.throws(
+    () => parseProject({ ...valid, decisions: [{ title: " ", detail: "Why" }] }),
+    /title/,
+  );
+});
+
+test("links must be labelled https URLs", () => {
+  const link = { label: "Live site", href: "https://example.com" };
+  assert.deepEqual(parseProject({ ...valid, links: [link] }).links, [link]);
+  for (const href of ["http://example.com", "javascript:alert(1)", "/work/vertex", "https://"]) {
+    assert.throws(() => parseProject({ ...valid, links: [{ ...link, href }] }), /https/);
+  }
+  assert.throws(() => parseProject({ ...valid, links: [{ href: link.href }] }), /label/);
+  assert.throws(() => parseProject({ ...valid, links: undefined }), /links/);
+});
+
+test("publication requires the evidence to be in place", () => {
+  assert.equal(parseProject(cleared).publicationReady, true);
+  assert.throws(() => parseProject({ ...cleared, permission: "unverified", screenshots: [] }), /granted/);
+  assert.throws(() => parseProject({ ...cleared, screenshots: [] }), /screenshot/);
+  assert.throws(() => parseProject({ ...cleared, engineering: [] }), /engineering/);
+  assert.throws(() => parseProject({ ...cleared, evidenceRequired: ["walkthrough"] }), /evidenceRequired/);
+  assert.throws(() => parseProject({ ...cleared, reportedCapability: "Unverified" }), /capability/);
+  assert.throws(() => parseProject({ ...valid, engineering: [" "] }), /engineering/);
 });
 
 test("rejects unknown categories and malformed slugs", () => {
@@ -89,7 +152,6 @@ test("rejects unknown categories and malformed slugs", () => {
 });
 
 test("rejects claims made before evidence is cleared", () => {
-  const shot = { src: "/projects/example-project/home.png", alt: "Home page" };
   assert.throws(() => parseProject({ ...valid, metrics: ["40% faster"] }), /metrics/);
   assert.throws(() => parseProject({ ...valid, screenshots: [shot] }), /screenshots/);
 });
@@ -103,11 +165,14 @@ test("accepts only the agreed permission terms", () => {
 
 test("screenshots need alt text and must live in the project's folder", () => {
   const granted = { ...valid, permission: "granted" };
-  const shot = { src: "/projects/example-project/home-page.webp", alt: "Home page" };
   assert.deepEqual(parseProject({ ...granted, screenshots: [shot] }).screenshots, [shot]);
   assert.throws(() => parseProject({ ...granted, screenshots: [shot.src] }), /screenshot #0/);
   assert.throws(() => parseProject({ ...granted, screenshots: [{ src: shot.src }] }), /alt/);
   assert.throws(() => parseProject({ ...granted, screenshots: [{ ...shot, alt: " " }] }), /alt/);
+  assert.throws(() => parseProject({ ...granted, screenshots: [{ ...shot, caption: "" }] }), /caption/);
+  for (const width of [0, 12.5, "1440", undefined]) {
+    assert.throws(() => parseProject({ ...granted, screenshots: [{ ...shot, width }] }), /width/);
+  }
   for (const src of [
     "/projects/other-project/home.png",
     "/headshot.jpg",

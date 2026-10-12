@@ -3,26 +3,68 @@
   "name": "Vertex",
   "category": "SaaS",
   "type": "Learning platform",
-  "summary": "Keyword search that takes learners to the relevant moment in a video.",
-  "challenge": "Help learners find relevant video content without searching through the full recording.",
+  "summary": "A learning platform whose search takes learners to the exact second a topic is taught in a lesson video.",
+  "challenge": "Course videos hide their answers. A learner who remembers a topic but not where it was covered has to scrub through recordings. Vertex needed search that understands a plain-language question and lands on the right moment, without a public AI feature running up unbounded cost.",
   "decisions": [
-    "Keyword discovery",
-    "Timestamp navigation",
-    "Video context"
+    {
+      "title": "Grounded AI search",
+      "detail": "A server route gives the model the content schema through the Sanity Context MCP and lets it query the dataset. Its output is card data validated with Zod, so every course, lesson and timestamp comes from the content, not from generated prose."
+    },
+    {
+      "title": "Two-stage timestamp matching",
+      "detail": "Each video has a document holding its chapter markers and a transcript split into short timestamped chunks. Chapters are matched first, with the transcript as fallback, and a result opens the lesson with the player at that second."
+    },
+    {
+      "title": "Cost and abuse limits",
+      "detail": "Search needs a signed-in account and is rate limited per learner. Daily quotas per learner and site-wide use an atomic counter, so they hold across serverless instances; repeat queries hit a 24-hour cache, and a kill switch can stop search before any model call."
+    }
   ],
-  "detail": "Capability description is user-reported. Deployment and implementation evidence are pending.",
+  "detail": "Authors manage courses in Sanity Studio and a Next.js site serves them, with accounts, progress, bookmarks, notes and analytics around the catalog. The demo runs on a sample catalog of 10 courses and 120 lessons.",
   "status": "Pre-launch",
-  "publicationReady": false,
+  "publicationReady": true,
   "permission": "granted",
-  "role": "Solo build: I engineered, built and set up this project.",
-  "screenshots": [],
   "metrics": [],
-  "evidenceRequired": [
-    "scope and contribution",
-    "current delivery status",
-    "authorized screenshots",
-    "walkthrough",
-    "technical decision evidence"
+  "evidenceRequired": [],
+  "reportedCapability": null,
+  "role": "Solo build: I engineered, built and set up this project.",
+  "screenshots": [
+    {
+      "src": "/projects/vertex/home.webp",
+      "alt": "Vertex home page: “Search your learning in plain English” above a search field",
+      "width": 1440,
+      "height": 900,
+      "caption": "Home and search"
+    },
+    {
+      "src": "/projects/vertex/catalog.webp",
+      "alt": "Vertex course catalog with sample courses, each showing level, duration and module count",
+      "width": 1440,
+      "height": 900,
+      "caption": "Course catalog, sample content"
+    },
+    {
+      "src": "/projects/vertex/course.webp",
+      "alt": "Vertex course page for Next.js App Router in Depth",
+      "width": 1440,
+      "height": 480,
+      "caption": "Course page"
+    }
   ],
-  "reportedCapability": "Keyword search navigates to a video timestamp"
+  "engineering": [
+    "Next.js App Router, TypeScript and Tailwind CSS, with Sanity Studio as a separate workspace",
+    "Private dataset read on the server only; no Sanity, OpenAI or Clerk secret reaches the browser",
+    "Learner progress, bookmarks and notes written only through server routes, keyed to the signed-in session",
+    "Video ingestion runs offline, outside the request path",
+    "CI runs type checks and lint on every push and pull request"
+  ],
+  "links": [
+    {
+      "label": "Demo site",
+      "href": "https://mercurius-vertex.vercel.app"
+    },
+    {
+      "label": "Source code",
+      "href": "https://github.com/Jcoley-Mercurius/vertex-learning-platform"
+    }
+  ]
 }
