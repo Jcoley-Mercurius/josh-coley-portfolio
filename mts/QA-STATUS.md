@@ -280,7 +280,7 @@ PASS: Playwright 92/92 at two workers. Removed the two S4 "legacy section entran
 PASS (visual, local, reduced motion): Approach → About → Contact → footer at 1440 and 390.
 NOT RUN: Vercel Preview, Safari/Firefox, screen reader.
 
-## S6c Footer — 2026-10-12 (branch `feat/s6c-footer`)
+## S6c Footer — 2026-10-12 (merged via PR #12, 4ebb5a6)
 Owner request (in conversation): footer modelled on the Mercurius Marketplace footer, professional and in depth; remove the motion switch and clean it up.
 Implementation: `Footer` rebuilt as a server component — brand block (wordmark, existing hero/metadata description, "Discuss a project ↗"), three labelled navigation columns (Case studies from the project records; What we build, whose links carry `data-inquiry-service` so the form preselects the type on the home page; Studio: home sections and "Start a project"), and a bottom bar (copyright, the source-checked statement). Nothing new is claimed: no policy pages, social links, email address or location, since the site has none approved. Removed `MotionToggle`, its CSS, the `html[data-motion="off"]` rules, the saved `mercurius-motion` preference and the manual half of `useMotionPreference`; the `<head>` script now only sets `data-js`. MDS-04 amended accordingly.
 PASS: `tsc --noEmit`, `npm run lint`, `npm run build`.
@@ -288,3 +288,9 @@ PASS: Playwright 94/94 at two workers. S4's four motion-switch checks replaced b
 FLAKY (not S6c code): the first default-worker run had timing failures across S1–S6b specs; all pass at two workers. Same family as earlier notes.
 PASS (visual, local): footer at 1440 (four columns), 768 (two by two) and 390 (stacked).
 NOT RUN: Vercel Preview, Safari/Firefox, screen reader.
+
+## S7 preparation — 2026-10-12 (branch `chore/s7-prep`, docs only)
+Roadmap, playbook, QA status and MTS state reconciled with the merged PRs (#10 S5b, #11 S6b, #12 S6c). Local `main` synced to 4ebb5a6. Merged slice branches deleted locally and on origin.
+PASS: `npm audit` 0 vulnerabilities.
+Owner decisions for S7: remove Web3Forms completely; the site stays on its Vercel domain; inquiry sender becomes jcoley@mercuriusmarketplace.com after Resend verifies `mercuriusmarketplace.com`.
+NOT RUN: build, lint and tests (no code changed).

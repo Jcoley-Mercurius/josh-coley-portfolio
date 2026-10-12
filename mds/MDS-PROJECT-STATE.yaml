@@ -6,6 +6,6 @@ rules:
   MDS-01: Preserve luminous ivory, bronze and Hermes composition
   MDS-02: Desktop hero places readable copy left and sculpture right; mobile artwork below copy
   MDS-03: Case study includes challenge, contribution, decisions and evidence
-  MDS-04: Motion respects the system reduced-motion preference (owner decision 2026-10-12, S6c: the manual footer switch is removed)
+  MDS-04: "Motion respects the system reduced-motion preference (owner decision 2026-10-12, S6c: the manual footer switch is removed)"
   MDS-05: Focus, menu, invalid, loading, success and recoverable error states remain visible
 numeric_tokens: observed prototype baseline, tune only with documented visual evidence

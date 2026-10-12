@@ -12,15 +12,17 @@ delivery: One branch and pull request per slice; Vercel Preview per PR; owner me
 proposed:
   MTS-04: Static typed project records and server-rendered case-study routes (records adapter implemented in S2; routes implemented in S3)
   MTS-05: Next Route Handler for Resend integration (implemented in S5b at app/api/contact/route.ts)
-  MTS-06: Distributed abuse control before public form activation (S5b, owner-selected 2026-10-11: Vercel Firewall rate-limit rule plus honeypot)
+  MTS-06: "Distributed abuse control before public form activation (S5b, owner-selected 2026-10-11: Vercel Firewall rate-limit rule plus honeypot)"
 contact:
   decided: 2026-10-11 (owner)
   domain: none; site stays on josh-coley-portfolio.vercel.app, which Resend cannot verify
-  sender: "Mercurius Solutions <onboarding@resend.dev>" (Resend test sender; only delivers to the Resend account's own address)
+  sender: "Mercurius Solutions <onboarding@resend.dev> (Resend test sender; only delivers to the Resend account's own address)"
   recipient: jcoley@mercuriusmarketplace.com (owner-chosen; must be the Resend account email)
   abuse_control: Vercel Firewall custom rule "Rate limit project inquiries", POST /api/contact, 5 per 600 s per IP, fixed window, 429; published 2026-10-11
   vercel_env: CONTACT_FROM_EMAIL and CONTACT_TO_EMAIL set for Production and Preview 2026-10-11; RESEND_API_KEY (Sensitive, sending access, all domains) added by owner for Production and Preview 2026-10-12
   verified: 2026-10-12 on PR #10 Preview — delivery to inbox, idempotent replay deduplicated, 429 on 6th request
   upgrade_path: verify a custom domain in Resend, then change CONTACT_FROM_EMAIL only
+  s7_sender_decision: "2026-10-12 (owner): send from jcoley@mercuriusmarketplace.com. Requires mercuriusmarketplace.com verified in Resend (DNS records on that domain), then CONTACT_FROM_EMAIL updated for Production and Preview and a Preview delivery re-test. Site domain unchanged (Vercel)."
+  s7_web3forms: "2026-10-12 (owner): remove Web3Forms completely in S7"
 readiness: foundations_can_begin_release_blocked
 blockers: [combined browser QA (S7), owner release instruction]
