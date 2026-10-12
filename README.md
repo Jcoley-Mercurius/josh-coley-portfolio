@@ -14,13 +14,13 @@ The rebuild uses the approved **A1** direction (luminous marble and bronze, Gree
 | S3 | Case studies: `/work/[slug]` routes, chapters, metadata, not-found | complete |
 | S4 | Motion and navigation: bounded hero depth, reduced motion, accessible menu | complete |
 | S5 | Contact removal: legacy Web3Forms form and contact CTAs removed | complete |
-| S5b | Inquiry: server-side Resend contact with validation and abuse controls | blocked |
+| S5b | Inquiry: server-side Resend contact with validation and abuse controls | complete (Preview delivery verified) |
 | S6 | Project evidence: permitted screenshots and verified case narratives | complete (PR open; Upwork/Fiverr exports deferred) |
 | S7 | Release verification: combined QA, preview inquiry test, approved deploy | blocked |
 
 The live roadmap is [`mts/BUILD-ROADMAP.md`](mts/BUILD-ROADMAP.md), and per-slice results are in [`mts/QA-STATUS.md`](mts/QA-STATUS.md).
 
-**Release blockers:** custom domain, the Resend sender and recipient, the shared abuse-control choice, and combined browser QA. Public release also requires Josh's explicit release instruction.
+**Release blockers:** combined browser QA (S7). Public release also requires Josh's explicit release instruction.
 
 ## Stack
 
@@ -31,7 +31,7 @@ The live roadmap is [`mts/BUILD-ROADMAP.md`](mts/BUILD-ROADMAP.md), and per-slic
 - npm with a committed lockfile
 - Playwright (`@playwright/test`, dev only) for browser and visual checks
 
-The site has no contact form for now: S5 removed the legacy Web3Forms form and its hard-coded key. S5b adds a same-origin Route Handler that sends through **Resend on the server** once the sending domain is verified. `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` and `CONTACT_TO_EMAIL` stay server-only, with no `NEXT_PUBLIC_` credentials.
+S5 removed the legacy Web3Forms form and its hard-coded key. S5b replaces it with a same-origin Route Handler (`app/api/contact`) that sends through **Resend on the server** with the REST API (no SDK). `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` and `CONTACT_TO_EMAIL` stay server-only, with no `NEXT_PUBLIC_` credentials; without them the form reports the service as unavailable. Without a custom domain the sender is Resend's `onboarding@resend.dev`, which only delivers to the Resend account's own address. A Vercel Firewall rule rate-limits `POST /api/contact` (5 per 10 minutes per IP).
 
 ## Development
 

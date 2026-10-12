@@ -3,6 +3,7 @@ import SelectedWork from "./components/SelectedWork";
 import About from "./components/About";
 import Services from "./components/Services";
 import WhyWorkWithMe from "./components/WhyWorkWithMe";
+import Contact from "./components/Contact";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <About />
       <Services />
       <WhyWorkWithMe />
+      <Contact />
     </>
   );
 }

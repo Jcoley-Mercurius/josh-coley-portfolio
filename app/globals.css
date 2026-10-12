@@ -239,6 +239,68 @@ select:focus-visible {
       height: 390px;
     }
   }
+
+  /* Project inquiry form (prototype form rules). */
+  .inquiry-field {
+    margin: 0 0 16px;
+  }
+
+  .inquiry-form input,
+  .inquiry-form textarea,
+  .inquiry-form select {
+    display: block;
+    width: 100%;
+    margin-top: 4px;
+    padding: 12px;
+    border: 1px solid var(--color-bronze);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font: inherit;
+  }
+
+  .inquiry-form [aria-invalid="true"] {
+    border: 2px solid #9b302b;
+  }
+
+  .inquiry-hint,
+  .inquiry-optional {
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+
+  .inquiry-hint,
+  .inquiry-error {
+    margin-top: 4px;
+  }
+
+  .inquiry-error {
+    font-size: 14px;
+    color: #9b302b;
+  }
+
+  .inquiry-form button:disabled {
+    cursor: wait;
+    opacity: 0.65;
+  }
+
+  .inquiry-status {
+    min-height: 1.65em;
+    margin-top: 16px;
+  }
+
+  .inquiry-status[data-status="invalid"],
+  .inquiry-status[data-status="rate-limited"],
+  .inquiry-status[data-status="unavailable"] {
+    color: #9b302b;
+  }
+
+  .inquiry-trap {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
 }
 
 /* Hero artwork: full-bleed behind the copy from 651px, a framed block
@@ -407,6 +469,11 @@ html:not([data-js]) .animate-in {
   transform: none !important;
 }
 
+/* The inquiry form posts with fetch only; say so when that cannot happen. */
+html[data-js] .inquiry-nojs {
+  display: none;
+}
+
 /* ===== LEGACY COMPONENT STYLES (pre-A1 sections, replaced in S2–S5) ===== */
 /* ===== SMOOTH SECTION TRANSITIONS ===== */
 section {
@@ -477,7 +544,7 @@ section {
 
 /* ===== REFINED INTERACTIONS ===== */
 a[class~="rounded-full"],
-button[type="submit"] {
+button[type="submit"]:not(.a1-btn) {
   transition:
     transform var(--duration-micro) var(--ease-refined),
     box-shadow var(--duration-micro) var(--ease-refined),
@@ -543,7 +610,7 @@ a[class*="bg-"] {
   button[class*="bg-"]:hover,
   a[class*="bg-"]:hover,
   a[class~="rounded-full"]:hover,
-  button[type="submit"]:hover {
+  button[type="submit"]:not(.a1-btn):hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 24px rgb(10 77 104 / 0.25);
   }

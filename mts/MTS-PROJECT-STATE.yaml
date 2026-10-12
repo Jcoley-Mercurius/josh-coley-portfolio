@@ -4,14 +4,23 @@ repository_classification: existing
 inspected_commit: 7a4ee96535bc8f9cf3a3bc4409d987a2025834a6
 approved:
   MTS-01: Reuse existing Next application and repository architecture
-  MTS-02: Replace Web3Forms with server-side Resend (Web3Forms removed in S5; Resend deferred to S5b)
+  MTS-02: Replace Web3Forms with server-side Resend (Web3Forms removed in S5; Resend implemented in S5b via REST fetch, no SDK dependency)
   MTS-03: Use existing motion library first; GSAP requires a specific evidenced need
 observed: {next: 16.4.0, react: 19.2.4, framer_motion: 12.40.0, tailwind: 4, package_manager: npm, playwright_test: 1.63.0}
 hosting: {provider: Vercel, linkage: GitHub integration, production: main, preview: other branches, url: https://josh-coley-portfolio.vercel.app, verified: 2026-10-11}
 delivery: One branch and pull request per slice; Vercel Preview per PR; owner merges to main, which deploys to Production (owner decision 2026-10-11, superseding direct commits to main)
 proposed:
   MTS-04: Static typed project records and server-rendered case-study routes (records adapter implemented in S2; routes implemented in S3)
-  MTS-05: Next Route Handler for Resend integration
-  MTS-06: Distributed abuse control before public form activation
+  MTS-05: Next Route Handler for Resend integration (implemented in S5b at app/api/contact/route.ts)
+  MTS-06: Distributed abuse control before public form activation (S5b, owner-selected 2026-10-11: Vercel Firewall rate-limit rule plus honeypot)
+contact:
+  decided: 2026-10-11 (owner)
+  domain: none; site stays on josh-coley-portfolio.vercel.app, which Resend cannot verify
+  sender: "Mercurius Solutions <onboarding@resend.dev>" (Resend test sender; only delivers to the Resend account's own address)
+  recipient: jcoley@mercuriusmarketplace.com (owner-chosen; must be the Resend account email)
+  abuse_control: Vercel Firewall custom rule "Rate limit project inquiries", POST /api/contact, 5 per 600 s per IP, fixed window, 429; published 2026-10-11
+  vercel_env: CONTACT_FROM_EMAIL and CONTACT_TO_EMAIL set for Production and Preview 2026-10-11; RESEND_API_KEY (Sensitive, sending access, all domains) added by owner for Production and Preview 2026-10-12
+  verified: 2026-10-12 on PR #10 Preview — delivery to inbox, idempotent replay deduplicated, 429 on 6th request
+  upgrade_path: verify a custom domain in Resend, then change CONTACT_FROM_EMAIL only
 readiness: foundations_can_begin_release_blocked
-blockers: [custom domain decision, Resend sending-domain verification, sender and recipient configuration, abuse-control selection, browser QA]
+blockers: [combined browser QA (S7), owner release instruction]
