@@ -70,8 +70,16 @@ Actual (2026-10-11): owner chose no custom domain (Resend test sender to the own
 
 Checkpoint: slice outcome demonstrated, applicable failures verified and limitations recorded. Next: S7. Recovery: revert only this slice through reviewed git history, preserving unrelated work.
 
-## S7: Release verification (blocked)
+## S6b: Services and approach (complete; PR #11, c7642db)
+Owner decision 2026-10-11, not in the original handoff. Replaced the legacy priced packages and retainer with the A1 "What we build" section (four project types that preselect the inquiry), added the A1 Approach section and nav item, replaced About with the prototype's About, and removed the old site's sections, theme/CSS, `AnimateIn`, `lucide-react` and unused public assets. Pricing is a fixed quote scoped from the brief, with no figures on the site. Details in mts/QA-STATUS.md. Rollback: 657238a.
+
+## S6c: Footer (complete; PR #12, 4ebb5a6)
+Owner request 2026-10-12, not in the original handoff. Server-rendered footer in the Mercurius Marketplace pattern (brand block, three link columns to existing content, bottom bar); the manual motion switch is removed and motion follows only the system reduced-motion preference (MDS-04). PASS lint, typecheck, build, Playwright 94/94 at two workers. Details in mts/QA-STATUS.md. Rollback: c7642db.
+
+## S7: Release verification (next)
 > Execute only S7. Read the inherited contract and canonical files above, then inspect current repository. Run combined acceptance, responsive/accessibility/performance QA, preview inquiry test and approved deployment with rollback record. Trace changes through mts/IMPLEMENTATION-PLAN.md. In scope: this slice's user journey and applicable failure, recovery, responsive and accessibility states. Out of scope: later slices and unapproved integrations. No migrations or authentication are planned; document if inspection changes that assumption. Validate the end-to-end journey with focused automated checks and manual preview evidence where available. Report actual pass/fail/not-run, changed files, unresolved setup, rollback commit and next slice. Update canonical status and stop at the checkpoint.
+
+Owner additions 2026-10-12: remove every remaining Web3Forms trace; keep the Vercel domain; switch the inquiry sender to jcoley@mercuriusmarketplace.com once `mercuriusmarketplace.com` is verified in Resend, then re-test Preview delivery.
 
 Checkpoint: slice outcome demonstrated, applicable failures verified and limitations recorded. Next: owner release review. Recovery: revert only this slice through reviewed git history, preserving unrelated work.
 
