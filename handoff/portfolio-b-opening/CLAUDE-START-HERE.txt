@@ -1,0 +1,9 @@
+Implement the owner-selected B opening refinement for Mercurius Solutions in this existing portfolio repository.
+
+Read the attached HANDOFF.md first, then root AGENTS.md and the current MPS, MDS and MTS authorities. Decision: MDS-PORTFOLIO-2026-10-14-B-OPENING. Do not restart discovery.
+
+Create a dedicated branch from current main. Inspect opening-only.patch before using it and run git apply --check; reconcile any drift instead of forcing it. It is an untested implementation aid, not a completed change.
+
+Scope: Hero.tsx typography, spacing, composition and service eyebrow, narrowly scoped CSS, and recording the accepted refinement in current MDS state and roadmap/QA. Preserve the existing shared header, real Next image and HeroDepth behavior, navigation, project cards, selected-work spacing and contact integration. The full-width featured project was NOT selected. Do not copy the experiment's frozen HTML, scripts, disabled form or Sites configuration.
+
+Implement the exact responsive values and content in HANDOFF.md. Run current required checks, compare baseline and implementation on desktop/mobile and verify the Vercel Preview. Open one PR. Return PR/preview links, actual checks and screenshots, and any deviations. Do not merge, push to main, change visibility or release publicly.
