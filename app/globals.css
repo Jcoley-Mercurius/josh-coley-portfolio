@@ -315,6 +315,81 @@ select:focus-visible {
   }
 }
 
+/* Opening refinement (MDS-06, MDS-PORTFOLIO-2026-10-14-B-OPENING). Local
+   hero values only; global A1 tokens are unchanged. Minimum heights, so the
+   hero still grows when text is enlarged. The mobile focal point stays the
+   base 77% top from .hero-art img above.
+   Desktop is B's 600px through 1440px wide (41.667vw = 600px there), then
+   grows with width, capped below the header as in S1, so wide screens keep
+   the statue framed to the hips (owner decision 2026-10-14). */
+.portfolio-opening {
+  min-height: max(600px, min(41.667vw, calc(100svh - 6rem)));
+}
+
+.portfolio-opening-copy {
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+
+.portfolio-opening #hero-title {
+  font-size: clamp(44px, 5.6vw, 80px);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+  max-width: 9.2em;
+  margin: 24px 0;
+}
+
+.portfolio-opening .hero-last {
+  display: block;
+}
+
+.portfolio-opening-services {
+  max-width: 400px;
+  font-size: 19px;
+  line-height: 1.55;
+}
+
+@media (max-width: 56.25rem) {
+  .portfolio-opening {
+    min-height: 560px;
+  }
+
+  .portfolio-opening-copy {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .portfolio-opening #hero-title {
+    font-size: clamp(44px, 6.8vw, 62px);
+  }
+}
+
+@media (max-width: 40.625rem) {
+  .portfolio-opening {
+    min-height: 0;
+  }
+
+  .portfolio-opening-copy {
+    padding: 36px 6% 20px;
+    width: auto;
+  }
+
+  .portfolio-opening #hero-title {
+    font-size: 46px;
+    line-height: 1.06;
+    max-width: 9.1em;
+    margin: 20px 0;
+  }
+
+  .portfolio-opening-services {
+    font-size: 17px;
+  }
+
+  .portfolio-opening .hero-art {
+    height: 220px;
+  }
+}
+
 /* ===== A1 MOTION (S4) =====
    Values from mds/tokens.json motion and the prototype. Stopped by the
    system reduced-motion preference. */

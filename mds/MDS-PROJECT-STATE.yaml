@@ -1,4 +1,4 @@
-version: 1.0
+version: 1.1
 authority: user-selected A1 and approved layout
 selection: A1 luminous marble and bronze with architectural and mythological symbolism
 status: approved_direction_with_implementation_verification_pending
@@ -8,4 +8,31 @@ rules:
   MDS-03: Case study includes challenge, contribution, decisions and evidence
   MDS-04: "Motion respects the system reduced-motion preference (owner decision 2026-10-12, S6c: the manual footer switch is removed)"
   MDS-05: Focus, menu, invalid, loading, success and recoverable error states remain visible
-numeric_tokens: observed prototype baseline, tune only with documented visual evidence
+  MDS-06: Owner-selected B opening refinement; apply scoped hero typography, spacing, service cue and responsive composition, preserving shared header and A1 identity
+numeric_tokens: observed prototype baseline except owner-selected opening refinement below; other tuning requires documented evidence
+opening_refinement:
+  decision_id: MDS-PORTFOLIO-2026-10-14-B-OPENING
+  approved_on: "2026-10-14"
+  approval_basis: Josh selected B opening and requested a focused Claude Code implementation handoff
+  evidence_class: owner_visual_preference_not_client_outcome
+  implementation_status: implemented_on_branch_handoff/portfolio-b-opening_pending_owner_merge
+  scope: Hero.tsx and scoped hero CSS; existing shared header unchanged
+  excluded: [featured_project_redesign, selected_work_spacing, global_type_replacement, public_release]
+  hero_min_height_px: {desktop: 600, tablet: 560, mobile: 0}
+  wide_screen_deviation: "Owner decision 2026-10-14: desktop minimum is max(600px, min(41.667vw, 100svh - 6rem)), so exactly 600px through 1440px wide and growing above it (800px at 1920), keeping the S1 statue framing to the hips. 600px alone cut the statue at the waist at 1920 and the chest at 2560."
+  copy_padding_y_px: {desktop: [56, 56], tablet: [40, 40], mobile: [36, 20]}
+  h1:
+    desktop_size: "clamp(44px, 5.6vw, 80px)"
+    tablet_size: "clamp(44px, 6.8vw, 62px)"
+    mobile_size_px: 46
+    line_height: {desktop: 1.04, tablet: 1.04, mobile: 1.06}
+    letter_spacing: "-.045em"
+    max_width: {desktop: "9.2em", tablet: "9.2em", mobile: "9.1em"}
+    margin_y_px: {desktop: 24, tablet: 24, mobile: 20}
+    wrapping: "Ideas shaped into followed by a block span containing working products.; natural wrapping within each group"
+  eyebrow: Web & product development
+  service_copy: {max_width_px: 400, desktop_tablet_size_px: 19, mobile_size_px: 17, line_height: 1.55}
+  mobile_art: {height_px: 220, object_position: "77% top", framing_note: "at 600px wide the block shows 54.9% of the artwork height (S1 check 0.6 relaxed to 0.54 for that viewport only; head check unchanged)"}
+  reference: "https://mercurius-portfolio-ui-experiment.jcoley516283.chatgpt.site/"
+  reference_source: d55a1448621b4bc6453ab79d83d301d9f3c215be
+  client_validation: not_run

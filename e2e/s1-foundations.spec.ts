@@ -191,18 +191,21 @@ test.describe("hero keeps the statue in frame", () => {
   // instead of capping workers.
   const slow = { timeout: 30_000 };
 
+  // Minimum visible fraction of the artwork's height. Owner decision
+  // 2026-10-14 (B opening): the 220px mobile art block may end just above the
+  // hips near 650px wide; the head check is unchanged.
   const viewports = [
-    [360, 800],
-    [600, 900],
-    [768, 1024],
-    [1024, 768],
-    [1280, 800],
-    [1440, 900],
-    [1920, 1080],
-    [2560, 1440],
+    [360, 800, 0.6],
+    [600, 900, 0.54], // measured 0.549 with the 220px block
+    [768, 1024, 0.6],
+    [1024, 768, 0.6],
+    [1280, 800, 0.6],
+    [1440, 900, 0.6],
+    [1920, 1080, 0.6],
+    [2560, 1440, 0.6],
   ] as const;
 
-  for (const [width, height] of viewports) {
+  for (const [width, height, minBottom] of viewports) {
     test(`at ${width}×${height}`, async ({ page }, testInfo) => {
       test.setTimeout(60_000);
       await page.setViewportSize({ width, height });
@@ -232,7 +235,7 @@ test.describe("hero keeps the statue in frame", () => {
       });
 
       expect(visible.top).toBeLessThanOrEqual(0.05);
-      expect(visible.bottom).toBeGreaterThanOrEqual(0.6);
+      expect(visible.bottom).toBeGreaterThanOrEqual(minBottom);
       expect(visible.left).toBeLessThanOrEqual(0.64);
       expect(visible.right).toBeGreaterThanOrEqual(0.82);
       await page.screenshot({ path: testInfo.outputPath(`statue-${width}.png`), ...slow });

@@ -76,6 +76,9 @@ Owner decision 2026-10-11, not in the original handoff. Replaced the legacy pric
 ## S6c: Footer (complete; PR #12, 4ebb5a6)
 Owner request 2026-10-12, not in the original handoff. Server-rendered footer in the Mercurius Marketplace pattern (brand block, three link columns to existing content, bottom bar); the manual motion switch is removed and motion follows only the system reduced-motion preference (MDS-04). PASS lint, typecheck, build, Playwright 94/94 at two workers. Details in mts/QA-STATUS.md. Rollback: c7642db.
 
+## S6d: B opening refinement (in review; branch `handoff/portfolio-b-opening`)
+Owner decision MDS-PORTFOLIO-2026-10-14-B-OPENING, not in the original handoff. Hero typography, spacing, composition and the "Web & product development" eyebrow from the B experiment, as local hero values (MDS-06, MDS v1.1); shared header, image pipeline, HeroDepth, CTAs and following sections unchanged. Owner decision 2026-10-14: the desktop minimum grows above 1440px wide so wide screens keep the statue framed. Details in mts/QA-STATUS.md. Rollback: bcda762.
+
 ## S7: Release verification (next)
 > Execute only S7. Read the inherited contract and canonical files above, then inspect current repository. Run combined acceptance, responsive/accessibility/performance QA, preview inquiry test and approved deployment with rollback record. Trace changes through mts/IMPLEMENTATION-PLAN.md. In scope: this slice's user journey and applicable failure, recovery, responsive and accessibility states. Out of scope: later slices and unapproved integrations. No migrations or authentication are planned; document if inspection changes that assumption. Validate the end-to-end journey with focused automated checks and manual preview evidence where available. Report actual pass/fail/not-run, changed files, unresolved setup, rollback commit and next slice. Update canonical status and stop at the checkpoint.
 
