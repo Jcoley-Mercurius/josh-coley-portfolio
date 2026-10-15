@@ -1,0 +1,1 @@
+Comparison A is the baseline; B is the owner-selected opening. Screenshots include surrounding context. Only the opening is selected: the featured-project layout and selected-work spacing visible below it are excluded. Header is identical in A and B. Desktop frames render at1440px; mobile frames at360px. These frozen-prototype screenshots do not replace Next.js implementation QA.

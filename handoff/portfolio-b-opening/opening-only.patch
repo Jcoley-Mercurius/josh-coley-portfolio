@@ -1,0 +1,103 @@
+--- a/app/components/Hero.tsx
++++ b/app/components/Hero.tsx
+@@ -6,21 +6,18 @@
+   return (
+     <section
+       aria-labelledby="hero-title"
+-      className="relative isolate overflow-hidden bg-paper tablet:flex tablet:min-h-[600px] tablet:items-center tablet:bg-marble desktop:min-h-[max(720px,min(50vw,calc(100svh-6rem)))]"
++      className="portfolio-opening relative isolate overflow-hidden bg-paper tablet:flex tablet:items-center tablet:bg-marble"
+     >
+-      <div className="a1-reveal max-w-[810px] px-[6%] pb-5 pt-[45px] tablet:w-[68%] tablet:px-[max(5vw,24px)] tablet:py-[70px] desktop:w-[60%]">
+-        <span className="eyebrow">Mercurius Solutions</span>
++      <div className="a1-reveal portfolio-opening-copy max-w-[810px] px-[6%] tablet:w-[68%] tablet:px-[max(5vw,24px)] desktop:w-[60%]">
++        <span className="eyebrow">Web &amp; product development</span>
+         <h1
+           id="hero-title"
+-          className="my-6 font-display text-[clamp(44px,6.8vw,98px)] leading-[1.1] font-normal tracking-[-0.05em]"
++          className="font-display font-normal"
+         >
+-          Ideas shaped
+-          <br />
+-          into working
+-          <br />
+-          products.
++          Ideas shaped into{" "}
++          <span className="hero-last">working products.</span>
+         </h1>
+-        <p className="max-w-[440px] text-[17px] tablet:text-xl">
++        <p className="portfolio-opening-services">
+           Websites, booking experiences, SaaS portals, and marketplaces.
+         </p>
+         <div className="my-[30px] flex flex-wrap gap-3">
+--- a/app/globals.css
++++ b/app/globals.css
+@@ -394,3 +394,29 @@
+ html[data-js] .inquiry-nojs {
+   display: none;
+ }
++
++/* MDS-PORTFOLIO-2026-10-14-B-OPENING — approved local hero refinement. */
++.portfolio-opening { min-height: 600px; }
++.portfolio-opening .portfolio-opening-copy { padding-top: 56px; padding-bottom: 56px; }
++.portfolio-opening #hero-title {
++  font-size: clamp(44px, 5.6vw, 80px);
++  line-height: 1.04;
++  letter-spacing: -.045em;
++  max-width: 9.2em;
++  margin: 24px 0;
++}
++.portfolio-opening .hero-last { display: block; }
++.portfolio-opening .portfolio-opening-services { max-width: 400px; font-size: 19px; line-height: 1.55; }
++@media (max-width: 900px) {
++  .portfolio-opening { min-height: 560px; }
++  .portfolio-opening .portfolio-opening-copy { padding-top: 40px; padding-bottom: 40px; }
++  .portfolio-opening #hero-title { font-size: clamp(44px, 6.8vw, 62px); }
++}
++@media (max-width: 650px) {
++  .portfolio-opening { min-height: 0; }
++  .portfolio-opening .portfolio-opening-copy { padding: 36px 6% 20px; width: auto; }
++  .portfolio-opening #hero-title { font-size: 46px; max-width: 9.1em; line-height: 1.06; margin: 20px 0; }
++  .portfolio-opening .portfolio-opening-services { font-size: 17px; }
++  .portfolio-opening .hero-art { height: 220px; }
++  .portfolio-opening .hero-art img { object-position: 77% top; }
++}
+--- a/mds/MDS-PROJECT-STATE.yaml
++++ b/mds/MDS-PROJECT-STATE.yaml
+@@ -1,4 +1,4 @@
+-version: 1.0
++version: 1.1
+ authority: user-selected A1 and approved layout
+ selection: A1 luminous marble and bronze with architectural and mythological symbolism
+ status: approved_direction_with_implementation_verification_pending
+@@ -8,4 +8,30 @@
+   MDS-03: Case study includes challenge, contribution, decisions and evidence
+   MDS-04: "Motion respects the system reduced-motion preference (owner decision 2026-10-12, S6c: the manual footer switch is removed)"
+   MDS-05: Focus, menu, invalid, loading, success and recoverable error states remain visible
+-numeric_tokens: observed prototype baseline, tune only with documented visual evidence
++  MDS-06: Owner-selected B opening refinement; apply scoped hero typography, spacing, service cue and responsive composition, preserving shared header and A1 identity
++numeric_tokens: observed prototype baseline except owner-selected opening refinement below; other tuning requires documented evidence
++opening_refinement:
++  decision_id: MDS-PORTFOLIO-2026-10-14-B-OPENING
++  approved_on: "2026-10-14"
++  approval_basis: Josh selected B opening and requested a focused Claude Code implementation handoff
++  evidence_class: owner_visual_preference_not_client_outcome
++  implementation_status: pending_implementation_and_preview_verification
++  scope: Hero.tsx and scoped hero CSS; existing shared header unchanged
++  excluded: [featured_project_redesign, selected_work_spacing, global_type_replacement, public_release]
++  hero_min_height_px: {desktop: 600, tablet: 560, mobile: 0}
++  copy_padding_y_px: {desktop: [56, 56], tablet: [40, 40], mobile: [36, 20]}
++  h1:
++    desktop_size: "clamp(44px, 5.6vw, 80px)"
++    tablet_size: "clamp(44px, 6.8vw, 62px)"
++    mobile_size_px: 46
++    line_height: {desktop: 1.04, tablet: 1.04, mobile: 1.06}
++    letter_spacing: "-.045em"
++    max_width: {desktop: "9.2em", tablet: "9.2em", mobile: "9.1em"}
++    margin_y_px: {desktop: 24, tablet: 24, mobile: 20}
++    wrapping: "Ideas shaped into followed by a block span containing working products.; natural wrapping within each group"
++  eyebrow: Web & product development
++  service_copy: {max_width_px: 400, desktop_tablet_size_px: 19, mobile_size_px: 17, line_height: 1.55}
++  mobile_art: {height_px: 220, object_position: "77% top"}
++  reference: "https://mercurius-portfolio-ui-experiment.jcoley516283.chatgpt.site/"
++  reference_source: d55a1448621b4bc6453ab79d83d301d9f3c215be
++  client_validation: not_run

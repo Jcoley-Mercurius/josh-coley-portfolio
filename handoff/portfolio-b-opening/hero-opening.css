@@ -1,0 +1,25 @@
+/* MDS-PORTFOLIO-2026-10-14-B-OPENING — approved local hero refinement. */
+.portfolio-opening { min-height: 600px; }
+.portfolio-opening .portfolio-opening-copy { padding-top: 56px; padding-bottom: 56px; }
+.portfolio-opening #hero-title {
+  font-size: clamp(44px, 5.6vw, 80px);
+  line-height: 1.04;
+  letter-spacing: -.045em;
+  max-width: 9.2em;
+  margin: 24px 0;
+}
+.portfolio-opening .hero-last { display: block; }
+.portfolio-opening .portfolio-opening-services { max-width: 400px; font-size: 19px; line-height: 1.55; }
+@media (max-width: 900px) {
+  .portfolio-opening { min-height: 560px; }
+  .portfolio-opening .portfolio-opening-copy { padding-top: 40px; padding-bottom: 40px; }
+  .portfolio-opening #hero-title { font-size: clamp(44px, 6.8vw, 62px); }
+}
+@media (max-width: 650px) {
+  .portfolio-opening { min-height: 0; }
+  .portfolio-opening .portfolio-opening-copy { padding: 36px 6% 20px; width: auto; }
+  .portfolio-opening #hero-title { font-size: 46px; max-width: 9.1em; line-height: 1.06; margin: 20px 0; }
+  .portfolio-opening .portfolio-opening-services { font-size: 17px; }
+  .portfolio-opening .hero-art { height: 220px; }
+  .portfolio-opening .hero-art img { object-position: 77% top; }
+}
