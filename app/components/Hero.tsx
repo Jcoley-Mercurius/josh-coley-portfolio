@@ -6,21 +6,18 @@ export default function Hero() {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative isolate overflow-hidden bg-paper tablet:flex tablet:min-h-[600px] tablet:items-center tablet:bg-marble desktop:min-h-[max(720px,min(50vw,calc(100svh-6rem)))]"
+      className="portfolio-opening relative isolate overflow-hidden bg-paper tablet:flex tablet:items-center tablet:bg-marble"
     >
-      <div className="a1-reveal max-w-[810px] px-[6%] pb-5 pt-[45px] tablet:w-[68%] tablet:px-[max(5vw,24px)] tablet:py-[70px] desktop:w-[60%]">
-        <span className="eyebrow">Mercurius Solutions</span>
+      <div className="a1-reveal portfolio-opening-copy max-w-[810px] px-[6%] tablet:w-[68%] tablet:px-[max(5vw,24px)] desktop:w-[60%]">
+        <span className="eyebrow">Web &amp; product development</span>
         <h1
           id="hero-title"
-          className="my-6 font-display text-[clamp(44px,6.8vw,98px)] leading-[1.1] font-normal tracking-[-0.05em]"
+          className="font-display font-normal"
         >
-          Ideas shaped
-          <br />
-          into working
-          <br />
-          products.
+          Ideas shaped into{" "}
+          <span className="hero-last">working products.</span>
         </h1>
-        <p className="max-w-[440px] text-[17px] tablet:text-xl">
+        <p className="portfolio-opening-services">
           Websites, booking experiences, SaaS portals, and marketplaces.
         </p>
         <div className="my-[30px] flex flex-wrap gap-3">
